@@ -1,6 +1,7 @@
 package systems.crigges.informaticup;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.text.Normalizer;
@@ -21,8 +22,8 @@ public class WordCounter {
 	private boolean active;
 	private HashMap<String, Integer> wordCount = new HashMap<>();
 
-	public WordCounter() {
-		out = new PipedOutputStream();
+	public WordCounter(PipedOutputStream out) {
+		this.out = out;
 		try {
 			in = new PipedInputStream(out);
 		} catch (IOException e) {
@@ -34,8 +35,13 @@ public class WordCounter {
 		active = true;
 		analyzer.start();
 	}
+	
+	public WordCounter() {
+		this(new PipedOutputStream());
+	}
 
 	public void feed(String text) {
+		text = text.replaceAll("-", "");
 		text = Normalizer.normalize(text, Normalizer.Form.NFD);
 		text = text.replaceAll("\\p{M}", "");
 		text = text.replaceAll("ß", "ss");
