@@ -39,6 +39,8 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+        compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.3'
+        compile group: 'org.docx4j', name: 'docx4j', version: '3.3.1'
     }
 }
 
