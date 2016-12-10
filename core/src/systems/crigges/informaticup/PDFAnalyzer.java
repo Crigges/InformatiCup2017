@@ -3,6 +3,7 @@ package systems.crigges.informaticup;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -28,20 +29,17 @@ public class PDFAnalyzer {
 
 	private PDDocument pd;
 
-	public PDFAnalyzer(File pfd) {
-		try {
-			pd = PDDocument.load(pfd);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+	public PDFAnalyzer(File pfd) throws IOException {
+		pd = PDDocument.load(pfd);
+	}
+	
+	public PDFAnalyzer(InputStream pfd) throws IOException {
+		pd = PDDocument.load(pfd);
 	}
 
 	public Set<Map.Entry<String, Integer>> getSortedWordCount() {
 		try {
 			PDFTextStripper stripper = new PDFTextStripper();
-			PipedOutputStream out = new PipedOutputStream();
 			WordCounter counter = new WordCounter();
 			counter.feed(stripper.getText(pd));
 			counter.close();
