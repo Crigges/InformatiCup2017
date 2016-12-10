@@ -41,7 +41,8 @@ public class WordCounter {
 	}
 
 	public void feed(String text) {
-		text = text.replaceAll("-", "");
+		text = text.replaceAll("-" + System.lineSeparator(), "");
+		text = text.replaceAll(System.lineSeparator(), " ");
 		text = Normalizer.normalize(text, Normalizer.Form.NFD);
 		text = text.replaceAll("\\p{M}", "");
 		text = text.replaceAll("ß", "ss");
