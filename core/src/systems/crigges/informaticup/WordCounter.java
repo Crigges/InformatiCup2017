@@ -19,7 +19,6 @@ public class WordCounter {
 	private PipedInputStream in;
 	private PipedOutputStream out;
 	private Thread analyzer;
-	private boolean active;
 	private HashMap<String, Integer> wordCount = new HashMap<>();
 
 	public WordCounter(PipedOutputStream out) {
@@ -32,7 +31,6 @@ public class WordCounter {
 		scanner = new Scanner(in);
 		scanner.useDelimiter(" ");
 		analyzer = new Thread(() -> parseInput());
-		active = true;
 		analyzer.start();
 	}
 	
@@ -41,6 +39,7 @@ public class WordCounter {
 	}
 
 	public void feed(String text) {
+		text = text + " ";
 		text = text.replaceAll("-" + System.lineSeparator(), "");
 		text = text.replaceAll(System.lineSeparator(), " ");
 		text = Normalizer.normalize(text, Normalizer.Form.NFD);
@@ -59,9 +58,8 @@ public class WordCounter {
 
 	public void close() {
 		try {
-			active = false;
-			out.write(0);
 			out.flush();
+			out.close();
 			analyzer.join();
 			out.close();
 			in.close();
@@ -84,8 +82,11 @@ public class WordCounter {
 
 
 	private void parseInput() {
-		while (active && scanner.hasNext()) {
+		while (scanner.hasNext()) {
 			String next = scanner.next();
+			if(next.equals("")){
+				continue;
+			}
 			Integer count = wordCount.get(next);
 			if (count == null || count == 0) {
 				wordCount.put(next, 1);
