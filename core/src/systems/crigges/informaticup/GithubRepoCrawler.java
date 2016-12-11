@@ -43,7 +43,6 @@ public class GithubRepoCrawler {
 	}
 	
 	private List<GHContent> getFullContentRecursive(List<GHContent> source, List<GHContent> target) throws IOException{
-		ArrayList<GHContent> folders = new ArrayList<>();
 		for(GHContent content : source){
 			if(content.isDirectory()){
 				getFullContentRecursive(content.listDirectoryContent().asList(), target);
@@ -65,7 +64,10 @@ public class GithubRepoCrawler {
 	}
 	
 	public static void main(String[] args) {
-		new GithubRepoCrawler("https://github.com/Crigges/Clickwars");
+		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/Crigges/Clickwars");
+		for(GHContent gh : crawler.getFullContent()){
+			System.out.println(gh.getName());
+		}
 	}
 
 }
