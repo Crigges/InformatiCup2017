@@ -65,7 +65,6 @@ public class GithubRepoCrawler {
 	}
 	
 	private List<GHContent> getFullContentRecursive(List<GHContent> source, List<GHContent> target) throws IOException{
-		ArrayList<GHContent> folders = new ArrayList<>();
 		for(GHContent content : source){
 			if(content.isDirectory()){
 				getFullContentRecursive(content.listDirectoryContent().asList(), target);

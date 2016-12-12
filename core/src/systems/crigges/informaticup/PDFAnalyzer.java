@@ -92,7 +92,7 @@ public class PDFAnalyzer {
 	public static void main(String[] args) throws IOException {
 		PDFAnalyzer pdf = new PDFAnalyzer(new File("assets\\Nahostkonflikt.pdf"));
 		for (Entry<String, Integer> e : pdf.getSortedWordCount()) {
-			//System.out.println(e);
+			System.out.println(e);
 		}
 		int i = 0;
 		for(RenderedImage img : pdf.getImages()){
@@ -100,7 +100,7 @@ public class PDFAnalyzer {
 			f.createNewFile();
 			ImageIO.write(img, "png", f);
 		}
-		// pdf.accessMetadata();
+		 pdf.accessMetadata();
 	}
 
 }
