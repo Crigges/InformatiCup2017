@@ -32,15 +32,16 @@ public class GithubRepoCrawler {
 	public GithubRepoCrawler(String url) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
 		git = GitHub.connectAnonymously();
 		repo = git.getRepository(getRepoNameFromURL(url));
-		target = Files.createTempDir();
-		target.deleteOnExit();
-		CloneCommand cloneCommand = Git.cloneRepository();
-		cloneCommand.setDirectory(target);
-		cloneCommand.setURI( url + ".git");
-		Set<String> defaultBranch = new TreeSet<>();
-		defaultBranch.add(repo.getDefaultBranch());
-		cloneCommand.setBranchesToClone(defaultBranch);
-		cloneCommand.call();
+		target = ZipballGrabber.grabZipball("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
+//		target = Files.createTempDir();
+//		target.deleteOnExit();
+//		CloneCommand cloneCommand = Git.cloneRepository();
+//		cloneCommand.setDirectory(target);
+//		cloneCommand.setURI( url + ".git");
+//		Set<String> defaultBranch = new TreeSet<>();
+//		defaultBranch.add(repo.getDefaultBranch());
+//		cloneCommand.setBranchesToClone(defaultBranch);
+//		cloneCommand.call();
 	}
 	
 	public String getRepoNameFromURL(String url){
