@@ -32,16 +32,16 @@ public class GithubRepoCrawler {
 	public GithubRepoCrawler(String url) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
 		git = GitHub.connectAnonymously();
 		repo = git.getRepository(getRepoNameFromURL(url));
-		target = ZipballGrabber.grabZipball("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
-//		target = Files.createTempDir();
-//		target.deleteOnExit();
-//		CloneCommand cloneCommand = Git.cloneRepository();
-//		cloneCommand.setDirectory(target);
-//		cloneCommand.setURI( url + ".git");
-//		Set<String> defaultBranch = new TreeSet<>();
-//		defaultBranch.add(repo.getDefaultBranch());
-//		cloneCommand.setBranchesToClone(defaultBranch);
-//		cloneCommand.call();
+		//target = ZipballGrabber.grabZipball("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
+		target = Files.createTempDir();
+		target.deleteOnExit();
+		CloneCommand cloneCommand = Git.cloneRepository();
+		cloneCommand.setDirectory(target);
+		cloneCommand.setURI( url + ".git");
+		Set<String> defaultBranch = new TreeSet<>();
+		defaultBranch.add(repo.getDefaultBranch());
+		cloneCommand.setBranchesToClone(defaultBranch);
+		cloneCommand.call();
 	}
 	
 	public String getRepoNameFromURL(String url){
@@ -119,13 +119,16 @@ public class GithubRepoCrawler {
 	}
 	
 	public static void main(String[] args) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
+		long milis = System.currentTimeMillis();
 		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/spring-projects/spring-boot");
 //		for (File f : crawler.getFullLocalContent()) {
 //			System.out.println(f.getName());
 //		}
-		for(Entry<String, Integer> entry : crawler.getSortedWordEndings()){
-			System.out.println(entry);
-		}
+		crawler.getFullLocalContent();
+//		for(Entry<String, Integer> entry : crawler.getSortedWordEndings()){
+//			System.out.println(entry);
+//		}
+		System.out.println("time: " + (System.currentTimeMillis() - milis));
 	}
 
 }
