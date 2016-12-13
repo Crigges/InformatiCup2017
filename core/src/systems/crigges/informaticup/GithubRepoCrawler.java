@@ -2,6 +2,7 @@ package systems.crigges.informaticup;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -22,26 +23,30 @@ import org.kohsuke.github.PagedIterable;
 
 import com.google.common.io.Files;
 
+import systems.crigges.informaticup.ZipballGrabber.VirtualFile;
+
 public class GithubRepoCrawler {
 	
 	private GitHub git;
 	private GHRepository repo;
 	private List<GHContent> contentCache = null;
 	private File target;
+	private ArrayList<VirtualFile> fileList;
 
 	public GithubRepoCrawler(String url) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
-		git = GitHub.connectAnonymously();
-		repo = git.getRepository(getRepoNameFromURL(url));
-		//target = ZipballGrabber.grabZipball("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
-		target = Files.createTempDir();
-		target.deleteOnExit();
-		CloneCommand cloneCommand = Git.cloneRepository();
-		cloneCommand.setDirectory(target);
-		cloneCommand.setURI( url + ".git");
-		Set<String> defaultBranch = new TreeSet<>();
-		defaultBranch.add(repo.getDefaultBranch());
-		cloneCommand.setBranchesToClone(defaultBranch);
-		cloneCommand.call();
+//		git = GitHub.connectAnonymously();
+//		repo = git.getRepository(getRepoNameFromURL(url));
+//		target = ZipballGrabber.grab("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
+		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
+//		target = Files.createTempDir();
+//		target.deleteOnExit();
+//		CloneCommand cloneCommand = Git.cloneRepository();
+//		cloneCommand.setDirectory(target);
+//		cloneCommand.setURI( url + ".git");
+//		Set<String> defaultBranch = new TreeSet<>();
+//		defaultBranch.add(repo.getDefaultBranch());
+//		cloneCommand.setBranchesToClone(defaultBranch);
+//		cloneCommand.call();
 	}
 	
 	public String getRepoNameFromURL(String url){
@@ -86,9 +91,9 @@ public class GithubRepoCrawler {
 	
 	public Set<Entry<String, Integer>> getSortedWordEndings(){
 		WordCounter endingCounter = new WordCounter();
-		List<File> content = getFullLocalContent();
-		for(File c: content){
-			String name = c.getName();
+		List<VirtualFile> content = getFullVirtualContent();
+		for(VirtualFile c: content){
+			String name = c.name;
 			String ending;
 			if(name.contains(".")){
 				ending = name.substring(name.lastIndexOf("."));
@@ -118,17 +123,30 @@ public class GithubRepoCrawler {
 	    }
 	}
 	
+	public List<VirtualFile> getFullVirtualContent(){
+		return fileList;
+	}
+	
 	public static void main(String[] args) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
 		long milis = System.currentTimeMillis();
 		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/spring-projects/spring-boot");
-//		for (File f : crawler.getFullLocalContent()) {
-//			System.out.println(f.getName());
-//		}
-		crawler.getFullLocalContent();
-//		for(Entry<String, Integer> entry : crawler.getSortedWordEndings()){
-//			System.out.println(entry);
-//		}
 		System.out.println("time: " + (System.currentTimeMillis() - milis));
+		
+		System.out.println("___________________");
+		
+		milis = System.currentTimeMillis();		
+		WordCounter javaCounter = new WordCounter();
+		for(VirtualFile f : crawler.getFullVirtualContent()){
+			if(f.name.endsWith(".java")){
+				String s = new String(f.data, StandardCharsets.UTF_8);
+				javaCounter.feed(s);
+			}
+		}
+		for(Entry<String, Integer> entry: javaCounter.getSortedEntrys()){
+			System.out.println(entry);
+		}
+		System.out.println("time: " + (System.currentTimeMillis() - milis));
+		
 	}
 
 }
