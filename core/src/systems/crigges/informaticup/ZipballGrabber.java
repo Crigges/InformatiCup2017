@@ -80,16 +80,6 @@ public class ZipballGrabber {
 		return files;
 	}
 	
-	public static class VirtualFile{
-		String name;
-		byte[] data;
-		
-		public VirtualFile(String name, byte[] data) {
-			this.name = name;
-			this.data = data;
-		}
-	}
-	
 	public static void main(String[] args) throws IOException {
 		grab("https://api.github.com/repos/spring-projects/spring-boot/zipball");
 	}

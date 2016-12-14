@@ -23,8 +23,6 @@ import org.kohsuke.github.PagedIterable;
 
 import com.google.common.io.Files;
 
-import systems.crigges.informaticup.ZipballGrabber.VirtualFile;
-
 public class GithubRepoCrawler {
 	
 	private GitHub git;
@@ -129,7 +127,7 @@ public class GithubRepoCrawler {
 	
 	public static void main(String[] args) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
 		long milis = System.currentTimeMillis();
-		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/spring-projects/spring-boot");
+		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/Crigges/JMPQ-v3");
 		System.out.println("time: " + (System.currentTimeMillis() - milis));
 		
 		System.out.println("___________________");
@@ -137,14 +135,17 @@ public class GithubRepoCrawler {
 		milis = System.currentTimeMillis();		
 		WordCounter javaCounter = new WordCounter();
 		for(VirtualFile f : crawler.getFullVirtualContent()){
-			if(f.name.endsWith(".java")){
-				String s = new String(f.data, StandardCharsets.UTF_8);
-				javaCounter.feed(s);
-			}
+			System.out.println(f.name + " = " + f.mimeType);
+//			if(f.name.endsWith(".java")){
+//				String s = new String(f.data, StandardCharsets.UTF_8);
+//				javaCounter.feed(s);
+//			}
 		}
-		for(Entry<String, Integer> entry: javaCounter.getSortedEntrys()){
-			System.out.println(entry);
-		}
+//		
+//		for(Entry<String, Integer> entry: javaCounter.getSortedEntrys()){
+//			System.out.println(entry);
+//		}
+		//System.out.println(javaCounter.getSortedEntrys().size());
 		System.out.println("time: " + (System.currentTimeMillis() - milis));
 		
 	}
