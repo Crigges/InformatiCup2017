@@ -2,6 +2,11 @@ package systems.crigges.informaticup;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +27,8 @@ import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
 
 import com.google.common.io.Files;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
 public class GithubRepoCrawler {
 	
@@ -32,10 +39,19 @@ public class GithubRepoCrawler {
 	private ArrayList<VirtualFile> fileList;
 
 	public GithubRepoCrawler(String url) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
+		URL u = new URL("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/git/trees/master?recursive=1");
+		URLConnection connection = u.openConnection();
+		InputStream in = connection.getInputStream();
+		Gson gson = new Gson();
+		GithubFileTree tree = gson.fromJson(new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8)), GithubFileTree.class);
+//		System.out.println(tree.url);
+//		for(GithubFile file : tree.tree){
+//			System.out.println(file.path);
+//		}
 //		git = GitHub.connectAnonymously();
 //		repo = git.getRepository(getRepoNameFromURL(url));
 //		target = ZipballGrabber.grab("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
-		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
+//		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
 //		target = Files.createTempDir();
 //		target.deleteOnExit();
 //		CloneCommand cloneCommand = Git.cloneRepository();
@@ -127,24 +143,29 @@ public class GithubRepoCrawler {
 	
 	public static void main(String[] args) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
 		long milis = System.currentTimeMillis();
-		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/Crigges/JMPQ-v3");
+		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/DataScienceSpecialization/courses");
 		System.out.println("time: " + (System.currentTimeMillis() - milis));
 		
 		System.out.println("___________________");
 		
 		milis = System.currentTimeMillis();		
-		WordCounter javaCounter = new WordCounter();
+		WordCounter totalCounter = new WordCounter();
 		for(VirtualFile f : crawler.getFullVirtualContent()){
-			System.out.println(f.name + " = " + f.mimeType);
-//			if(f.name.endsWith(".java")){
+			if(f.type == SuperMimeType.Text){
 //				String s = new String(f.data, StandardCharsets.UTF_8);
-//				javaCounter.feed(s);
-//			}
+//				totalCounter.feed(s);
+			}else if(f.type == SuperMimeType.PDF){
+				try{
+					PDFAnalyzer anal = new PDFAnalyzer(f.data);
+					totalCounter.feed(anal.getRawText());
+				}catch(Exception e){}
+				
+			}
 		}
 //		
-//		for(Entry<String, Integer> entry: javaCounter.getSortedEntrys()){
-//			System.out.println(entry);
-//		}
+		for(Entry<String, Integer> entry: totalCounter.getSortedEntrys()){
+			System.out.println(entry);
+		}
 		//System.out.println(javaCounter.getSortedEntrys().size());
 		System.out.println("time: " + (System.currentTimeMillis() - milis));
 		

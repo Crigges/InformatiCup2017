@@ -36,6 +36,10 @@ public class PDFAnalyzer {
 	public PDFAnalyzer(InputStream pfd) throws IOException {
 		pd = PDDocument.load(pfd);
 	}
+	
+	public PDFAnalyzer(byte[] pdf) throws IOException {
+		pd = PDDocument.load(pdf);
+	}
 
 	public Set<Map.Entry<String, Integer>> getSortedWordCount() {
 		try {
@@ -48,6 +52,17 @@ public class PDFAnalyzer {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public String getRawText(){
+		PDFTextStripper stripper;
+		try {
+			stripper = new PDFTextStripper();
+			return stripper.getText(pd);
+		} catch (IOException e) {
+			return "";
+		}
+		
 	}
 
 	public List<RenderedImage> getImages() throws IOException {

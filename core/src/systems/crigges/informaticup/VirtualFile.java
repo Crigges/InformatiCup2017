@@ -1,7 +1,5 @@
 package systems.crigges.informaticup;
 
-import com.sun.xml.internal.ws.message.MimeAttachmentSet;
-
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatch;
