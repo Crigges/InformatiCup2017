@@ -1,0 +1,44 @@
+Repository
+	Body
+		Wordcount
+	Benutzer
+		E-Mail Endung :doublecircle
+	
+	subscribed / starred :doublecircle
+	
+	Dateien
+		EndungenCount :doublecircle 
+		Typen
+			PDF
+				Wordcount
+				Mediendichte
+			RAR
+				Dateien
+			ZIP
+				Dateien
+			Word
+				Wordcount
+				Mediendichte
+			Text
+				Wordcount
+			PPT
+				Mediendichte
+				Wordcount
+			Binary
+			Image
+				ReverseImageSuche? :doublecircle
+		Namen? :doublecircle
+		Groesse / Anzahl :doublecircle
+		
+	
+	Tickets
+		Nachricht
+			Wordcount :doublecircle
+	
+	Commits
+		GroesseCommits / Zeit? :doublecircle
+		Zeit / AnzahlCommits? :doublecircle
+		
+	
+	
+		
