@@ -16,12 +16,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.eclipse.jgit.api.CloneCommand;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.TransportException;
-import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
@@ -41,7 +35,7 @@ public class GithubRepoCrawler {
 	private ArrayList<VirtualFile> fileList;
 	private Gson gson = new Gson();
 
-	public GithubRepoCrawler(String url) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
+	public GithubRepoCrawler(String url) throws MalformedURLException, IOException  {
 		URLConnection zipConnection = new URL("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball").openConnection();
 		//Decide if grabbing the Zipball is faster than Analyzing the tree
 		if(false && zipConnection.getContentLength() < Constants.MaxZipSize){
@@ -110,7 +104,7 @@ public class GithubRepoCrawler {
 		return fileList;
 	}
 	
-	public static void main(String[] args) throws InvalidRemoteException, TransportException, GitAPIException, IOException {
+	public static void main(String[] args) throws MalformedURLException, IOException {
 		long milis = System.currentTimeMillis();
 		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/DataScienceSpecialization/courses");
 		System.out.println("time: " + (System.currentTimeMillis() - milis));
