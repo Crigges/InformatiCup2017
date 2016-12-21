@@ -39,7 +39,6 @@ public class ZipballGrabber {
 		File extractFolder = com.google.common.io.Files.createTempDir();
 		URL url = new URL(hostUrl);
 		URLConnection connection = url.openConnection();
-		
 		ZipInputStream zipIn = new ZipInputStream(connection.getInputStream());
 		ZipEntry entry = zipIn.getNextEntry();
 		while (entry != null) {
@@ -70,7 +69,9 @@ public class ZipballGrabber {
 			if (!entry.isDirectory()) {
 				byte[] data = new byte[(int) entry.getSize()];
 				zipIn.read(data);
-				files.add(new VirtualFile(new File(filePath).getName(), data));
+				files.add(new VirtualFile(new File(filePath).getName(), data, false));
+			}else{
+				files.add(new VirtualFile(entry.getName(), null, true));
 			}
 			zipIn.closeEntry();
 			entry = zipIn.getNextEntry();

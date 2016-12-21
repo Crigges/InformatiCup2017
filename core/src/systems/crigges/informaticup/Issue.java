@@ -18,8 +18,8 @@ public class Issue {
     public List<Object> labels = null;
     public String state;
     public boolean locked;
-    public Assignee assignee;
-    public List<Assignee_> assignees = null;
+    public User assignee;
+    public List<User> assignees = null;
     public Object milestone;
     public int comments;
     public String createdAt;

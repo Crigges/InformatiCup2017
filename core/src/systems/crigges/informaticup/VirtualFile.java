@@ -11,36 +11,50 @@ public class VirtualFile{
 	byte[] data;
 	SuperMimeType type;
 	String mimeType;
+	int size;
+	boolean isFolder;
 	
-	public VirtualFile(String name, byte[] data) {
+	public VirtualFile(String name, byte[] data, boolean folder) {
+		this(name, data, folder, 0);
+	}
+	
+	public VirtualFile(String name, byte[] data, boolean folder, int orgSize) {
 		this.name = name;
 		this.data = data;
-		MagicMatch match;
-		try {
-			match = Magic.getMagicMatch(data);
-			mimeType = match.getMimeType();
-		} catch (MagicParseException | MagicMatchNotFoundException | MagicException e) {
-			mimeType = "unknown";
-		}
-		name = name.toLowerCase();
-		if(name.endsWith("pdf")){
-			type = SuperMimeType.PDF;
-		}else if(name.endsWith("doc") || name.endsWith("docx")){
-			type = SuperMimeType.Word;
-		}else if(name.endsWith("xls") || name.endsWith("xlsx")){
-			type = SuperMimeType.Excel;
-		}else if(name.endsWith("ppt") || name.endsWith("pptx")){
-			type = SuperMimeType.PowerPoint;
-		}else if(name.endsWith("png") || name.endsWith("jpg")){
-			type = SuperMimeType.Image;
-		}else if(name.endsWith("rar")){
-			type = SuperMimeType.Rar;
-		}else if(name.endsWith("zip") || mimeType.endsWith("zip")){
-			type = SuperMimeType.Zip;
-		}else if(mimeType.startsWith("text")){
-			type = SuperMimeType.Zip;
-		}else{
+		isFolder = folder;
+		if(isFolder){
+			type = SuperMimeType.Folder;
+			size = 0;
+		}else if(data == null){
 			type = SuperMimeType.Binary;
+			size = orgSize;
+		}else{
+			size = data.length;
+			MagicMatch match;
+			try {
+				match = Magic.getMagicMatch(data);
+				mimeType = match.getMimeType();
+			} catch (MagicParseException | MagicMatchNotFoundException | MagicException e) {
+				mimeType = "unknown";
+			}
+			name = name.toLowerCase();
+			if(name.endsWith("pdf")){
+				type = SuperMimeType.PDF;
+			}else if(name.endsWith("doc") || name.endsWith("docx")){
+				type = SuperMimeType.Word;
+			}else if(name.endsWith("ppt") || name.endsWith("pptx")){
+				type = SuperMimeType.PowerPoint;
+			}else if(name.endsWith("png") || name.endsWith("jpg") || name.startsWith("image")){
+				type = SuperMimeType.Image;
+			}else if(name.endsWith("rar")){
+				type = SuperMimeType.Rar;
+			}else if(name.endsWith("zip") || mimeType.endsWith("zip")){
+				type = SuperMimeType.Zip;
+			}else if(mimeType.startsWith("text")){
+				type = SuperMimeType.Zip;
+			}else{
+				type = SuperMimeType.Binary;
+			}
 		}
 	}
 }
