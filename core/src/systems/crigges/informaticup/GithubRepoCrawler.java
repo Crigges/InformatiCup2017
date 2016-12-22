@@ -1,5 +1,6 @@
 package systems.crigges.informaticup;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,38 +12,38 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.docx4j.openpackaging.exceptions.Docx4JException;
+import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
 
+import com.github.junrar.Archive;
+import com.github.junrar.Volume;
+import com.github.junrar.VolumeManager;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 public class GithubRepoCrawler {
 	
-	private GitHub git;
-	private GHRepository repo;
-	private List<GHContent> contentCache = null;
-	private File target;
+
 	private ArrayList<VirtualFile> fileList;
 	private Gson gson = new Gson();
 
 	public GithubRepoCrawler(String url) throws MalformedURLException, IOException  {
-		URLConnection zipConnection = new URL("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball").openConnection();
-		//Decide if grabbing the Zipball is faster than Analyzing the tree
-		if(false && zipConnection.getContentLength() < Constants.MaxZipSize){
-			fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
-		}else{
-			fileList = getFilesFromTree("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/git/trees/master?recursive=1");
-		}
+		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
+		inflateFileList();
 	}
 	
 	private String getRepoNameFromURL(String url){
@@ -82,22 +83,70 @@ public class GithubRepoCrawler {
 		return new VirtualFile(name, file.byteContent, false);
 	}
 	
-//	public Set<Entry<String, Integer>> getSortedWordEndings(){
-//		WordCounter endingCounter = new WordCounter();
-//		List<VirtualFile> content = getFullVirtualContent();
-//		for(VirtualFile c: content){
-//			String name = c.name;
-//			String ending;
-//			if(name.contains(".")){
-//				ending = name.substring(name.lastIndexOf("."));
-//			}else{
-//				ending = "fileHasNoEnding";
-//			}
-//			endingCounter.feed(ending);
-//		}
-//		endingCounter.close();
-//		return endingCounter.getSortedEntrys();
-//	}
+	private void inflateFileList(){
+		for (Iterator<VirtualFile> iterator = fileList.iterator(); iterator.hasNext();) {
+			VirtualFile f = iterator.next();
+			if(f.type == SuperMimeType.Rar){
+				//TODO add virtual unrar
+			}else if(f.type == SuperMimeType.Zip){
+				try{
+					ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(f.data));
+					ZipEntry entry = zipIn.getNextEntry();
+					while (entry != null) {
+						String filePath = entry.getName();
+						if (!entry.isDirectory()) {
+							byte[] data = new byte[(int) entry.getSize()];
+							zipIn.read(data);
+							fileList.add(new VirtualFile(new File(filePath).getName(), data, false));
+						}else{
+							fileList.add(new VirtualFile(entry.getName(), null, true));
+						}
+						zipIn.closeEntry();
+						entry = zipIn.getNextEntry();
+					}
+					zipIn.close();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public Set<Entry<String, Integer>> getSortedEndingCount(){
+		WordCounter endingCounter = new WordCounter();
+		for(VirtualFile c: fileList){
+			if(c.type != SuperMimeType.Folder){
+				String name = c.name;
+				String ending;
+				if(name.contains(".")){
+					ending = name.substring(name.lastIndexOf("."));
+				}else{
+					ending = "fileHasNoEnding";
+				}
+				endingCounter.feed(ending);
+			}
+		}
+		endingCounter.close();
+		return endingCounter.getSortedEntrys();
+	}
+	
+	public Set<Entry<String, Integer>> getSortedWordEndings(){
+		WordCounter wordCounter = new WordCounter();
+		for(VirtualFile f : fileList){
+			if(f.type == SuperMimeType.Text){
+				wordCounter.feed(new String(f.data));
+			}else if(f.type == SuperMimeType.Word){
+				WordprocessingMLPackage doc = null;
+				try {
+					doc = WordprocessingMLPackage.load(new ByteArrayInputStream(f.data));
+				} catch (Docx4JException e) {
+					e.printStackTrace();
+				}
+				doc.getMainDocumentPart().getXML();
+			}
+		}
+		return null;
+	}
 	
 	
 	public List<VirtualFile> getFullContent(){

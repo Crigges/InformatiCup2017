@@ -51,7 +51,7 @@ public class VirtualFile{
 			}else if(name.endsWith("zip") || mimeType.endsWith("zip")){
 				type = SuperMimeType.Zip;
 			}else if(mimeType.startsWith("text")){
-				type = SuperMimeType.Zip;
+				type = SuperMimeType.Text;
 			}else{
 				type = SuperMimeType.Binary;
 			}

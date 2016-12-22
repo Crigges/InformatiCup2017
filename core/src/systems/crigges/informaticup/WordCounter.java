@@ -20,6 +20,7 @@ public class WordCounter {
 	private PipedOutputStream out;
 	private Thread analyzer;
 	private HashMap<String, Integer> wordCount = new HashMap<>();
+	private long totalWordCount = 0;
 
 	public WordCounter(PipedOutputStream out) {
 		this.out = out;
@@ -87,6 +88,7 @@ public class WordCounter {
 			if(next.equals("")){
 				continue;
 			}
+			totalWordCount++;
 			Integer count = wordCount.get(next);
 			if (count == null || count == 0) {
 				wordCount.put(next, 1);

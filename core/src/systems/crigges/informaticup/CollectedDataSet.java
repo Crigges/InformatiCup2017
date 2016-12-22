@@ -2,6 +2,7 @@ package systems.crigges.informaticup;
 
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class CollectedDataSet {
 	public int repoSize;
@@ -11,9 +12,9 @@ public class CollectedDataSet {
 	public int subscribedCount;
 	public int staredCount;
 	
-	public List<Entry<String, Integer>> wordCount;
-	public List<Entry<String, Integer>> endingCount;
-	public List<Entry<String, Integer>> folderNameCount;
-	public List<Entry<String, Integer>> emailEndingCount;
+	public Set<Entry<String, Integer>> wordCount;
+	public Set<Entry<String, Integer>> endingCount;
+	public Set<Entry<String, Integer>> folderNameCount;
+	public Set<Entry<String, Integer>> emailEndingCount;
 
 }
