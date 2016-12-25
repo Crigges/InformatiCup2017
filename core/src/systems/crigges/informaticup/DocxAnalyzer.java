@@ -2,12 +2,10 @@ package systems.crigges.informaticup;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FilePermission;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -15,10 +13,7 @@ import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.Part;
 import org.docx4j.openpackaging.parts.PartName;
-import org.docx4j.openpackaging.parts.WordprocessingML.BinaryPart;
 import org.docx4j.openpackaging.parts.WordprocessingML.BinaryPartAbstractImage;
-
-import sun.reflect.generics.reflectiveObjects.GenericArrayTypeImpl;
 
 public class DocxAnalyzer {
 
@@ -39,20 +34,19 @@ public class DocxAnalyzer {
 		return builder.toString();
 	}
 
-	public void getImages() throws IOException {
-		int i = 0;
+	public List<BinaryPartAbstractImage> getImages() throws IOException {
+		ArrayList<BinaryPartAbstractImage> res = new ArrayList<>();
 		for (Entry<PartName, Part> entry : doc.getParts().getParts().entrySet()) {
-
 			if (entry.getValue() instanceof BinaryPartAbstractImage) {
-				File f = new File("./test/docImg" + i++ + ".png");
-				f.createNewFile();
-				FileOutputStream fos = new FileOutputStream(f);
-				((BinaryPart) entry.getValue()).writeDataToOutputStream(fos);
-				fos.close();
-
+				res.add((BinaryPartAbstractImage) entry.getValue());
+				// File f = new File("./test/docImg" + i++ + ".png");
+				// f.createNewFile();
+				// FileOutputStream fos = new FileOutputStream(f);
+				// ((BinaryPart) entry.getValue()).writeDataToOutputStream(fos);
+				// fos.close();
 			}
-
 		}
+		return res;
 	}
 
 	public static void main(String[] args) throws Exception {

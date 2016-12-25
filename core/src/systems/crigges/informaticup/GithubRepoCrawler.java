@@ -20,6 +20,7 @@ import java.util.zip.ZipInputStream;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.docx4j.fonts.fop.fonts.type1.PFBData;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.kohsuke.github.GHContent;
@@ -34,62 +35,67 @@ import com.github.junrar.VolumeManager;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.sun.javafx.binding.DoubleConstant;
 
 public class GithubRepoCrawler {
-	
 
 	private ArrayList<VirtualFile> fileList;
 	private Gson gson = new Gson();
+	private WordCounter wordCounter;
+	private int imageCount;
 
-	public GithubRepoCrawler(String url) throws MalformedURLException, IOException  {
+	public GithubRepoCrawler(String url) throws MalformedURLException, IOException {
 		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
 		inflateFileList();
+		analyzeRepo();
 	}
-	
-	private String getRepoNameFromURL(String url){
+
+	private String getRepoNameFromURL(String url) {
 		return url.replace("https://github.com/", "");
 	}
-	
-	private ArrayList<VirtualFile> getFilesFromTree(String treeUrl) throws IOException{
+
+	private ArrayList<VirtualFile> getFilesFromTree(String treeUrl) throws IOException {
 		URL u = new URL(treeUrl);
 		URLConnection fileTreeConnection = u.openConnection();
-		InputStream in = fileTreeConnection.getInputStream();	
-		//Create tree from response
-		GithubFileTree tree = gson.fromJson(new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8)), GithubFileTree.class);
+		InputStream in = fileTreeConnection.getInputStream();
+		// Create tree from response
+		GithubFileTree tree = gson.fromJson(new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8)),
+				GithubFileTree.class);
 		System.out.println("tree " + tree.tree.size());
 		Collections.sort(tree.tree);
 		ArrayList<VirtualFile> files = new ArrayList<VirtualFile>();
-		for(GithubFile file : tree.tree){
-			String name =  new File(file.path).getName();
-			if(file.isFolder()){
+		for (GithubFile file : tree.tree) {
+			String name = new File(file.path).getName();
+			if (file.isFolder()) {
 				files.add(new VirtualFile(name, null, true));
-			}else{
-				if(file.size < Constants.MaxFileSize){
+			} else {
+				if (file.size < Constants.MaxFileSize) {
 					files.add(getFileFromUrl(name, file.url));
-				}else{
+				} else {
 					files.add(new VirtualFile(name, null, false, file.size));
 				}
 			}
 		}
 		return files;
 	}
-	
-	private VirtualFile getFileFromUrl(String name, String url) throws IOException{
+
+	private VirtualFile getFileFromUrl(String name, String url) throws IOException {
 		URL u = new URL(url);
 		URLConnection fileConnection = u.openConnection();
 		InputStream in = fileConnection.getInputStream();
-		GithubFileContent file = gson.fromJson(new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8)), GithubFileContent.class);
+		GithubFileContent file = gson.fromJson(new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8)),
+				GithubFileContent.class);
 		file.genByteContent();
 		return new VirtualFile(name, file.byteContent, false);
 	}
-	
-	private void inflateFileList(){
+
+	private void inflateFileList() {
 		for (Iterator<VirtualFile> iterator = fileList.iterator(); iterator.hasNext();) {
 			VirtualFile f = iterator.next();
-			if(f.type == SuperMimeType.Rar){
-				//TODO add virtual unrar
-			}else if(f.type == SuperMimeType.Zip){
-				try{
+			if (f.type == SuperMimeType.Rar) {
+				// TODO add virtual unrar
+			} else if (f.type == SuperMimeType.Zip) {
+				try {
 					ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(f.data));
 					ZipEntry entry = zipIn.getNextEntry();
 					while (entry != null) {
@@ -98,29 +104,29 @@ public class GithubRepoCrawler {
 							byte[] data = new byte[(int) entry.getSize()];
 							zipIn.read(data);
 							fileList.add(new VirtualFile(new File(filePath).getName(), data, false));
-						}else{
+						} else {
 							fileList.add(new VirtualFile(entry.getName(), null, true));
 						}
 						zipIn.closeEntry();
 						entry = zipIn.getNextEntry();
 					}
 					zipIn.close();
-				}catch(Exception e){
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
-	
-	public Set<Entry<String, Integer>> getSortedEndingCount(){
+
+	public Set<Entry<String, Integer>> getSortedEndingCount() {
 		WordCounter endingCounter = new WordCounter();
-		for(VirtualFile c: fileList){
-			if(c.type != SuperMimeType.Folder){
+		for (VirtualFile c : fileList) {
+			if (c.type != SuperMimeType.Folder) {
 				String name = c.name;
 				String ending;
-				if(name.contains(".")){
+				if (name.contains(".")) {
 					ending = name.substring(name.lastIndexOf("."));
-				}else{
+				} else {
 					ending = "fileHasNoEnding";
 				}
 				endingCounter.feed(ending);
@@ -129,61 +135,67 @@ public class GithubRepoCrawler {
 		endingCounter.close();
 		return endingCounter.getSortedEntrys();
 	}
-	
-	public Set<Entry<String, Integer>> getSortedWordEndings(){
-		WordCounter wordCounter = new WordCounter();
-		for(VirtualFile f : fileList){
-			if(f.type == SuperMimeType.Text){
-				wordCounter.feed(new String(f.data));
-			}else if(f.type == SuperMimeType.Word){
-				WordprocessingMLPackage doc = null;
-				try {
-					doc = WordprocessingMLPackage.load(new ByteArrayInputStream(f.data));
-				} catch (Docx4JException e) {
-					e.printStackTrace();
+
+	private void analyzeRepo() {
+		wordCounter = new WordCounter();
+		for (VirtualFile f : fileList) {
+			try {
+				if (f.type == SuperMimeType.Text) {
+					wordCounter.feed(new String(f.data));
+				} else if (f.type == SuperMimeType.Word) {
+					DocxAnalyzer ana = new DocxAnalyzer(f.data);
+					wordCounter.feed(ana.getRawText());
+					imageCount += ana.getImages().size();
+				} else if (f.type == SuperMimeType.PDF) {
+					PDFAnalyzer ana = new PDFAnalyzer(f.data);
+					wordCounter.feed(ana.getRawText());
+					imageCount += ana.getImages().size();
+				} else if (f.type == SuperMimeType.Image) {
+					imageCount++;
 				}
-				doc.getMainDocumentPart().getXML();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
-		return null;
+		wordCounter.close();
+		
 	}
-	
-	
-	public List<VirtualFile> getFullContent(){
+
+	public List<VirtualFile> getFullContent() {
 		return fileList;
 	}
-	
+
 	public static void main(String[] args) throws MalformedURLException, IOException {
 		long milis = System.currentTimeMillis();
 		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/DataScienceSpecialization/courses");
 		System.out.println("time: " + (System.currentTimeMillis() - milis));
-		
+
 		System.out.println("___________________");
-		
-		milis = System.currentTimeMillis();		
+
+		milis = System.currentTimeMillis();
 		WordCounter totalCounter = new WordCounter();
-		for(VirtualFile f : crawler.getFullContent()){
+		for (VirtualFile f : crawler.getFullContent()) {
 			System.out.println("name: " + f.name + "   | size:" + f.size);
-//			if(f.type == SuperMimeType.Text){
-////				String s = new String(f.data, StandardCharsets.UTF_8);
-////				totalCounter.feed(s);
-//			}else if(f.type == SuperMimeType.PDF){
-//				try{
-//					PDFAnalyzer anal = new PDFAnalyzer(f.data);
-//					totalCounter.feed(anal.getRawText());
-//				}catch(Exception e){
-//					e.printStackTrace();
-//				}
-//				
-//			}
+			// if(f.type == SuperMimeType.Text){
+			//// String s = new String(f.data, StandardCharsets.UTF_8);
+			//// totalCounter.feed(s);
+			// }else if(f.type == SuperMimeType.PDF){
+			// try{
+			// PDFAnalyzer anal = new PDFAnalyzer(f.data);
+			// totalCounter.feed(anal.getRawText());
+			// }catch(Exception e){
+			// e.printStackTrace();
+			// }
+			//
+			// }
 		}
-//		
-		for(Entry<String, Integer> entry: totalCounter.getSortedEntrys()){
+		//
+		for (Entry<String, Integer> entry : totalCounter.getSortedEntrys()) {
 			System.out.println(entry);
 		}
-		//System.out.println(javaCounter.getSortedEntrys().size());
+		// System.out.println(javaCounter.getSortedEntrys().size());
 		System.out.println("time: " + (System.currentTimeMillis() - milis));
-		
+
 	}
 
 }
