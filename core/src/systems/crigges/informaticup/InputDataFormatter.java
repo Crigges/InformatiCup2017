@@ -35,7 +35,7 @@ public class InputDataFormatter {
 		return normalizedNeurons;
 	}
 
-	private double[] getInputNeurons(){
+	public double[] getInputNeurons(){
 		return inputNeurons;
 	}
 	
