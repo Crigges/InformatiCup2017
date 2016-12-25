@@ -5,25 +5,26 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
 import java.util.Set;
 
-import com.adarshr.raroscope.RAREntry;
-import com.adarshr.raroscope.RARFile;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+
+import net.sf.jmimemagic.MagicParseException;
+import net.sf.jmimemagic.MagicParser;
 
 public class GithubRepoCrawler {
 
@@ -34,6 +35,10 @@ public class GithubRepoCrawler {
 
 	public GithubRepoCrawler(String url) throws MalformedURLException, IOException {
 		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
+		for(VirtualFile f : fileList){
+			System.out.println(f.name);
+			System.out.println(f.mimeType);
+		}
 		inflateFileList();
 		analyzeRepo();
 	}
@@ -78,6 +83,8 @@ public class GithubRepoCrawler {
 	}
 
 	private void inflateFileList() {
+		ArrayList<VirtualFile> res = new ArrayList<>();
+		res.addAll(fileList);
 		for (Iterator<VirtualFile> iterator = fileList.iterator(); iterator.hasNext();) {
 			try {
 				VirtualFile f = iterator.next();
@@ -92,7 +99,6 @@ public class GithubRepoCrawler {
 //
 //						}
 //					}
-
 				} else if (f.type == SuperMimeType.Zip) {
 
 					ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(f.data));
@@ -102,10 +108,11 @@ public class GithubRepoCrawler {
 						if (!entry.isDirectory()) {
 							byte[] data = new byte[(int) entry.getSize()];
 							zipIn.read(data);
-							fileList.add(new VirtualFile(new File(filePath).getName(), data, false));
+							res.add(new VirtualFile(new File(filePath).getName(), data, false));
 						} else {
-							fileList.add(new VirtualFile(entry.getName(), null, true));
+							res.add(new VirtualFile(entry.getName(), null, true));
 						}
+						System.out.println(entry.getName());
 						zipIn.closeEntry();
 						entry = zipIn.getNextEntry();
 					}
@@ -166,37 +173,13 @@ public class GithubRepoCrawler {
 		return fileList;
 	}
 
-	public static void main(String[] args) throws MalformedURLException, IOException {
-		long milis = System.currentTimeMillis();
-		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/DataScienceSpecialization/courses");
-		System.out.println("time: " + (System.currentTimeMillis() - milis));
-
-		System.out.println("___________________");
-
-		milis = System.currentTimeMillis();
-		WordCounter totalCounter = new WordCounter();
-		for (VirtualFile f : crawler.getFullContent()) {
-			System.out.println("name: " + f.name + "   | size:" + f.size);
-			// if(f.type == SuperMimeType.Text){
-			//// String s = new String(f.data, StandardCharsets.UTF_8);
-			//// totalCounter.feed(s);
-			// }else if(f.type == SuperMimeType.PDF){
-			// try{
-			// PDFAnalyzer anal = new PDFAnalyzer(f.data);
-			// totalCounter.feed(anal.getRawText());
-			// }catch(Exception e){
-			// e.printStackTrace();
-			// }
-			//
-			// }
-		}
-		//
-		for (Entry<String, Integer> entry : totalCounter.getSortedEntrys()) {
-			System.out.println(entry);
-		}
-		// System.out.println(javaCounter.getSortedEntrys().size());
-		System.out.println("time: " + (System.currentTimeMillis() - milis));
-
+	public static void main(String[] args) throws MalformedURLException, IOException, MagicParseException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		Field f = MagicParser.class.getDeclaredField("log");
+		f.setAccessible(true);
+		f.set(null, new NoLog());
+		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/Raldir/test01");
+		
+	
 	}
 
 }

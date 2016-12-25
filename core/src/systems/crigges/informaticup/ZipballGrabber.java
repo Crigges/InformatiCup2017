@@ -35,29 +35,28 @@ public class ZipballGrabber {
 //	}
 //	
 	
-	public static File grab(String hostUrl) throws IOException {
-		File extractFolder = com.google.common.io.Files.createTempDir();
-		URL url = new URL(hostUrl);
-		URLConnection connection = url.openConnection();
-		ZipInputStream zipIn = new ZipInputStream(connection.getInputStream());
-		ZipEntry entry = zipIn.getNextEntry();
-		while (entry != null) {
-			String filePath = extractFolder.getAbsolutePath() + File.separator + entry.getName();
-			if (!entry.isDirectory()) {
-				Files.copy(zipIn, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-			} else {
-				new File(filePath).mkdir();
-			}
-			zipIn.closeEntry();
-			entry = zipIn.getNextEntry();
-		}
-		zipIn.close();
-		extractFolder.deleteOnExit();
-		return extractFolder;
-	}
+//	public static File grab(String hostUrl) throws IOException {
+//		File extractFolder = com.google.common.io.Files.createTempDir();
+//		URL url = new URL(hostUrl);
+//		URLConnection connection = url.openConnection();
+//		ZipInputStream zipIn = new ZipInputStream(connection.getInputStream());
+//		ZipEntry entry = zipIn.getNextEntry();
+//		while (entry != null) {
+//			String filePath = extractFolder.getAbsolutePath() + File.separator + entry.getName();
+//			if (!entry.isDirectory()) {
+//				Files.copy(zipIn, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+//			} else {
+//				new File(filePath).mkdir();
+//			}
+//			zipIn.closeEntry();
+//			entry = zipIn.getNextEntry();
+//		}
+//		zipIn.close();
+//		extractFolder.deleteOnExit();
+//		return extractFolder;
+//	}
 	
 	public static ArrayList<VirtualFile> grabVirtual(String hostUrl) throws IOException {
-		File extractFolder = com.google.common.io.Files.createTempDir();
 		URL url = new URL(hostUrl);
 		URLConnection connection = url.openConnection();
 		
@@ -65,7 +64,7 @@ public class ZipballGrabber {
 		ZipInputStream zipIn = new ZipInputStream(connection.getInputStream());
 		ZipEntry entry = zipIn.getNextEntry();
 		while (entry != null) {
-			String filePath = extractFolder.getAbsolutePath() + File.separator + entry.getName();
+			String filePath = "." + File.separator + entry.getName();
 			if (!entry.isDirectory()) {
 				byte[] data = new byte[(int) entry.getSize()];
 				zipIn.read(data);
@@ -77,12 +76,11 @@ public class ZipballGrabber {
 			entry = zipIn.getNextEntry();
 		}
 		zipIn.close();
-		extractFolder.delete();
 		return files;
 	}
 	
 	public static void main(String[] args) throws IOException {
-		grab("https://api.github.com/repos/spring-projects/spring-boot/zipball");
+		//grab("https://api.github.com/repos/spring-projects/spring-boot/zipball");
 	}
 
 }
