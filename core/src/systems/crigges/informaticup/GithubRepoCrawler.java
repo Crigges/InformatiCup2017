@@ -12,6 +12,7 @@ import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -19,13 +20,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.Set;
 
-import org.docx4j.fonts.fop.fonts.type1.PFBData;
-import org.docx4j.openpackaging.exceptions.Docx4JException;
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-
+import com.adarshr.raroscope.RAREntry;
+import com.adarshr.raroscope.RARFile;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import com.sun.javafx.binding.DoubleConstant;
 
 public class GithubRepoCrawler {
 
@@ -81,11 +79,22 @@ public class GithubRepoCrawler {
 
 	private void inflateFileList() {
 		for (Iterator<VirtualFile> iterator = fileList.iterator(); iterator.hasNext();) {
-			VirtualFile f = iterator.next();
-			if (f.type == SuperMimeType.Rar) {
-				// TODO add virtual unrar
-			} else if (f.type == SuperMimeType.Zip) {
-				try {
+			try {
+				VirtualFile f = iterator.next();
+				if (f.type == SuperMimeType.Rar) {
+//					RARFile rar = new RARFile(new ByteArrayInputStream(f.data));
+//					Enumeration<RAREntry> entries = rar.entries();
+//					while (entries.hasMoreElements()) {
+//						RAREntry entry = (RAREntry) entries.nextElement();
+//						if (!entry.isDirectory()) {
+//							entry.
+//						} else {
+//
+//						}
+//					}
+
+				} else if (f.type == SuperMimeType.Zip) {
+
 					ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(f.data));
 					ZipEntry entry = zipIn.getNextEntry();
 					while (entry != null) {
@@ -101,9 +110,9 @@ public class GithubRepoCrawler {
 						entry = zipIn.getNextEntry();
 					}
 					zipIn.close();
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -142,13 +151,15 @@ public class GithubRepoCrawler {
 					imageCount += ana.getImages().size();
 				} else if (f.type == SuperMimeType.Image) {
 					imageCount++;
+				} else if (f.type == SuperMimeType.PowerPoint) {
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		wordCounter.close();
-		
+
 	}
 
 	public List<VirtualFile> getFullContent() {

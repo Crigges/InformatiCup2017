@@ -39,11 +39,11 @@ public class DocxAnalyzer {
 		for (Entry<PartName, Part> entry : doc.getParts().getParts().entrySet()) {
 			if (entry.getValue() instanceof BinaryPartAbstractImage) {
 				res.add((BinaryPartAbstractImage) entry.getValue());
-				// File f = new File("./test/docImg" + i++ + ".png");
-				// f.createNewFile();
-				// FileOutputStream fos = new FileOutputStream(f);
-				// ((BinaryPart) entry.getValue()).writeDataToOutputStream(fos);
-				// fos.close();
+//				File f = new File("./test/docImg" + i++ + ".png");
+//				f.createNewFile();
+//				FileOutputStream fos = new FileOutputStream(f);
+//				((BinaryPart) entry.getValue()).writeDataToOutputStream(fos);
+//				fos.close();
 			}
 		}
 		return res;

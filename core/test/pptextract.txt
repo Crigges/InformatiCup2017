@@ -1,0 +1,4 @@
+Sample PowerPoint FileSt. Cloud Technical CollegeThis is a Sample SlideHere is an outline of bulleted points
+You can print out PPT files as handouts using the 
+PRINT > 
+  PRINT WHAT > HANDOUTS option
