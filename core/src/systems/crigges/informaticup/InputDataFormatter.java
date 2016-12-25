@@ -10,8 +10,8 @@ public class InputDataFormatter {
 	double[] inputNeurons;
 	CollectedDataSet dataSet;
 
-	public InputDataFormatter() {
-		dataSet = new CollectedDataSet();
+	public InputDataFormatter(CollectedDataSet dataSet) {
+		this.dataSet = dataSet;
 		inputNeurons = normalizeInput(calculateInput());	
 	}
 
