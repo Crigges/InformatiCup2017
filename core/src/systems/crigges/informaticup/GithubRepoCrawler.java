@@ -42,7 +42,7 @@ public class GithubRepoCrawler {
 		inflateFileList();
 		analyzeRepo();
 	}
-
+	
 	private String getRepoNameFromURL(String url) {
 		return url.replace("https://github.com/", "");
 	}
@@ -176,7 +176,6 @@ public class GithubRepoCrawler {
 	public static void main(String[] args) throws MalformedURLException, IOException, MagicParseException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		Field f = MagicParser.class.getDeclaredField("log");
 		f.setAccessible(true);
-		f.set(null, new NoLog());
 		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/Raldir/test01");
 		
 	
