@@ -19,6 +19,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import jdk.nashorn.internal.ir.CatchNode;
 
@@ -66,8 +67,7 @@ public class ZipballGrabber {
 		while (entry != null) {
 			String filePath = "." + File.separator + entry.getName();
 			if (!entry.isDirectory()) {
-				byte[] data = new byte[(int) entry.getSize()];
-				zipIn.read(data);
+				byte[] data = IOUtils.toByteArray(zipIn);
 				files.add(new VirtualFile(new File(filePath).getName(), data, false));
 			}else{
 				files.add(new VirtualFile(entry.getName(), null, true));

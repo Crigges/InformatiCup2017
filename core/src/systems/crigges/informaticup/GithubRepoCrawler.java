@@ -18,6 +18,8 @@ import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apache.commons.io.IOUtils;
+
 import java.util.Set;
 
 import com.google.gson.Gson;
@@ -35,10 +37,6 @@ public class GithubRepoCrawler {
 
 	public GithubRepoCrawler(String url) throws MalformedURLException, IOException {
 		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
-		for(VirtualFile f : fileList){
-			System.out.println(f.name);
-			System.out.println(f.mimeType);
-		}
 		inflateFileList();
 		analyzeRepo();
 	}
@@ -106,13 +104,11 @@ public class GithubRepoCrawler {
 					while (entry != null) {
 						String filePath = entry.getName();
 						if (!entry.isDirectory()) {
-							byte[] data = new byte[(int) entry.getSize()];
-							zipIn.read(data);
+							byte[] data = IOUtils.toByteArray(zipIn);
 							res.add(new VirtualFile(new File(filePath).getName(), data, false));
 						} else {
 							res.add(new VirtualFile(entry.getName(), null, true));
 						}
-						System.out.println(entry.getName());
 						zipIn.closeEntry();
 						entry = zipIn.getNextEntry();
 					}
@@ -122,6 +118,7 @@ public class GithubRepoCrawler {
 				e.printStackTrace();
 			}
 		}
+		fileList = res;
 	}
 
 	public Set<Entry<String, Integer>> getSortedEndingCount() {
@@ -159,27 +156,34 @@ public class GithubRepoCrawler {
 				} else if (f.type == SuperMimeType.Image) {
 					imageCount++;
 				} else if (f.type == SuperMimeType.PowerPoint) {
-
+					
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		wordCounter.close();
-
 	}
 
 	public List<VirtualFile> getFullContent() {
 		return fileList;
 	}
+	
+	public void getWordCount() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	public static void main(String[] args) throws MalformedURLException, IOException, MagicParseException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		Field f = MagicParser.class.getDeclaredField("log");
 		f.setAccessible(true);
 		f.set(null, new NoLog());
 		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/Raldir/test01");
+		crawler.getWordCount();
 		
 	
 	}
 
+	
 }

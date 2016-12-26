@@ -1,5 +1,10 @@
 package systems.crigges.informaticup;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatch;
@@ -29,6 +34,12 @@ public class VirtualFile{
 			type = SuperMimeType.Binary;
 			size = orgSize;
 		}else{
+//			try {
+//				Files.write(new File("./test/" + name).toPath(), data, StandardOpenOption.CREATE);
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			size = data.length;
 			MagicMatch match;
 			try {
