@@ -169,8 +169,8 @@ public class GithubRepoCrawler {
 		return fileList;
 	}
 	
-	public void getWordCount() {
-		// TODO Auto-generated method stub
+	public Set<Entry<String, Integer>> getWordCount() {
+		return wordCounter.getSortedEntrys();
 		
 	}
 
@@ -178,8 +178,11 @@ public class GithubRepoCrawler {
 	public static void main(String[] args) throws MalformedURLException, IOException, MagicParseException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		Field f = MagicParser.class.getDeclaredField("log");
 		f.setAccessible(true);
+		f.set(null, new NoLog());
 		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/Raldir/test01");
-		crawler.getWordCount();
+		for(Entry<String, Integer> entry : crawler.getWordCount()){
+			System.out.println(entry);
+		}
 		
 	
 	}
