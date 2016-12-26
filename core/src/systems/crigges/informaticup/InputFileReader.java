@@ -45,7 +45,7 @@ public class InputFileReader {
 			String typ = null, name;
 			if (line.contains(" ")) {
 				name = line.substring(0, line.indexOf(" "));
-				typ = line.substring(line.indexOf(" "));
+				typ = line.substring(line.indexOf(" ") + 1);
 			} else {
 				name = line;
 			}
@@ -57,4 +57,15 @@ public class InputFileReader {
 		return repositorys;
 	}
 
+	public static void main(String[] args){
+		List<Repository> list = null;
+		try {
+			list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		for(Repository t : list){
+			System.out.println(t.getTyp());
+		}
+	}
 }
