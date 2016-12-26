@@ -7,8 +7,10 @@ import java.util.Map.Entry;
 
 public class InputDataFormatter {
 
-	double[] inputNeurons;
-	CollectedDataSet dataSet;
+	private double[] inputNeurons;
+	private CollectedDataSet dataSet;
+	
+	private final int inputNeuronSize = 60003;
 
 	public InputDataFormatter(CollectedDataSet dataSet) {
 		this.dataSet = dataSet;
@@ -39,10 +41,10 @@ public class InputDataFormatter {
 		return inputNeurons;
 	}
 	
-	private ArrayList<Double> calculateInput(){
+	private double[] calculateInput(){
 		//TODO: Still need to clarify special indexPosition, MISSING!
 		//TODO: ChangeValueSet
-		ArrayList<Double> input = new ArrayList<Double>();
+		double[] input = new double[inputNeuronSize];
 		double averageFileSize = ((double) dataSet.repoSize) / dataSet.fileCount;
 		double mediaDensity  = ((double) dataSet.mediaCount) / dataSet.fileCount;
 		double subscribeToStaredRatio = ((double) dataSet.subscribedCount) / dataSet.staredCount;
@@ -63,18 +65,13 @@ public class InputDataFormatter {
 			averagefolderNameOccurrence.add(((double) entry.getValue()) / dataSet.fileCount);
 		}
 
-		//Also filter?
-		ArrayList<Double> averageEmailEndingOccurrence =  new ArrayList<Double>();
-		for(Entry<String, Integer> entry : dataSet.emailEndingCount){
-			averageEmailEndingOccurrence.add(((double) entry.getValue()) / dataSet.fileCount);
-		}
-		input.add(averageFileSize);
-		input.add(mediaDensity);
-		input.add(subscribeToStaredRatio);
+		
+		input[0] = averageFileSize;
+		input[1] = mediaDensity;
+		input[2] = subscribeToStaredRatio;
 		input.addAll(averageEndingOccurrence);
 		input.addAll(averageWordOccurrence);
 		input.addAll(averagefolderNameOccurrence);
-		input.addAll(averageEmailEndingOccurrence);
 		
 		return input;
 		
