@@ -156,7 +156,9 @@ public class GithubRepoCrawler {
 				} else if (f.type == SuperMimeType.Image) {
 					imageCount++;
 				} else if (f.type == SuperMimeType.PowerPoint) {
-					
+					PptxAnalyzer ana = new PptxAnalyzer(f.data);
+					wordCounter.feed(ana.getRawText());
+					imageCount += ana.getImages().size();				
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
