@@ -1,9 +1,12 @@
 package systems.crigges.informaticup;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 public class InputFileReader {
 
@@ -65,7 +68,20 @@ public class InputFileReader {
 			e.printStackTrace();
 		}
 		for(Repository t : list){
-			System.out.println(t.getTyp());
+			GithubRepoCrawler crawler;
+			try {
+				crawler = new GithubRepoCrawler(t.getName());
+				for(Entry<String, Integer> entry : crawler.getWordCount()){
+					System.out.println(entry);
+				}
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 	}
 }
