@@ -3,18 +3,18 @@ package systems.crigges.informaticup;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -22,62 +22,26 @@ import org.apache.commons.io.IOUtils;
 
 import java.util.Set;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
-
 import net.sf.jmimemagic.MagicParseException;
 import net.sf.jmimemagic.MagicParser;
 
-public class GithubRepoCrawler {
-
+public class GithubRepoCrawler implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private ArrayList<VirtualFile> fileList;
-	private Gson gson = new Gson();
-	private WordCounter wordCounter;
+	private HashMap<String, Integer> wordCount;
+	private long totalWordCount;
 	private int imageCount;
+	private String repoName;
 
 	public GithubRepoCrawler(String url) throws MalformedURLException, IOException {
-		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + getRepoNameFromURL(url) + "/zipball");
+		repoName = getRepoNameFromURL(url);
+		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + repoName + "/zipball");
 		inflateFileList();
 		analyzeRepo();
 	}
-	
+
 	private String getRepoNameFromURL(String url) {
 		return url.replace("https://github.com/", "");
-	}
-
-	private ArrayList<VirtualFile> getFilesFromTree(String treeUrl) throws IOException {
-		URL u = new URL(treeUrl);
-		URLConnection fileTreeConnection = u.openConnection();
-		InputStream in = fileTreeConnection.getInputStream();
-		// Create tree from response
-		GithubFileTree tree = gson.fromJson(new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8)),
-				GithubFileTree.class);
-		System.out.println("tree " + tree.tree.size());
-		Collections.sort(tree.tree);
-		ArrayList<VirtualFile> files = new ArrayList<VirtualFile>();
-		for (GithubFile file : tree.tree) {
-			String name = new File(file.path).getName();
-			if (file.isFolder()) {
-				files.add(new VirtualFile(name, null, true));
-			} else {
-				if (file.size < Constants.MaxFileSize) {
-					files.add(getFileFromUrl(name, file.url));
-				} else {
-					files.add(new VirtualFile(name, null, false, file.size));
-				}
-			}
-		}
-		return files;
-	}
-
-	private VirtualFile getFileFromUrl(String name, String url) throws IOException {
-		URL u = new URL(url);
-		URLConnection fileConnection = u.openConnection();
-		InputStream in = fileConnection.getInputStream();
-		GithubFileContent file = gson.fromJson(new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8)),
-				GithubFileContent.class);
-		file.genByteContent();
-		return new VirtualFile(name, file.byteContent, false);
 	}
 
 	private void inflateFileList() {
@@ -87,16 +51,17 @@ public class GithubRepoCrawler {
 			try {
 				VirtualFile f = iterator.next();
 				if (f.type == SuperMimeType.Rar) {
-//					RARFile rar = new RARFile(new ByteArrayInputStream(f.data));
-//					Enumeration<RAREntry> entries = rar.entries();
-//					while (entries.hasMoreElements()) {
-//						RAREntry entry = (RAREntry) entries.nextElement();
-//						if (!entry.isDirectory()) {
-//							entry.
-//						} else {
-//
-//						}
-//					}
+					// RARFile rar = new RARFile(new
+					// ByteArrayInputStream(f.data));
+					// Enumeration<RAREntry> entries = rar.entries();
+					// while (entries.hasMoreElements()) {
+					// RAREntry entry = (RAREntry) entries.nextElement();
+					// if (!entry.isDirectory()) {
+					// entry.
+					// } else {
+					//
+					// }
+					// }
 				} else if (f.type == SuperMimeType.Zip) {
 
 					ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(f.data));
@@ -140,7 +105,7 @@ public class GithubRepoCrawler {
 	}
 
 	private void analyzeRepo() {
-		wordCounter = new WordCounter();
+		WordCounter wordCounter = new WordCounter();
 		for (VirtualFile f : fileList) {
 			try {
 				if (f.type == SuperMimeType.Text) {
@@ -156,36 +121,51 @@ public class GithubRepoCrawler {
 				} else if (f.type == SuperMimeType.Image) {
 					imageCount++;
 				} else if (f.type == SuperMimeType.PowerPoint) {
-					
+					PptxAnalyzer ana = new PptxAnalyzer(f.data);
+					wordCounter.feed(ana.getRawText());
+					imageCount += ana.getImages().size();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		wordCounter.close();
+		wordCount = wordCounter.getEntryMap();
+		totalWordCount = wordCounter.getTotalWordCount();
 	}
 
 	public List<VirtualFile> getFullContent() {
 		return fileList;
 	}
-	
+
 	public Set<Entry<String, Integer>> getWordCount() {
-		return wordCounter.getSortedEntrys();
-		
+		return wordCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
+				.entrySet();
 	}
 
+	public String getRepoName() {
+		return repoName;
+	}
 
-	public static void main(String[] args) throws MalformedURLException, IOException, MagicParseException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public int getImageCount() {
+		return imageCount;
+	}
+
+	public long getTotalWordCount() {
+		return totalWordCount;
+	}
+
+	public static void main(String[] args) throws MalformedURLException, IOException, MagicParseException,
+			NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		Field f = MagicParser.class.getDeclaredField("log");
 		f.setAccessible(true);
 		f.set(null, new NoLog());
-		GithubRepoCrawler crawler = new GithubRepoCrawler("https://github.com/Raldir/test01");
+		GithubRepoCrawler crawler = RepoCacher.get("https://github.com/Crigges/Clickwars");
 		for(Entry<String, Integer> entry : crawler.getWordCount()){
 			System.out.println(entry);
 		}
-		
-	
+
 	}
 
-	
 }
