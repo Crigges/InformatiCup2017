@@ -21,17 +21,19 @@ public class RepoCacher {
 		return url.replace("https://github.com/", "");
 	}
 	
-	public static void put(GithubRepoCrawler crawler) throws FileNotFoundException, IOException{
-		String name = crawler.getRepoName();
-		File f = new File(cacheLocation + name.substring(0, name.indexOf("/")) + "/");
-		f.mkdir();
-		f = new File(cacheLocation + name + ".repo");
-		f.delete();
-		f.createNewFile();
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
-		out.writeObject(crawler);
-		out.flush();
-		out.close();
+	private static void put(GithubRepoCrawler crawler){
+		try{
+			String name = crawler.getRepoName();
+			File f = new File(cacheLocation + name.substring(0, name.indexOf("/")) + "/");
+			f.mkdir();
+			f = new File(cacheLocation + name + ".repo");
+			f.delete();
+			f.createNewFile();
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
+			out.writeObject(crawler);
+			out.flush();
+			out.close();
+		}catch(IOException e){}
 	}
 	
 	public static GithubRepoCrawler get(String url) throws MalformedURLException, IOException{
@@ -45,9 +47,13 @@ public class RepoCacher {
 				return repo;
 			} catch (IOException | ClassNotFoundException e) {
 				f.delete();
-				return new GithubRepoCrawler(url);
+				GithubRepoCrawler repo = new GithubRepoCrawler(url);
+				put(repo);
+				return repo;
 			}
 		}else{
+			GithubRepoCrawler repo = new GithubRepoCrawler(url);
+			put(repo);
 			return new GithubRepoCrawler(url);
 		}
 	}

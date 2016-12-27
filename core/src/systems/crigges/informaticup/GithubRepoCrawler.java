@@ -161,8 +161,7 @@ public class GithubRepoCrawler implements Serializable {
 		Field f = MagicParser.class.getDeclaredField("log");
 		f.setAccessible(true);
 		f.set(null, new NoLog());
-		GithubRepoCrawler crawler = RepoCacher.get("https://github.com/Raldir/test01");//new GithubRepoCrawler("https://github.com/Raldir/test01");
-		//RepoCacher.put(crawler);
+		GithubRepoCrawler crawler = RepoCacher.get("https://github.com/Crigges/Clickwars");
 		for(Entry<String, Integer> entry : crawler.getWordCount()){
 			System.out.println(entry);
 		}
