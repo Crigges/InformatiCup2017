@@ -72,7 +72,7 @@ public class InputFileReader {
 			try {
 				crawler = new GithubRepoCrawler(t.getName());
 				for(Entry<String, Integer> entry : crawler.getWordCount()){
-					System.out.println(entry);
+//					System.out.println(entry);
 				}
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
@@ -81,7 +81,6 @@ public class InputFileReader {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 	}
 }

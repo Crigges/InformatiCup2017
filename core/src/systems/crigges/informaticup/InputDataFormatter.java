@@ -17,22 +17,22 @@ public class InputDataFormatter {
 		inputNeurons = normalizeInput(calculateInput());	
 	}
 
-	private double[] normalizeInput(ArrayList<Double> calculateInput) {
+	private double[] normalizeInput(double[] ds) {
 		//Testen!
-		double[] normalizedNeurons = new double[calculateInput.size()];
+		double[] normalizedNeurons = new double[ds.length];
 		double erwartungswertA = 0;
 		double varianzA = 0;
 		double partVarianz = 0;
-		for(Double inputNeuron : calculateInput){
+		for(Double inputNeuron : ds){
 			erwartungswertA += inputNeuron;
 		}
-		erwartungswertA /= calculateInput.size();
-		for(Double inputNeuron : calculateInput){
+		erwartungswertA /= ds.length;
+		for(Double inputNeuron : ds){
 			partVarianz += Math.pow((inputNeuron - erwartungswertA), 2);
 		}
-		varianzA = Math.sqrt(partVarianz / calculateInput.size());
+		varianzA = Math.sqrt(partVarianz / ds.length);
 		for(int i = 0; i < normalizedNeurons.length; i++){
-			normalizedNeurons[i] = (calculateInput.get(i) - erwartungswertA) / varianzA;
+			normalizedNeurons[i] = (ds[i] - erwartungswertA) / varianzA;
 		}
 		return normalizedNeurons;
 	}
@@ -69,9 +69,9 @@ public class InputDataFormatter {
 		input[0] = averageFileSize;
 		input[1] = mediaDensity;
 		input[2] = subscribeToStaredRatio;
-		input.addAll(averageEndingOccurrence);
-		input.addAll(averageWordOccurrence);
-		input.addAll(averagefolderNameOccurrence);
+//		input.addAll(averageEndingOccurrence);
+//		input.addAll(averageWordOccurrence);
+//		input.addAll(averagefolderNameOccurrence);
 		
 		return input;
 		
