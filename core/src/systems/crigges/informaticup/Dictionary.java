@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,7 +12,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import sun.security.pkcs11.wrapper.Functions;
 import systems.crigges.informaticup.InputFileReader.Repository;
 
 public class Dictionary {
@@ -23,7 +20,7 @@ public class Dictionary {
 	ArrayList<String> words;
 	Map<String, Integer> occurenceInRepos = new HashMap<String, Integer>();
 
-	private final double intersectionThreshold = 0.9, intersectionOccurence = 0.2;
+	private final double intersectionThreshold = 0.9;
 
 	public Dictionary(List<Repository> repositorys) {
 		this.repositorys = repositorys;
@@ -76,11 +73,14 @@ public class Dictionary {
 		for (Repository t : repositorys) {
 			GithubRepoCrawler crawler = RepoCacher.get(t.getName());
 			Set<Entry<String, Integer>> words = crawler.getWordCount();
+			System.out.println("before");
 			for (Entry<String, Integer> word : words) {
 				wordGroups[t.getTyp().getValue()].add(word);
 			}
+			System.out.println("after");
 			repositoryCount[t.getTyp().getValue()]++;
 		}
+		System.out.println("finished");
 
 		for (int i = 0; i < wordGroups.length; i++) {
 			Set<Entry<String, Integer>> group = wordGroups[i];

@@ -10,7 +10,7 @@ import net.sf.jmimemagic.MagicParseException;
 public class VirtualFile implements Serializable{
 	private static final long serialVersionUID = 1L;
 	String name;
-	byte[] data;
+	transient byte[] data;
 	SuperMimeType type;
 	String mimeType;
 	int size;
@@ -59,14 +59,17 @@ public class VirtualFile implements Serializable{
 				type = SuperMimeType.PowerPoint;
 			} else if (name.endsWith("png") || name.endsWith("jpg") || name.startsWith("image")) {
 				type = SuperMimeType.Image;
+				data = null;
 			} else if (name.endsWith("rar")) {
 				type = SuperMimeType.Rar;
+				data = null;
 			} else if (name.endsWith("zip") || mimeType.endsWith("zip")) {
 				type = SuperMimeType.Zip;
 			} else if (mimeType.startsWith("text") || name.endsWith("txt")) {
 				type = SuperMimeType.Text;
 			} else {
 				type = SuperMimeType.Binary;
+				data = null;
 			}
 		}
 	}
