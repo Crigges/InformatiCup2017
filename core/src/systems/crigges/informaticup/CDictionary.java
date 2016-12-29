@@ -1,5 +1,6 @@
 package systems.crigges.informaticup;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -36,5 +37,10 @@ public class CDictionary {
 			unifier.finish(defaultUnifierStrength);
 			groupWordStatistic.put(type, unifier.getUnifiedStatistic());
 		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		List<Repository> list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
+		new CDictionary(list);
 	}
 }

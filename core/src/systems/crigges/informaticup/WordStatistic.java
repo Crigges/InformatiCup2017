@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 public class WordStatistic {
-	private HashMap<String, Integer> wordCount;
+	private HashMap<String, Integer> wordCount = new HashMap<>();
 	private long totalCount = 0;
 	
 	public void add(Set<Entry<String, Integer>> entrys){

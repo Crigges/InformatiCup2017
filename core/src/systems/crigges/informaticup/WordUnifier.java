@@ -6,7 +6,7 @@ import java.util.Set;
 
 
 public class WordUnifier {
-	private HashMap<String, Integer> occurence;
+	private HashMap<String, Integer> occurence = new HashMap<>();
 	private WordStatistic statistic = new WordStatistic();
 	private int count = 0;
 	
