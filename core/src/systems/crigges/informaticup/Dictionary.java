@@ -56,6 +56,7 @@ public class Dictionary {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private Map<String, Integer>[] genreateSetsAccordingToRepositoryType(List<Repository> repositorys)
 			throws MalformedURLException, IOException {
 		Set<Entry<String, Integer>>[] wordGroups = (HashSet<Entry<String, Integer>>[]) new HashSet[7];
@@ -109,6 +110,7 @@ public class Dictionary {
 	}
 
 	private Map<String, Double>[] wordOccurences(Map<String, Integer>[] list) {
+		@SuppressWarnings("unchecked")
 		Map<String, Double>[] propabilityList = (HashMap<String, Double>[]) new HashMap[list.length];
 
 		for (int i = 0; i < list.length; i++) {

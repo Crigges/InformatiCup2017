@@ -4,7 +4,6 @@ import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.core.data.DataSetRow;
 import org.neuroph.core.learning.IterativeLearning;
-import org.neuroph.core.learning.LearningRule;
 import org.neuroph.nnet.Perceptron;
 
 public class ClassifierNN {
@@ -27,6 +26,7 @@ public class ClassifierNN {
 
 	@SuppressWarnings("deprecation")
 	public double[] useClassifier() {
+		@SuppressWarnings("unchecked")
 		NeuralNetwork<IterativeLearning> neuralNetwork = NeuralNetwork.load("or_perceptron.nnet");
 		// set network input
 		neuralNetwork.setInput(1, 0);

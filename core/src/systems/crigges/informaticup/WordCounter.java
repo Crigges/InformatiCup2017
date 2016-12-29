@@ -1,10 +1,8 @@
 package systems.crigges.informaticup;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.io.Serializable;
 import java.text.Normalizer;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class WordCounter {
-	private static final long serialVersionUID = 1L;
 	private Scanner scanner;
 	private PipedInputStream in;
 	private PipedOutputStream out;

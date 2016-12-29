@@ -60,19 +60,20 @@ public class InputFileReader {
 		return repositorys;
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		List<Repository> list = null;
 		try {
-			list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();;
+			list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
+			;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		for(Repository t : list){
+		for (Repository t : list) {
 			GithubRepoCrawler crawler;
 			try {
 				crawler = new GithubRepoCrawler(t.getName());
-				for(Entry<String, Integer> entry : crawler.getWordCount()){
-//					System.out.println(entry);
+				for (Entry<String, Integer> entry : crawler.getWordCount()) {
+					System.out.println(entry);
 				}
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block

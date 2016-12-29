@@ -1,6 +1,5 @@
 package systems.crigges.informaticup;
 
-import java.io.Serializable;
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatch;
@@ -8,7 +7,6 @@ import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
 public class VirtualFile{
-	private static final long serialVersionUID = 1L;
 	String name;
 	byte[] data;
 	SuperMimeType type;
