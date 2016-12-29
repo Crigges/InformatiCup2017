@@ -36,4 +36,8 @@ public class WordStatistic {
 		return count / totalCount;
 	}
 
+	public Set<Entry<String, Integer>> getSet() {
+		return wordCount.entrySet();
+	}
+
 }

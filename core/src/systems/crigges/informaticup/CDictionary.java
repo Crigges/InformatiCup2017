@@ -27,7 +27,6 @@ public class CDictionary {
 			try {
 				GithubRepoCrawler crawler = RepoCacher.get(r.getName());
 				unifiedGroupDictonary.get(r.getTyp()).add(crawler.getWordCount());
-				naturalWordStatistic.add(crawler.getWordCount());
 			} catch (IOException e) {
 				e.printStackTrace(); //skip for now
 			}
@@ -35,7 +34,10 @@ public class CDictionary {
 		for(RepositoryTyp type : RepositoryTyp.values()){
 			WordUnifier unifier = unifiedGroupDictonary.get(type);
 			unifier.finish(defaultUnifierStrength);
-			WordStatistic statistic = unifier.getUnifiedStatistic();
+			naturalWordStatistic.add(unifier.getUnifiedStatistic().getSet());
+		}
+		for(RepositoryTyp type : RepositoryTyp.values()){
+			WordStatistic statistic = unifiedGroupDictonary.get(type).getUnifiedStatistic();
 			statistic.neutralize(naturalWordStatistic);
 			groupWordStatistic.put(type, statistic);
 		}
