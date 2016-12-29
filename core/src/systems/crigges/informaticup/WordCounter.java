@@ -49,7 +49,6 @@ public class WordCounter {
 		if (text != null) {
 			try {
 				out.write(text.getBytes());
-				out.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

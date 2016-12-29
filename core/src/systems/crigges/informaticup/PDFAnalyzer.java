@@ -62,29 +62,29 @@ public class PDFAnalyzer {
 		
 	}
 
-	public List<RenderedImage> getImages() throws IOException {
-		List<RenderedImage> images = new ArrayList<>();
+	public int getImageCount() throws IOException {
+		int imageCount = 0;
 		for (PDPage page : pd.getPages()) {
-			images.addAll(getImagesFromResources(page.getResources()));
+			imageCount += getImagesFromResources(page.getResources());
 		}
 
-		return images;
+		return imageCount;
 	}
 
-	private List<RenderedImage> getImagesFromResources(PDResources resources) throws IOException {
-		List<RenderedImage> images = new ArrayList<>();
-
-		for (COSName xObjectName : resources.getXObjectNames()) {
-			PDXObject xObject = resources.getXObject(xObjectName);
-
-			if (xObject instanceof PDFormXObject) {
-				images.addAll(getImagesFromResources(((PDFormXObject) xObject).getResources()));
-			} else if (xObject instanceof PDImageXObject) {
-				images.add(((PDImageXObject) xObject).getImage());
+	private int getImagesFromResources(PDResources resources) throws IOException {
+		int imageCount = 0;
+		if(resources != null){
+			for (COSName xObjectName : resources.getXObjectNames()) {
+				PDXObject xObject = resources.getXObject(xObjectName);
+	
+				if (xObject instanceof PDFormXObject) {
+					imageCount += getImagesFromResources(((PDFormXObject) xObject).getResources());
+				} else if (xObject instanceof PDImageXObject) {
+					imageCount++;
+				}
 			}
 		}
-
-		return images;
+		return imageCount;
 	}
 
 	public void accessMetadata() {
@@ -107,11 +107,6 @@ public class PDFAnalyzer {
 			System.out.println(e);
 		}
 		int i = 0;
-		for(RenderedImage img : pdf.getImages()){
-			File f = new File("./test/pdfpic" + i++ + ".png");
-			f.createNewFile();
-			ImageIO.write(img, "png", f);
-		}
 		 pdf.accessMetadata();
 	}
 

@@ -128,7 +128,7 @@ public class GithubRepoCrawler implements Serializable {
 				} else if (f.type == SuperMimeType.PDF) {
 					PDFAnalyzer ana = new PDFAnalyzer(f.data);
 					wordCounter.feed(ana.getRawText());
-					mediaCount += ana.getImages().size();
+					mediaCount += ana.getImageCount();
 				} else if (f.type == SuperMimeType.Image) {
 					mediaCount++;
 				} else if (f.type == SuperMimeType.PowerPoint) {

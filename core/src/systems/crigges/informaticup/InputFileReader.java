@@ -45,14 +45,15 @@ public class InputFileReader {
 	private void analyseRepositoryInput() throws Exception {
 		while (sc.hasNextLine()) {
 			String line = sc.nextLine();
-			String typ = null, name;
+			String name;
+			RepositoryTyp type = null;
 			if (line.contains(" ")) {
 				name = line.substring(0, line.indexOf(" "));
-				typ = line.substring(line.indexOf(" ") + 1);
+				type = RepositoryTyp.get(line.substring(line.indexOf(" ") + 1));
 			} else {
 				name = line;
 			}
-			repositorys.add(new Repository(name, RepositoryTyp.get(typ)));
+			repositorys.add(new Repository(name, type));
 		}
 	}
 

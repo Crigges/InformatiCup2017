@@ -56,6 +56,10 @@ project(":core") {
         compile group: 'com.github.junrar', name: 'junrar', version: '0.7'
         compile group: 'org.beykery', name: 'neuroph', version: '2.92'
         compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'    
+        compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.54'
+        compile group: 'org.bouncycastle', name: 'bcmail-jdk15on', version: '1.54'
+        compile group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: '1.54'
+        compile group: 'de.ruedigermoeller', name: 'fst', version: '2.48'
     }
 }
 
