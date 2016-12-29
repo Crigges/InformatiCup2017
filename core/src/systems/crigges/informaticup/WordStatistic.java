@@ -20,6 +20,12 @@ public class WordStatistic {
 		}
 	}
 	
+	public void neutralize(WordStatistic neutralStatistic){
+		for(String s : wordCount.keySet()){
+			wordCount.put(s, (int) (Math.abs(getStatistic(s) - neutralStatistic.getStatistic(s)) * totalCount));
+		}
+	}
+	
 	public void remove(String word){
 		totalCount -= wordCount.get(word);
 		wordCount.remove(word);

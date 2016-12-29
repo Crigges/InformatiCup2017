@@ -35,7 +35,9 @@ public class CDictionary {
 		for(RepositoryTyp type : RepositoryTyp.values()){
 			WordUnifier unifier = unifiedGroupDictonary.get(type);
 			unifier.finish(defaultUnifierStrength);
-			groupWordStatistic.put(type, unifier.getUnifiedStatistic());
+			WordStatistic statistic = unifier.getUnifiedStatistic();
+			statistic.neutralize(naturalWordStatistic);
+			groupWordStatistic.put(type, statistic);
 		}
 	}
 	
