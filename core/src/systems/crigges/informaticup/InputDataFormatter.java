@@ -61,7 +61,7 @@ public class InputDataFormatter {
 
 		//Needs filter
 		ArrayList<Double> averagefolderNameOccurrence =  new ArrayList<Double>();
-		for(Entry<String, Integer> entry : dataSet.folderNameCount){
+		for(Entry<String, Integer> entry : dataSet.fileNameCount){
 			averagefolderNameOccurrence.add(((double) entry.getValue()) / dataSet.fileCount);
 		}
 

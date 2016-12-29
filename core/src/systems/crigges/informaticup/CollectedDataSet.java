@@ -14,7 +14,14 @@ public class CollectedDataSet {
 	
 	public Set<Entry<String, Integer>> wordCount;
 	public Set<Entry<String, Integer>> endingCount;
-	public Set<Entry<String, Integer>> folderNameCount;
-	public Set<Entry<String, Integer>> emailEndingCount;
-
+	public Set<Entry<String, Integer>> fileNameCount;
+	
+	@Override
+	public String toString() {
+		return "CollectedDataSet" +  System.lineSeparator() +  "[repoSize=" + repoSize + ", fileCount=" + fileCount + ", mediaCount=" + mediaCount
+				+ ", totalWordCount=" + totalWordCount + ", subscribedCount=" + subscribedCount + ", staredCount="
+				+ staredCount + System.lineSeparator() + "wordCount=" + wordCount + System.lineSeparator() + "endingCount=" + endingCount +  System.lineSeparator() + "fileNameCount="
+				+ fileNameCount + "]";
+	}
+	
 }

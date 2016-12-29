@@ -7,10 +7,10 @@ import net.sf.jmimemagic.MagicMatch;
 import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
-public class VirtualFile implements Serializable{
+public class VirtualFile{
 	private static final long serialVersionUID = 1L;
 	String name;
-	transient byte[] data;
+	byte[] data;
 	SuperMimeType type;
 	String mimeType;
 	int size;
