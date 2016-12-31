@@ -7,10 +7,12 @@ public class InputDataFormatter {
 
 	private double[] inputNeurons;
 	private CollectedDataSet dataSet;
+	private ArrayList<String> dictionary;
 
 	private final int inputNeuronSize = 60003;
 
-	public InputDataFormatter(CollectedDataSet dataSet) {
+	public InputDataFormatter(CollectedDataSet dataSet, ArrayList<String> dictionary) {
+		this.dictionary = dictionary;
 		this.dataSet = dataSet;
 		inputNeurons = normalizeInput(calculateInput());
 	}
@@ -46,29 +48,25 @@ public class InputDataFormatter {
 		double averageFileSize = ((double) dataSet.repoSize) / dataSet.fileCount;
 		double mediaDensity = ((double) dataSet.mediaCount) / dataSet.fileCount;
 		double subscribeToStaredRatio = ((double) dataSet.subscribedCount) / dataSet.staredCount;
-
-		ArrayList<Double> averageEndingOccurrence = new ArrayList<Double>();
-		for (Entry<String, Integer> entry : dataSet.endingCount) {
-			averageEndingOccurrence.add(((double) entry.getValue()) / dataSet.fileCount);
-		}
-
-		ArrayList<Double> averageWordOccurrence = new ArrayList<Double>();
-		for (Entry<String, Integer> entry : dataSet.wordCount) {
-			averageWordOccurrence.add(((double) entry.getValue()) / dataSet.fileCount);
-		}
-
-		// Needs filter
-		ArrayList<Double> averagefolderNameOccurrence = new ArrayList<Double>();
-		for (Entry<String, Integer> entry : dataSet.fileNameCount) {
-			averagefolderNameOccurrence.add(((double) entry.getValue()) / dataSet.fileCount);
-		}
-
+		
 		input[0] = averageFileSize;
 		input[1] = mediaDensity;
 		input[2] = subscribeToStaredRatio;
-		// input.addAll(averageEndingOccurrence);
-		// input.addAll(averageWordOccurrence);
-		// input.addAll(averagefolderNameOccurrence);
+
+		for (Entry<String, Integer> entry : dataSet.endingCount) {
+			if(dictionary.contains(entry.getKey())){
+				input[dictionary.indexOf(entry.getKey()) + 3] = entry.getValue();
+			}
+		}
+
+		for (Entry<String, Integer> entry : dataSet.wordCount) {
+			input[dictionary.indexOf(entry.getKey()) + 3] = entry.getValue();
+		}
+
+		// Needs filter
+		for (Entry<String, Integer> entry : dataSet.fileNameCount) {
+			input[dictionary.indexOf(entry.getKey()) + 3] = entry.getValue();
+		}
 
 		return input;
 

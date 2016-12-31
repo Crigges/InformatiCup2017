@@ -1,7 +1,10 @@
 package systems.crigges.informaticup;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -59,16 +62,31 @@ public class CDictionary {
 				}
 			}
 		}
+		serializeDictionary();
 	}
-	
-	public Set<String> getWords(){
-		return dictionaryWords;
+
+	private void serializeDictionary() {
+		try {
+			FileOutputStream fileOut = new FileOutputStream("/assets/dictionary.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(dictionaryWords);
+			out.close();
+			fileOut.close();
+		} catch (IOException e) {
+			System.out.println("Dictionary could not be serialized");
+			e.printStackTrace();
+		}
+
+	}
+
+	public ArrayList<String> getWords() {
+		return new ArrayList<String>(dictionaryWords);
 	}
 
 	public static void main(String[] args) throws Exception {
 		List<Repository> list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
-		Set<String> words = new CDictionary(list).getWords();
-		for(String word : words){
+		ArrayList<String> words = new CDictionary(list).getWords();
+		for (String word : words) {
 			System.out.println(word);
 		}
 	}
