@@ -5,24 +5,24 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 public class WordStatistic {
-	private HashMap<String, Integer> wordCount = new HashMap<>();
+	private HashMap<String, Double> wordCount = new HashMap<>();
 	private long totalCount = 0;
 	
 	public void add(Set<Entry<String, Integer>> entrys){
 		for(Entry<String, Integer> e : entrys){
-			Integer content = wordCount.get(e.getKey());
+			Double content = wordCount.get(e.getKey());
 			totalCount += e.getValue();
 			if(content == null || content == 0){
-				wordCount.put(e.getKey(), e.getValue());
+				wordCount.put(e.getKey(), (double) (e.getValue()));
 			}else{
 				wordCount.put(e.getKey(), content + e.getValue());
 			}
 		}
 	}
 	
-	public void neutralize(WordStatistic neutralStatistic){
+	public void calculateVariance(WordStatistic neutralStatistic){
 		for(String s : wordCount.keySet()){
-			wordCount.put(s, (int) (Math.abs(getStatistic(s) - neutralStatistic.getStatistic(s)) * totalCount));
+			wordCount.put(s, (Math.abs(getStatistic(s) - neutralStatistic.getStatistic(s))));
 		}
 	}
 	
@@ -32,12 +32,23 @@ public class WordStatistic {
 	}
 	
 	public double getStatistic(String word){
-		long count = wordCount.get(word);
+		double count = wordCount.get(word);
 		return count / totalCount;
 	}
 
-	public Set<Entry<String, Integer>> getSet() {
+	public Set<Entry<String, Double>> getSet() {
 		return wordCount.entrySet();
 	}
-
+	
+	public Set<Entry<String, Integer>> getIntSet() {
+		HashMap<String, Integer> wordCount = new HashMap<>();
+		for(Entry<String, Double> word : this.wordCount.entrySet()){
+			wordCount.put(word.getKey(), word.getValue().intValue());
+		}
+		return wordCount.entrySet();
+	}
+	
+	public void sortWordCount(){
+		MapUtil.sortByValue(wordCount);
+	}
 }
