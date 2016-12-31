@@ -68,9 +68,9 @@ public class ClassifierNN {
 	}
 
 	public static void main(String[] args) {
-		double[] output = new ClassifierNN().useClassifier();
-		for (double d : output) {
-			System.out.println(d);
-		}
+//		double[] output = new ClassifierNN().useClassifier();
+//		for (double d : output) {
+//			System.out.println(d);
+//		}
 	}
 }
