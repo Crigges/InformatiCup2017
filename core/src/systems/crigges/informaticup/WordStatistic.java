@@ -20,6 +20,18 @@ public class WordStatistic {
 		}
 	}
 	
+	public void addDouble(Set<Entry<String, Double>> entrys){
+		for(Entry<String, Double> e : entrys){
+			Double content = wordCount.get(e.getKey());
+			totalCount += e.getValue();
+			if(content == null || content == 0){
+				wordCount.put(e.getKey(), (double) (e.getValue()));
+			}else{
+				wordCount.put(e.getKey(), content + e.getValue());
+			}
+		}
+	}
+	
 	public void calculateVariance(WordStatistic neutralStatistic){
 		for(String s : wordCount.keySet()){
 			wordCount.put(s, (Math.abs(getStatistic(s) - neutralStatistic.getStatistic(s))));
@@ -37,14 +49,6 @@ public class WordStatistic {
 	}
 
 	public Set<Entry<String, Double>> getSet() {
-		return wordCount.entrySet();
-	}
-	
-	public Set<Entry<String, Integer>> getIntSet() {
-		HashMap<String, Integer> wordCount = new HashMap<>();
-		for(Entry<String, Double> word : this.wordCount.entrySet()){
-			wordCount.put(word.getKey(), word.getValue().intValue());
-		}
 		return wordCount.entrySet();
 	}
 	

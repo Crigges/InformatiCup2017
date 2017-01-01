@@ -3,7 +3,6 @@ package systems.crigges.informaticup;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,11 +10,13 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.nustaq.serialization.FSTObjectOutput;
+
 import systems.crigges.informaticup.InputFileReader.Repository;
 
 public class CDictionary {
-	private static final double defaultUnifierStrength = 0.8;
-	private static final double wordsPerCategory = 20;
+	private static final double defaultUnifierStrength = 0.5;
+	private static final double wordsPerCategory = 50;
 
 	private HashMap<RepositoryTyp, WordUnifier> unifiedGroupDictonary = new HashMap<>();
 	private HashMap<RepositoryTyp, WordStatistic> groupWordStatistic = new HashMap<>();
@@ -43,7 +44,7 @@ public class CDictionary {
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			WordUnifier unifier = unifiedGroupDictonary.get(type);
 			unifier.finish(defaultUnifierStrength);
-			naturalWordStatistic.add(unifier.getUnifiedStatistic().getIntSet());
+			naturalWordStatistic.addDouble(unifier.getUnifiedStatistic().getSet());
 		}
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			WordStatistic statistic = unifiedGroupDictonary.get(type).getUnifiedStatistic();
@@ -67,11 +68,12 @@ public class CDictionary {
 
 	private void serializeDictionary() {
 		try {
-			FileOutputStream fileOut = new FileOutputStream("/assets/dictionary.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			File f = new File("./assets/dictionary.ser");
+			f.createNewFile();
+			FSTObjectOutput out = new FSTObjectOutput(new FileOutputStream(f));
 			out.writeObject(dictionaryWords);
 			out.close();
-			fileOut.close();
+			out.close();
 		} catch (IOException e) {
 			System.out.println("Dictionary could not be serialized");
 			e.printStackTrace();

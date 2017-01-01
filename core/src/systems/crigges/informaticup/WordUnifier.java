@@ -34,7 +34,6 @@ public class WordUnifier {
 	
 	public WordStatistic getUnifiedStatistic(){
 		return statistic;
-		
 	}
 
 }
