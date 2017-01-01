@@ -1,21 +1,27 @@
 package systems.crigges.informaticup;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class WordStatistic {
-	private HashMap<String, Double> wordCount = new HashMap<>();
+	private Map<String, Double> wordCount = new HashMap<>();
 	private long totalCount = 0;
 	
 	public void add(Set<Entry<String, Integer>> entrys){
 		for(Entry<String, Integer> e : entrys){
-			Double content = wordCount.get(e.getKey());
-			totalCount += e.getValue();
-			if(content == null || content == 0){
-				wordCount.put(e.getKey(), (double) (e.getValue()));
-			}else{
-				wordCount.put(e.getKey(), content + e.getValue());
+			if(!e.getKey().matches("[0-9]+")){
+				Double content = wordCount.get(e.getKey());
+				totalCount += e.getValue();
+				if(content == null || content == 0){
+					wordCount.put(e.getKey(), (double) (e.getValue()));
+				}else{
+					wordCount.put(e.getKey(), content + e.getValue());
+				}
 			}
 		}
 	}
@@ -52,7 +58,9 @@ public class WordStatistic {
 		return wordCount.entrySet();
 	}
 	
-	public void sortWordCount(){
-		MapUtil.sortByValue(wordCount);
+	public Set<Entry<String, Double>> getSortedWordCount(){
+		return wordCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
+				.entrySet();
 	}
 }

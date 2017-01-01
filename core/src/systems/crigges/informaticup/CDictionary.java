@@ -15,8 +15,8 @@ import org.nustaq.serialization.FSTObjectOutput;
 import systems.crigges.informaticup.InputFileReader.Repository;
 
 public class CDictionary {
-	private static final double defaultUnifierStrength = 0.5;
-	private static final double wordsPerCategory = 50;
+	private static final double defaultUnifierStrength = 0.25;
+	private static final double wordsPerCategory = 100;
 
 	private HashMap<RepositoryTyp, WordUnifier> unifiedGroupDictonary = new HashMap<>();
 	private HashMap<RepositoryTyp, WordStatistic> groupWordStatistic = new HashMap<>();
@@ -30,6 +30,7 @@ public class CDictionary {
 			unifiedGroupDictonary.put(type, new WordUnifier());
 		}
 		generate();
+		serializeDictionary();
 	}
 
 	private void generate() {
@@ -38,7 +39,7 @@ public class CDictionary {
 				GithubRepoCrawler crawler = RepoCacher.get(r.getName());
 				unifiedGroupDictonary.get(r.getTyp()).add(crawler.getWordCount());
 			} catch (IOException e) {
-				e.printStackTrace(); // skip for now
+				// skip for now
 			}
 		}
 		for (RepositoryTyp type : RepositoryTyp.values()) {
@@ -52,9 +53,11 @@ public class CDictionary {
 			groupWordStatistic.put(type, statistic);
 		}
 		for (RepositoryTyp type : RepositoryTyp.values()) {
-			groupWordStatistic.get(type).sortWordCount();
 			int count = 0;
-			for (Entry<String, Double> word : groupWordStatistic.get(type).getSet()) {
+			for (Entry<String, Double> word : groupWordStatistic.get(type).getSortedWordCount()) {
+				if(type == RepositoryTyp.OTHER){
+					System.out.println(word);
+				}
 				if (count < wordsPerCategory) {
 					dictionaryWords.add(word.getKey());
 					count++;
@@ -63,7 +66,7 @@ public class CDictionary {
 				}
 			}
 		}
-		serializeDictionary();
+		
 	}
 
 	private void serializeDictionary() {
@@ -88,8 +91,8 @@ public class CDictionary {
 	public static void main(String[] args) throws Exception {
 		List<Repository> list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
 		ArrayList<String> words = new CDictionary(list).getWords();
-		for (String word : words) {
-			System.out.println(word);
-		}
+//		for (String word : words) {
+//			System.out.println(word);
+//		}
 	}
 }

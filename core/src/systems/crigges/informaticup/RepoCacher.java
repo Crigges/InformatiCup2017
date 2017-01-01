@@ -85,7 +85,7 @@ public class RepoCacher {
 			try{
 				FSTObjectInput in = new FSTObjectInput(new FileInputStream(f));
 				long time = System.currentTimeMillis();
-				System.out.println("Loading..");
+				System.out.print("Loading: " + name + "\t\t\t\t");
 				GithubRepoCrawler repo = (GithubRepoCrawler) in.readObject();
 				System.out.println("Time: " + (System.currentTimeMillis() - time));
 				in.close();

@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 
+
 public class WordUnifier {
 	private HashMap<String, Integer> occurence = new HashMap<>();
 	private WordStatistic statistic = new WordStatistic();
@@ -13,11 +14,13 @@ public class WordUnifier {
 	public void add(Set<Entry<String, Integer>> entrys){
 		count++;
 		for(Entry<String, Integer> e : entrys){
-			Integer content = occurence.get(e.getKey());
-			if(content == null || content == 0){
-				occurence.put(e.getKey(), 1);
-			}else{
-				occurence.put(e.getKey(), content + 1);
+			if(!e.getKey().matches("[0-9]+")){
+				Integer content = occurence.get(e.getKey());
+				if(content == null || content == 0){
+					occurence.put(e.getKey(), 1);
+				}else{
+					occurence.put(e.getKey(), content + 1);
+				}
 			}
 		}
 		statistic.add(entrys);
