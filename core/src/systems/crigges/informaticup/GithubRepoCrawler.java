@@ -23,6 +23,7 @@ import java.util.zip.ZipInputStream;
 import org.apache.commons.io.IOUtils;
 
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import net.sf.jmimemagic.MagicParseException;
 import net.sf.jmimemagic.MagicParser;
@@ -39,8 +40,10 @@ public class GithubRepoCrawler implements Serializable {
 	private String repoName;
 	private int repoSize;
 	private int fileCount;
-	public int subscribedCount;
-	public int staredCount;
+	private int subscribedCount;
+	private int staredCount;
+	private long numberCount;
+	
 
 	public GithubRepoCrawler(String url) throws IOException {
 		repoName = getRepoNameFromURL(url);
@@ -143,6 +146,7 @@ public class GithubRepoCrawler implements Serializable {
 		wordCounter.close();
 		wordCount = wordCounter.getEntryMap();
 		totalWordCount = wordCounter.getTotalWordCount();
+		numberCount = wordCounter.getNumberCount();
 	}
 	
 	private void calcFileNameCount() {
@@ -209,6 +213,10 @@ public class GithubRepoCrawler implements Serializable {
 		return staredCount;
 	}
 	
+	public long getNumberCount() {
+		return numberCount;
+	}
+	
 	public CollectedDataSet getCollectedDataSet(){
 		CollectedDataSet set = new CollectedDataSet();
 		set.endingCount = getFileEndingCount();
@@ -220,11 +228,12 @@ public class GithubRepoCrawler implements Serializable {
 		set.subscribedCount = getSubscribedCount();
 		set.totalWordCount = getTotalWordCount();
 		set.wordCount = getWordCount();
+		set.numberCount = getNumberCount();
 		return set;
 	}
 
 	public static void main(String[] args) throws MalformedURLException, IOException, MagicParseException,
-			NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+			NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InterruptedException, ExecutionException {
 		Field f = MagicParser.class.getDeclaredField("log");
 		f.setAccessible(true);
 		f.set(null, new NoLog());

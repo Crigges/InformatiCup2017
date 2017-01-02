@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import systems.crigges.informaticup.InputFileReader.Repository;
 
@@ -32,6 +33,12 @@ public class Dictionary {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -39,7 +46,7 @@ public class Dictionary {
 		return words;
 	}
 
-	private void generateWords() throws MalformedURLException, IOException {
+	private void generateWords() throws MalformedURLException, IOException, InterruptedException, ExecutionException {
 		Map<String, Double>[] wordGroups = wordOccurences(genreateSetsAccordingToRepositoryType(repositorys));
 		Map<String, Double> unification = generateUnficationMap(wordGroups);
 		Map<String, Double>[] variance = calculateVarianceAll(unification, wordGroups);
@@ -58,7 +65,7 @@ public class Dictionary {
 
 	@SuppressWarnings("unchecked")
 	private Map<String, Integer>[] genreateSetsAccordingToRepositoryType(List<Repository> repositorys)
-			throws MalformedURLException, IOException {
+			throws MalformedURLException, IOException, InterruptedException, ExecutionException {
 		Set<Entry<String, Integer>>[] wordGroups = (HashSet<Entry<String, Integer>>[]) new HashSet[7];
 		Map<String, Integer>[] intersectionGroups = (HashMap<String, Integer>[]) new HashMap[7];
 		Map<String, Integer>[] wordAppearance = (HashMap<String, Integer>[]) new HashMap[7];

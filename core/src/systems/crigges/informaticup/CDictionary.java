@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import org.nustaq.serialization.FSTObjectOutput;
 
@@ -36,9 +37,9 @@ public class CDictionary {
 	private void generate() {
 		for (Repository r : repositorys) {
 			try {
-				GithubRepoCrawler crawler = RepoCacher.get(r.getName());
-				unifiedGroupDictonary.get(r.getTyp()).add(crawler.getWordCount());
-			} catch (IOException e) {
+				RepoCacher.getThreaded(r.getName(), (GithubRepoCrawler crawler) -> {});
+				//unifiedGroupDictonary.get(r.getTyp()).add(crawler.getWordCount());
+			} catch (IOException | InterruptedException | ExecutionException e) {
 				// skip for now
 			}
 		}

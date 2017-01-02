@@ -20,6 +20,7 @@ public class WordCounter {
 	private Thread analyzer;
 	private HashMap<String, Integer> wordCount = new HashMap<>();
 	private long totalWordCount = 0;
+	private long numberCount = 0;
 
 	public WordCounter(PipedOutputStream out) {
 		this.out = out;
@@ -76,11 +77,19 @@ public class WordCounter {
 	public long getTotalWordCount() {
 		return totalWordCount;
 	}
+	
+	public long getNumberCount() {
+		return numberCount;
+	}
 
 	private void parseInput() {
 		while (scanner.hasNext()) {
 			String next = scanner.next();
 			if (next.equals("")) {
+				continue;
+			}
+			if(next.matches("[0-9]+")){
+				numberCount++;
 				continue;
 			}
 			totalWordCount++;

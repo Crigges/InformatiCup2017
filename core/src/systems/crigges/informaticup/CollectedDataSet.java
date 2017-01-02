@@ -10,6 +10,7 @@ public class CollectedDataSet {
 	public long totalWordCount;
 	public int subscribedCount;
 	public int staredCount;
+	public long numberCount;
 	public RepositoryTyp repositoryType;
 	
 	public Set<Entry<String, Integer>> wordCount;
