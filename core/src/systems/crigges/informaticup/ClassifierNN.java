@@ -14,9 +14,8 @@ import org.neuroph.nnet.Perceptron;
 
 public class ClassifierNN {
 
-	public ClassifierNN(Set<CollectedDataSet> dataSetAll) {
+	public ClassifierNN(Set<CollectedDataSet> dataSetAll, ArrayList<String> dictionary) {
 		// create new perceptron network
-		ArrayList<String> dictionary = deserializeDictionary();
 		Perceptron neuralNetwork = new Perceptron(dictionary.size() + 3, 7);
 		DataSet trainingSet = new DataSet(dictionary.size() + 3, 7);
 		for (CollectedDataSet dataSet : dataSetAll) {
@@ -73,4 +72,11 @@ public class ClassifierNN {
 //			System.out.println(d);
 //		}
 	}
+
+	public RepositoryTyp classify(CollectedDataSet collectedDataSet) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }
