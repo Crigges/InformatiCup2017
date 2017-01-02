@@ -25,20 +25,19 @@ public class CDictionary {
 	private WordStatistic naturalWordStatistic = new WordStatistic();
 	private List<Repository> repositorys;
 
-	public CDictionary(List<Repository> repositorys) {
+	public CDictionary(List<Repository> repositorys) throws IOException {
 		this.repositorys = repositorys;
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			unifiedGroupDictonary.put(type, new WordUnifier());
 		}
 		generate();
-		serializeDictionary();
+		SerializeHelper.serialize("./assets/dictionary.ser", dictionaryWords);
 	}
 
 	private void generate() {
 		for (Repository r : repositorys) {
 			try {
-				RepoCacher.getThreaded(r.getName(), (GithubRepoCrawler crawler) -> {});
-				//unifiedGroupDictonary.get(r.getTyp()).add(crawler.getWordCount());
+				unifiedGroupDictonary.get(r.getTyp()).add(RepoCacher.get(r.getName()).getWordCount());
 			} catch (IOException | InterruptedException | ExecutionException e) {
 				// skip for now
 			}
@@ -68,21 +67,6 @@ public class CDictionary {
 			}
 		}
 		
-	}
-
-	private void serializeDictionary() {
-		try {
-			File f = new File("./assets/dictionary.ser");
-			f.createNewFile();
-			FSTObjectOutput out = new FSTObjectOutput(new FileOutputStream(f));
-			out.writeObject(dictionaryWords);
-			out.close();
-			out.close();
-		} catch (IOException e) {
-			System.out.println("Dictionary could not be serialized");
-			e.printStackTrace();
-		}
-
 	}
 
 	public ArrayList<String> getWords() {
