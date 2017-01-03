@@ -55,7 +55,7 @@ public class CDictionary {
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			int count = 0;
 			for (Entry<String, Double> word : groupWordStatistic.get(type).getSortedWordCount()) {
-				if(type == RepositoryTyp.OTHER){
+				if(type == RepositoryTyp.HW){
 					System.out.println(word);
 				}
 				if (count < wordsPerCategory) {
