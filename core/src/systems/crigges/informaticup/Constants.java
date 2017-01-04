@@ -11,7 +11,6 @@ public class Constants {
 	
 	
 	public static final int numberOfNeuronOutput = 7;
-	public static final int numbersOfNeuronInput = numberOfWordCountTypes * numberOfNeuronOutput * dictionaryWordCountPerType + numberOfConsideredPropotions;
 	
 
 }

@@ -82,8 +82,7 @@ public class CDictionary {
 		
 	}
 
-	private void generate() {
-		
+	private void generate() {		
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			WordUnifier unifier = unifiedGroupDictonary.get(type);
 			unifier.finish(Constants.dictionaryIntersectionStrength);

@@ -17,17 +17,18 @@ public class ClassifierNN {
 
 	private ArrayList<DictionaryEntry> dictionary;
 	private DataSet trainingSet;
+	private int inputNeuronCount;
 	
 	public ClassifierNN(Set<CollectedDataSet> trainDataSet, ArrayList<DictionaryEntry> dictionary) {
 		this.dictionary = dictionary;
-		Perceptron neuralNetwork = new Perceptron(Constants.numbersOfNeuronInput, Constants.numberOfNeuronOutput);
-		DataSet trainingSet = new DataSet(Constants.numbersOfNeuronInput, Constants.numberOfNeuronOutput);
-		for (CollectedDataSet dataSet :  trainDataSet) {
-			trainNetwork(dataSet);
-		}
-		neuralNetwork.learn(trainingSet);
-		
-		neuralNetwork.save("assets//classifierNN.nnet");
+//		Perceptron neuralNetwork = new Perceptron(Constants.numbersOfNeuronInput, Constants.numberOfNeuronOutput);
+//		DataSet trainingSet = new DataSet(Constants.numbersOfNeuronInput, Constants.numberOfNeuronOutput);
+//		for (CollectedDataSet dataSet :  trainDataSet) {
+//			trainNetwork(dataSet);
+//		}
+//		neuralNetwork.learn(trainingSet);
+//		
+//		neuralNetwork.save("assets//classifierNN.nnet");
 	}
 
 	private void trainNetwork(CollectedDataSet dataSet){
@@ -45,25 +46,26 @@ public class ClassifierNN {
 	}
 	
 	private double[] getFormattedInput(CollectedDataSet dataSet){
-		RatioDataSet ratioDataSet = new RatioDataSet(dataSet);
-		InputDataFormatter formattedInputWords = new InputDataFormatter(dataSet.wordCount, dictionary, 130);
-		InputDataFormatter formattedInputEnding = new InputDataFormatter(dataSet.endingCount, dictionary, 130);
-		InputDataFormatter formattedInputFolder = new InputDataFormatter(dataSet.fileNameCount, dictionary, 130);
-		
-		double[] input = new double[Constants.numbersOfNeuronInput];
-		
-		int count = 0;
-		
-		double[] list = new double[ratioDataSet.getInputNeurons().size()];
-		for(int i = 0; i < ratioDataSet.getInputNeurons().size(); i++){
-			Double d = ratioDataSet.getInputNeurons().get(i);
-			list[i] = d.doubleValue();
-		}
-		addDoublesToArray(input, list, count);
-		addDoublesToArray(input, formattedInputWords.getInputNeurons(), count += list.length);
-		addDoublesToArray(input, formattedInputEnding.getInputNeurons(), count += formattedInputWords.getInputNeurons().length);
-		addDoublesToArray(input, formattedInputFolder.getInputNeurons(), count += formattedInputEnding.getInputNeurons().length);	
-		return input;
+		return null;
+//		RatioDataSet ratioDataSet = new RatioDataSet(dataSet);
+//		InputDataFormatter formattedInputWords = new InputDataFormatter(dataSet.wordCount, dictionary, 130);
+//		InputDataFormatter formattedInputEnding = new InputDataFormatter(dataSet.endingCount, dictionary, 130);
+//		InputDataFormatter formattedInputFolder = new InputDataFormatter(dataSet.fileNameCount, dictionary, 130);
+//		
+//		double[] input = new double[Constants.numbersOfNeuronInput];
+//		
+//		int count = 0;
+//		
+//		double[] list = new double[ratioDataSet.getInputNeurons().size()];
+//		for(int i = 0; i < ratioDataSet.getInputNeurons().size(); i++){
+//			Double d = ratioDataSet.getInputNeurons().get(i);
+//			list[i] = d.doubleValue();
+//		}
+//		addDoublesToArray(input, list, count);
+//		addDoublesToArray(input, formattedInputWords.getInputNeurons(), count += list.length);
+//		addDoublesToArray(input, formattedInputEnding.getInputNeurons(), count += formattedInputWords.getInputNeurons().length);
+//		addDoublesToArray(input, formattedInputFolder.getInputNeurons(), count += formattedInputEnding.getInputNeurons().length);	
+//		return input;
 	}
 	
 	@SuppressWarnings("deprecation")
