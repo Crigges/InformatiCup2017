@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import systems.crigges.informaticup.CDictionary.DictionaryEntry;
 import systems.crigges.informaticup.InputFileReader.Repository;
 
 public class Main {
@@ -58,7 +59,7 @@ public class Main {
 	}
 
 	private static ClassifierNN createNeuralNetwork() throws Exception {
-		ArrayList<String> dictionary = SerializeHelper.deserialize(dictionaryInputPath);
+		ArrayList<DictionaryEntry> dictionary = SerializeHelper.deserialize(dictionaryInputPath);
 		List<Repository> repositorys = new InputFileReader(new File(repositoryInputPath)).getRepositorysAndTypes();
 		Set<CollectedDataSet> dataSetAll = new HashSet<>();
 		for (Repository rp : repositorys) {

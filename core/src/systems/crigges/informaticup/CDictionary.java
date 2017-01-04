@@ -13,14 +13,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 
-import org.apache.pdfbox.pdmodel.font.encoding.DictionaryEncoding;
-import org.nustaq.serialization.FSTObjectOutput;
-
 import systems.crigges.informaticup.InputFileReader.Repository;
 
 public class CDictionary {
-	private static final double defaultUnifierStrength = 0.25;
-	private static final double wordsPerCategory = 100;
 
 	private HashMap<RepositoryTyp, WordUnifier> unifiedGroupDictonary = new HashMap<>();
 	private HashMap<RepositoryTyp, WordStatistic> groupWordStatistic = new HashMap<>();
@@ -34,7 +29,9 @@ public class CDictionary {
 			unifiedGroupDictonary.put(type, new WordUnifier());
 		}
 		generate();
-		SerializeHelper.serialize("./assets/dictionary.ser", dictionaryWords);
+		ArrayList<DictionaryEntry> list = new ArrayList<DictionaryEntry>();
+		list.addAll(dictionaryWords);
+		SerializeHelper.serialize("./assets/dictionary.ser", list);
 	}
 	
 	public static class DictionaryEntry implements Serializable, Comparable<DictionaryEntry>{
@@ -45,6 +42,18 @@ public class CDictionary {
 		public DictionaryEntry(String word, double occurence) {
 			this.word = word;
 			this.occurence = occurence;
+		}
+
+		public static long getSerialversionuid() {
+			return serialVersionUID;
+		}
+
+		public String getWord() {
+			return word;
+		}
+
+		public double getOccurence() {
+			return occurence;
 		}
 
 		@Override
@@ -76,7 +85,7 @@ public class CDictionary {
 		}
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			WordUnifier unifier = unifiedGroupDictonary.get(type);
-			unifier.finish(defaultUnifierStrength);
+			unifier.finish(Constants.dictionaryIntersectionStrength);
 			naturalWordStatistic.addDouble(unifier.getUnifiedStatistic().getSet());
 		}
 		for (RepositoryTyp type : RepositoryTyp.values()) {
@@ -89,7 +98,7 @@ public class CDictionary {
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			int count = 0;
 			for (Entry<String, Double> word : groupWordStatistic.get(type).getSortedWordCount()) {
-				if (count < wordsPerCategory) {
+				if (count < Constants.dictionaryWordCountPerType) {
 					uniqueWords.add(word.getKey());
 					dictionaryWordStatistic.add(word.getKey(), naturalWordStatistic.getAbsoluteCount(word.getKey()));
 					count++;

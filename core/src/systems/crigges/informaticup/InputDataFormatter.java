@@ -1,75 +1,63 @@
 package systems.crigges.informaticup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+
+import systems.crigges.informaticup.CDictionary.DictionaryEntry;
 
 public class InputDataFormatter {
 
-	private double[] inputNeurons;
-	private CollectedDataSet dataSet;
-	private ArrayList<String> dictionary;
+	
+	
+	private double[] inputNeurons = new double[Constants.dictionaryWordCountPerType * Constants.numberOfWordCountTypes];
+	private Set<Entry<String, Integer>> dataSet;
+	private ArrayList<DictionaryEntry> dictionary;
 
-	private final int inputNeuronSize = 60003;
+	private LogisticInputCalculator logisticFunction;
 
-	public InputDataFormatter(CollectedDataSet dataSet, ArrayList<String> dictionary) {
+	public InputDataFormatter(Set<Entry<String, Integer>> dataSet, ArrayList<DictionaryEntry> dictionary, double functionValue) {
 		this.dictionary = dictionary;
 		this.dataSet = dataSet;
-		inputNeurons = normalizeInput(calculateInput());
+		this.logisticFunction = new LogisticInputCalculator(functionValue);
+		calculateInput();
 	}
-
-	private double[] normalizeInput(double[] ds) {
-		// Testen!
-		double[] normalizedNeurons = new double[ds.length];
-		double erwartungswertA = 0;
-		double varianzA = 0;
-		double partVarianz = 0;
-		for (Double inputNeuron : ds) {
-			erwartungswertA += inputNeuron;
-		}
-		erwartungswertA /= ds.length;
-		for (Double inputNeuron : ds) {
-			partVarianz += Math.pow((inputNeuron - erwartungswertA), 2);
-		}
-		varianzA = Math.sqrt(partVarianz / ds.length);
-		for (int i = 0; i < normalizedNeurons.length; i++) {
-			normalizedNeurons[i] = (ds[i] - erwartungswertA) / varianzA;
-		}
-		return normalizedNeurons;
-	}
-
+	
 	public double[] getInputNeurons() {
 		return inputNeurons;
 	}
 
-	private double[] calculateInput() {
+	private void calculateInput() {
 		// TODO: Still need to clarify special indexPosition, MISSING!
 		// TODO: ChangeValueSet
-		double[] input = new double[inputNeuronSize];
-		double averageFileSize = ((double) dataSet.repoSize) / dataSet.fileCount;
-		double mediaDensity = ((double) dataSet.mediaCount) / dataSet.fileCount;
-		double subscribeToStaredRatio = ((double) dataSet.subscribedCount) / dataSet.staredCount;
-		
-		input[0] = averageFileSize;
-		input[1] = mediaDensity;
-		input[2] = subscribeToStaredRatio;
-
-		for (Entry<String, Integer> entry : dataSet.endingCount) {
-			if(dictionary.contains(entry.getKey())){
-				input[dictionary.indexOf(entry.getKey()) + 3] = entry.getValue();
+		WordStatistic wordsInDictionary = new WordStatistic();
+		for(DictionaryEntry entryD : dictionary){
+			for(Entry<String, Integer> entry : dataSet){
+				if(entryD.getWord().equals(entry.getKey())){
+					wordsInDictionary.add(entry.getKey(), entry.getValue());
+				}
 			}
 		}
-
-		for (Entry<String, Integer> entry : dataSet.wordCount) {
-			input[dictionary.indexOf(entry.getKey()) + 3] = entry.getValue();
+		for(Entry<String, Double> entry : wordsInDictionary.getSet()){
+			double normalizedValue = entry.getValue() / wordsInDictionary.getTotalCount() * wordsInDictionary.getStatistic(entry.getKey()); 
+			inputNeurons[indexInDictionaryEntry(entry.getKey())] = logisticFunction.calc(normalizedValue);
 		}
+		
 
-		// Needs filter
-		for (Entry<String, Integer> entry : dataSet.fileNameCount) {
-			input[dictionary.indexOf(entry.getKey()) + 3] = entry.getValue();
+	}
+	
+
+	
+	private int indexInDictionaryEntry(String s){
+		for(int i = 0; i < dictionary.size(); i++){
+			DictionaryEntry d = dictionary.get(i);
+			if(d.getWord().equals(s)){
+				return i;
+			}
 		}
-
-		return input;
-
+		return -1;
 	}
 
 }

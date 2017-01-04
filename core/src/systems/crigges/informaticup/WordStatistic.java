@@ -69,6 +69,10 @@ public class WordStatistic {
 		return wordCount.get(word);
 	}
 
+	public double getTotalCount(){
+		return totalCount;
+	}
+	
 	public Set<Entry<String, Double>> getSet() {
 		return wordCount.entrySet();
 	}
