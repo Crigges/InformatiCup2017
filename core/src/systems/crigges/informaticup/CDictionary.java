@@ -33,6 +33,13 @@ public class CDictionary {
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			unifiedGroupDictonary.put(type, new WordUnifier());
 		}
+		for (Repository r : repositorys) {
+			try {
+				unifiedGroupDictonary.get(r.getTyp()).add(RepoCacher.get(r.getName()).getWordCount());
+			} catch (IOException | InterruptedException | ExecutionException e) {
+				// skip for now
+			}
+		}
 		generate();
 		SerializeHelper.serialize("./assets/dictionary.ser", dictionaryWords);
 	}
@@ -67,13 +74,7 @@ public class CDictionary {
 	}
 
 	private void generate() {
-		for (Repository r : repositorys) {
-			try {
-				unifiedGroupDictonary.get(r.getTyp()).add(RepoCacher.get(r.getName()).getWordCount());
-			} catch (IOException | InterruptedException | ExecutionException e) {
-				// skip for now
-			}
-		}
+		
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			WordUnifier unifier = unifiedGroupDictonary.get(type);
 			unifier.finish(defaultUnifierStrength);
@@ -98,7 +99,6 @@ public class CDictionary {
 				}
 			}
 		}
-		double d = 0;
 		for(String s : uniqueWords){
 			dictionaryWords.add(new DictionaryEntry(s, dictionaryWordStatistic.getStatistic(s)));
 		}
