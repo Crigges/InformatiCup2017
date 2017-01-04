@@ -23,6 +23,16 @@ public class WordStatistic {
 			}
 		}
 	}
+	
+	public void add(String word, double count){
+		totalCount += count;
+		Double content = wordCount.get(word);
+		if (content == null || content == 0) {
+			wordCount.put(word, count);
+		} else {
+			wordCount.put(word, content + count);
+		}
+	}
 
 	public void addDouble(Set<Entry<String, Double>> entrys) {
 		for (Entry<String, Double> e : entrys) {
@@ -43,13 +53,20 @@ public class WordStatistic {
 	}
 
 	public void remove(String word) {
-		totalCount -= wordCount.get(word);
-		wordCount.remove(word);
+		Double entry = wordCount.get(word);
+		if(entry != null){
+			totalCount -= entry;
+			wordCount.remove(word);
+		}
 	}
 
 	public double getStatistic(String word) {
 		double count = wordCount.get(word);
 		return count / totalCount;
+	}
+	
+	public double getAbsoluteCount(String word){
+		return wordCount.get(word);
 	}
 
 	public Set<Entry<String, Double>> getSet() {
