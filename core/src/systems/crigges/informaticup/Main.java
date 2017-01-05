@@ -14,26 +14,20 @@ import systems.crigges.informaticup.InputFileReader.Repository;
 
 public class Main {
 
-	private static final String repositoryInputPath = "assets\\Repositorys.txt";
-	private static final String testRepositoryInputPath = "assets\\TestRepositorys.txt";
-	private static final String dictionaryInputPath = "assets\\dictionary.ser";
-	private static final String neuralNetworkInputPath = "assets\\neuralNetwork.nn";
-
 	public static void main(String[] args) throws Exception {
-		String testRepositoryInputPath = null;
+		File testRepositoryLocation = null;
 		if(args.length > 1){
 			System.out.println("Invalid Input");
 			return;
 		}else if(args.length == 0){
-			testRepositoryInputPath = Main.testRepositoryInputPath;	
+			testRepositoryLocation = Constants.testRepositoryLocation;	
 		}else{
-			testRepositoryInputPath = args[0];
+			testRepositoryLocation = new File(args[0]);
 		}
 		ClassifierNN neuralNetwork;
-		File fileNN = new File(neuralNetworkInputPath);
-		if(fileNN.exists()){
+		if(testRepositoryLocation.exists()){
 			try {
-				neuralNetwork = SerializeHelper.deserialize(neuralNetworkInputPath);
+				neuralNetwork = SerializeHelper.deserialize(Constants.neuralNetworkLocation);
 			} catch (Exception e2) {
 				neuralNetwork = createNeuralNetwork();
 			}
@@ -42,9 +36,9 @@ public class Main {
 		}
 		
 		try{
-			File inputFile = new File(testRepositoryInputPath);
+			File inputFile = Constants.testRepositoryLocation;
 			String outputFileName = inputFile.getParentFile().getAbsolutePath() + "/" + inputFile.getName().substring(0, inputFile.getName().indexOf(".")) + "output.txt";
-			List<Repository> repositorys = new InputFileReader(new File(testRepositoryInputPath)).getRepositorysAndTypes();
+			List<Repository> repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
 			OutputFileWriter writer = new OutputFileWriter(new File(outputFileName));
 			for (Repository rp : repositorys) {
 				RepositoryTyp type = neuralNetwork.classify(RepoCacher.get(rp.getName()).getCollectedDataSet());
@@ -59,8 +53,8 @@ public class Main {
 	}
 
 	private static ClassifierNN createNeuralNetwork() throws Exception {
-		ArrayList<DictionaryEntry> dictionary = SerializeHelper.deserialize(dictionaryInputPath);
-		List<Repository> repositorys = new InputFileReader(new File(repositoryInputPath)).getRepositorysAndTypes();
+		ArrayList<DictionaryEntry> dictionary = SerializeHelper.deserialize(Constants.wordDictionaryLocation);
+		List<Repository> repositorys = new InputFileReader(Constants.learnRepositoryLocation).getRepositorysAndTypes();
 		Set<CollectedDataSet> dataSetAll = new HashSet<>();
 		for (Repository rp : repositorys) {
 			dataSetAll.add(RepoCacher.get(rp.getName()).getCollectedDataSet());
