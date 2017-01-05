@@ -14,7 +14,7 @@ public class LogisticInputCalculator {
 	
 	public static void main(String[] args) {
 		LogisticInputCalculator in = new LogisticInputCalculator(130);
-		System.out.println(in.calc(1.01));
+		System.out.println(in.calc(1.00));
 		System.out.println(in.calc(0.99));
 	}
 
