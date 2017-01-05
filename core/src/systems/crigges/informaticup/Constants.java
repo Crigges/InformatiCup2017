@@ -12,7 +12,7 @@ public class Constants {
 	public static final int fileNameDictionaryWordCountPerType = 30;
 	public static final File fileNameDictionaryLocation = new File("./assets/fileNameDictionary.ser");
 	
-	public static final double fileEndingDictionaryIntersectionStrength = 0.25;
+	public static final double fileEndingDictionaryIntersectionStrength = 0.08;
 	public static final int fileEndingDictionaryWordCountPerType = 30;
 	public static final File fileEndingDictionaryLocation = new File("./assets/fileEndingDictionary.ser");
 

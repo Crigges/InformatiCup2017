@@ -121,8 +121,14 @@ public class GithubRepoCrawler implements Serializable {
 	private void calcWordCount(){
 		WordCounter wordCounter = new WordCounter();
 		for (VirtualFile f : fileList) {
-			try {
-				if (f.type == SuperMimeType.Text) {
+			try {		
+				if (f.name.toLowerCase().equals("readme.md")) {
+					StringBuilder builder = new StringBuilder();
+					for(int i = 1; i<=5; i++){
+						builder.append(new String(f.data));
+					}
+					wordCounter.feed(builder.toString());
+				} else if (f.type == SuperMimeType.Text) {
 					wordCounter.feed(new String(f.data));
 				} else if (f.type == SuperMimeType.Word) {
 					DocxAnalyzer ana = new DocxAnalyzer(f.data);
