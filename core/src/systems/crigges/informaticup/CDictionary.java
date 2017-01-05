@@ -21,11 +21,9 @@ public class CDictionary {
 	private HashMap<RepositoryTyp, WordStatistic> groupWordStatistic = new HashMap<>();
 	private ArrayList<DictionaryEntry> dictionaryWords = new ArrayList<>();
 	private WordStatistic naturalWordStatistic = new WordStatistic();
-	private List<Repository> repositorys;
-
-
+	
+	
 	public CDictionary(List<Repository> repositorys) throws IOException {
-		this.repositorys = repositorys;
 		List<LoadedRepository> crawlers = new ArrayList<>();
 		
 		for (Repository r : repositorys) {
@@ -163,14 +161,14 @@ public class CDictionary {
 	}
 
 	public static void main(String[] args) throws Exception {
-//		List<Repository> list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
-//		new CDictionary(list);
+		List<Repository> list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
+		new CDictionary(list);
 //		for (String word : words) {
 //			System.out.println(word);
 //		}
-		ArrayList<DictionaryEntry> dictionaryWords = SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
-		for(DictionaryEntry entry : dictionaryWords){
-			System.out.println(entry);
-		}
+//		ArrayList<DictionaryEntry> dictionaryWords = SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
+//		for(DictionaryEntry entry : dictionaryWords){
+//			System.out.println(entry);
+//		}
 	}
 }
