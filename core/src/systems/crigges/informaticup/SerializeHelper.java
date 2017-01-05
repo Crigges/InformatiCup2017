@@ -13,9 +13,7 @@ import org.nustaq.serialization.FSTObjectOutput;
 
 public class SerializeHelper {
 
-	public static void serialize(String pfad,  Object input) throws IOException{
-		
-		File f = new File(pfad);
+	public static void serialize(File f,  Object input) throws IOException{
 		f.createNewFile();
 		FSTObjectOutput out = new FSTObjectOutput(new FileOutputStream(f));
 		out.writeObject(input);
@@ -25,9 +23,8 @@ public class SerializeHelper {
 	
 	
 	@SuppressWarnings("unchecked")
-	public static <T> T deserialize(String pfad){
+	public static <T> T deserialize(File f){
 		T words = null;
-		File f = new File(pfad);
 		try {
 			FSTObjectInput in = new FSTObjectInput(new FileInputStream(f));
 			words = (T) in.readObject();

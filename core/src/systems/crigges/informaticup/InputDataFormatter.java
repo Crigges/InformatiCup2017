@@ -9,7 +9,7 @@ import java.util.Set;
 import systems.crigges.informaticup.CDictionary.DictionaryEntry;
 
 public class InputDataFormatter {
-	private double[] inputNeurons = new double[Constants.dictionaryWordCountPerType * Constants.numberOfWordCountTypes];
+	private double[] inputNeurons;// = new double[Constants.dictionaryWordCountPerType * Constants.numberOfWordCountTypes];
 	private Set<Entry<String, Integer>> dataSet;
 	private ArrayList<DictionaryEntry> dictionary;
 
