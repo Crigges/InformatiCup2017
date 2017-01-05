@@ -38,6 +38,7 @@ public class Main {
 		try{
 			File inputFile = Constants.testRepositoryLocation;
 			String outputFileName = inputFile.getParentFile().getAbsolutePath() + "/" + inputFile.getName().substring(0, inputFile.getName().indexOf(".")) + "output.txt";
+			System.out.println(outputFileName);
 			List<Repository> repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
 			OutputFileWriter writer = new OutputFileWriter(new File(outputFileName));
 			for (Repository rp : repositorys) {
@@ -47,19 +48,28 @@ public class Main {
 			}
 			writer.close();
 		}catch(Exception e2){
-			System.out.println("Could not find File for TestRepositorys");
+			e2.printStackTrace();
 		}
 		
 	}
 
 	private static ClassifierNN createNeuralNetwork() throws Exception {
-		ArrayList<DictionaryEntry> dictionary = SerializeHelper.deserialize(Constants.wordDictionaryLocation);
-		List<Repository> repositorys = new InputFileReader(Constants.learnRepositoryLocation).getRepositorysAndTypes();
+		ArrayList<DictionaryEntry> fileNameDictionary = SerializeHelper.deserialize(Constants.fileNameDictionaryLocation);
+		ArrayList<DictionaryEntry> fileEndingDictionary = SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
+		ArrayList<DictionaryEntry> wordDictionary = SerializeHelper.deserialize(Constants.wordDictionaryLocation);
+		List<Repository> repositorys = new InputFileReader(Constants.trainingRepositoryLocation).getRepositorysAndTypes();
 		Set<CollectedDataSet> dataSetAll = new HashSet<>();
 		for (Repository rp : repositorys) {
-			dataSetAll.add(RepoCacher.get(rp.getName()).getCollectedDataSet());
+			CollectedDataSet dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
+			dataSetAll.add(dataSet);
 		}
-		return new ClassifierNN(dataSetAll, dictionary);
+		ClassifierConfiguration configuration = new ClassifierConfiguration();
+		configuration.collectedDataSet = dataSetAll;
+		configuration.endingDictionary = fileEndingDictionary;
+		configuration.fileNameDictionary = fileNameDictionary;
+		configuration.wordDictionary = wordDictionary;
+		
+		return new ClassifierNN(dataSetAll, configuration);
 
 	}
 }

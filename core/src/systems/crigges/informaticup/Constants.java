@@ -22,9 +22,9 @@ public class Constants {
 	
 	public static final int numberOfNeuronOutput = 7;
 	
-	public static final File learnRepositoryLocation = new File("./assets/Repositorys.txt");
+	public static final File trainingRepositoryLocation = new File("./assets/Repositorys.txt");
 	public static final File testRepositoryLocation = new File("./assets/TestRepositorys.txt");
-	public static final File neuralNetworkLocation = new File("./assets/neuralNetwork.nn");
+	public static final File neuralNetworkLocation = new File("./assets/classifierNN.nnet");
 	
 
 }

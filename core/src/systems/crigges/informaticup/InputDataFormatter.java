@@ -1,15 +1,20 @@
 package systems.crigges.informaticup;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import systems.crigges.informaticup.CDictionary.DictionaryEntry;
+import systems.crigges.informaticup.InputFileReader.Repository;
 
 public class InputDataFormatter {
 	private double[] inputNeurons;
@@ -65,28 +70,46 @@ public class InputDataFormatter {
 	}
 	
 	public static void main(String[] args) {
-		ArrayList<DictionaryEntry> dictionary = SerializeHelper.deserialize("assets\\dictionary.ser");
-		CollectedDataSet dataSet = null;
+		ArrayList<DictionaryEntry> fileNameDictionary = null;
+		ArrayList<DictionaryEntry> fileEndingDictionary = null;
+		ArrayList<DictionaryEntry> wordDictionary = null;
+		List<Repository> repositorys = null;
 		try {
-			dataSet = RepoCacher.get("https://github.com/ericfischer/housing-inventory").getCollectedDataSet();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
+			fileNameDictionary = SerializeHelper.deserialize(Constants.fileNameDictionaryLocation);
+			fileEndingDictionary = SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
+			wordDictionary = SerializeHelper.deserialize(Constants.wordDictionaryLocation);
+			repositorys = new InputFileReader(Constants.trainingRepositoryLocation).getRepositorysAndTypes();
+		} catch (Exception e){
 			e.printStackTrace();
 		}
-		InputDataFormatter ds=  new InputDataFormatter(dataSet.wordCount, dictionary, 30);
-		for(int i = 0 ; i< ds.getInputNeurons().length; i++){
-			
-			System.out.println(dictionary.get(i).getWord() + " " + ds.getInputNeurons()[i]);
+		
+		Set<CollectedDataSet> dataSetAll = new HashSet<>();
+		for (Repository rp : repositorys) {
+			CollectedDataSet dataSet = null;
+			try {
+				dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dataSetAll.add(dataSet);
 		}
+		ClassifierConfiguration configuration = new ClassifierConfiguration();
+		configuration.collectedDataSet = dataSetAll;
+		configuration.endingDictionary = fileEndingDictionary;
+		configuration.fileNameDictionary = fileNameDictionary;
+		configuration.wordDictionary = wordDictionary;
+		
+		new ClassifierNN(dataSetAll, configuration);
 	}
 
 }

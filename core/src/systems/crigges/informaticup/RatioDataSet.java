@@ -21,10 +21,12 @@ public class RatioDataSet {
 		double averageFileSize = ((double) dataSet.repoSize) / dataSet.fileCount;
 		double mediaDensity = ((double) dataSet.mediaCount) / dataSet.fileCount;
 		double subscribeToStaredRatio = ((double) dataSet.subscribedCount) / dataSet.staredCount;
+		double numberToWordRatio = ((double) dataSet.numberCount / dataSet.totalWordCount);
 
 		inputNeurons.add(averageFileSize);
 		inputNeurons.add(mediaDensity);
 		inputNeurons.add(subscribeToStaredRatio);
+		inputNeurons.add(numberToWordRatio);
 	}
 	
 	public static int getDefaultRatioCount(){
