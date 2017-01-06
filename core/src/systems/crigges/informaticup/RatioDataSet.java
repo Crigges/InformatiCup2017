@@ -18,18 +18,31 @@ public class RatioDataSet {
 	}
 
 	private void calculateInput() {
-		double averageFileSize = ((double) dataSet.repoSize) / dataSet.fileCount;
-		double mediaDensity = ((double) dataSet.mediaCount) / dataSet.fileCount;
-		double subscribeToStaredRatio = ((double) dataSet.subscribedCount) / dataSet.staredCount;
-		double numberToWordRatio = ((double) dataSet.numberCount / dataSet.totalWordCount);
+		double averageFileSize = 0;
+		double mediaDensity = 0;
+		double subscribeToStaredRatio = 0;
+		double numberToWordRatio = 0;
+
+		if (dataSet.fileCount > 0) {
+			averageFileSize = (double) (dataSet.repoSize) / dataSet.fileCount;
+		}
+		if (dataSet.fileCount > 0) {
+			mediaDensity = ((double) dataSet.mediaCount) / dataSet.fileCount;
+		}
+		if (dataSet.staredCount > 0) {
+			subscribeToStaredRatio = ((double) dataSet.subscribedCount) / dataSet.staredCount;
+		}
+		if (dataSet.totalWordCount > 0) {
+			numberToWordRatio = ((double) dataSet.numberCount / dataSet.totalWordCount);
+		}
 
 		inputNeurons.add(averageFileSize);
 		inputNeurons.add(mediaDensity);
 		inputNeurons.add(subscribeToStaredRatio);
 		inputNeurons.add(numberToWordRatio);
 	}
-	
-	public static int getDefaultRatioCount(){
+
+	public static int getDefaultRatioCount() {
 		CollectedDataSet dataSet = new CollectedDataSet();
 		dataSet.fileCount = 1;
 		dataSet.mediaCount = 1;

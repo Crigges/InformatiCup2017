@@ -1,20 +1,16 @@
 package systems.crigges.informaticup;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import systems.crigges.informaticup.CDictionary.DictionaryEntry;
-import systems.crigges.informaticup.InputFileReader.Repository;
 
 public class InputDataFormatter {
 	private double[] inputNeurons;
@@ -28,7 +24,7 @@ public class InputDataFormatter {
 		this.dictionary = dictionary;
 		this.dataSet = dataSet;
 		this.logisticFunction = new LogisticInputCalculator(functionValue);
-		this.inputNeurons =  new double[dictionary.size()];
+		this.inputNeurons = new double[2 * dictionary.size()];
 		calculateInput();
 	}
 
@@ -37,12 +33,14 @@ public class InputDataFormatter {
 	}
 
 	private void calculateInput() {
-		//TODO: Still need to clarify special indexPosition, MISSING!
-		//TODO: ChangeValueSet
-		for(int i = 0;  i < inputNeurons.length; i++){
-			inputNeurons[i] = -1;
+		// TODO: Still need to clarify special indexPosition, MISSING!
+		// TODO: ChangeValueSet
+		for (int i = 0; i < inputNeurons.length; i++) {
+			if (i % 2 == 0) {
+				inputNeurons[i] = 1;
+			}
 		}
-		
+
 		WordStatistic wordsInDictionary = new WordStatistic();
 		for (DictionaryEntry entryD : dictionary) {
 			for (Entry<String, Integer> entry : dataSet) {
@@ -51,10 +49,21 @@ public class InputDataFormatter {
 				}
 			}
 		}
-		
+
 		for (Entry<String, Double> entry : wordsInDictionary.getSet()) {
-			double normalizedValue = wordsInDictionary.getStatistic(entry.getKey()) /dictionary.get(indexInDictionaryEntry(entry.getKey())).getOccurence();
-			inputNeurons[indexInDictionaryEntry(entry.getKey())] = logisticFunction.calc(normalizedValue);
+			double normalizedValue = wordsInDictionary.getStatistic(entry.getKey())
+					/ dictionary.get(indexInDictionaryEntry(entry.getKey())).getOccurence();
+			double funcnorm = logisticFunction.calc(normalizedValue);
+			if (funcnorm < 0) {
+				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2] = Math.abs(funcnorm);
+			} else {
+				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2 + 1] = funcnorm;
+				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2] = 0;
+			}
+//			System.out.println(funcnorm + "smaller" + "   " + indexInDictionaryEntry(entry.getKey()) * 2 );
+//			System.out.println(funcnorm + "bigger" + "  " + indexInDictionaryEntry(entry.getKey()) * 2 + 1);
+//			inputNeurons[indexInDictionaryEntry(entry.getKey())] = logisticFunction.calc(normalizedValue);
+//			System.out.println(logisticFunction.calc(normalizedValue));
 		}
 
 	}
@@ -68,48 +77,21 @@ public class InputDataFormatter {
 		}
 		return -1;
 	}
-	
+
 	public static void main(String[] args) {
-		ArrayList<DictionaryEntry> fileNameDictionary = null;
-		ArrayList<DictionaryEntry> fileEndingDictionary = null;
-		ArrayList<DictionaryEntry> wordDictionary = null;
-		List<Repository> repositorys = null;
+		CollectedDataSet dataSet = null;
+		ArrayList<DictionaryEntry> dictionary = null;
 		try {
-			fileNameDictionary = SerializeHelper.deserialize(Constants.fileNameDictionaryLocation);
-			fileEndingDictionary = SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
-			wordDictionary = SerializeHelper.deserialize(Constants.wordDictionaryLocation);
-			repositorys = new InputFileReader(Constants.trainingRepositoryLocation).getRepositorysAndTypes();
-		} catch (Exception e){
+			dataSet = RepoCacher.get("https://github.com/ericfischer/housing-inventory").getCollectedDataSet();
+			dictionary = SerializeHelper.deserialize(new File("assets\\dictionary.ser"));
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		Set<CollectedDataSet> dataSetAll = new HashSet<>();
-		for (Repository rp : repositorys) {
-			CollectedDataSet dataSet = null;
-			try {
-				dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			dataSetAll.add(dataSet);
+		InputDataFormatter ds = new InputDataFormatter(dataSet.wordCount, dictionary, 0.2);
+		for (int i = 0; i < dictionary.size(); i++) {
+
+			System.out.println(dictionary.get(i).getWord() + " " + ds.getInputNeurons()[i *2] + " " + ds.getInputNeurons()[i * 2 +1]);
 		}
-		ClassifierConfiguration configuration = new ClassifierConfiguration();
-		configuration.collectedDataSet = dataSetAll;
-		configuration.endingDictionary = fileEndingDictionary;
-		configuration.fileNameDictionary = fileNameDictionary;
-		configuration.wordDictionary = wordDictionary;
-		
-		new ClassifierNN(dataSetAll, configuration);
 	}
 
 }
