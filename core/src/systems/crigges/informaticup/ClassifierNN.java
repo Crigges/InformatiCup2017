@@ -1,5 +1,6 @@
 package systems.crigges.informaticup;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -61,7 +62,12 @@ public class ClassifierNN {
 			}
 		}
 
-		neuralNetwork.save("assets//classifierNN.nnet");
+		neuralNetwork.save(Constants.neuralNetworkLocation.getAbsolutePath());
+	}
+	
+	public ClassifierNN(MultiLayerPerceptron neuralNetwork, ClassifierConfiguration configuration){
+		this.neuralNetwork = neuralNetwork;
+		this.configuration = configuration;
 	}
 
 	private void createNeuronStructure() {
@@ -172,12 +178,15 @@ public class ClassifierNN {
 			}
 		}
 		ClassifierConfiguration configuration = new ClassifierConfiguration();
-		configuration.collectedDataSet = dataSetAll;
 		configuration.endingDictionary = fileEndingDictionary;
 		configuration.fileNameDictionary = fileNameDictionary;
 		configuration.wordDictionary = wordDictionary;
 
 		new ClassifierNN(dataSetAll, configuration);
+	}
+
+	public static ClassifierNN loadFromFile(File neuralnetworklocation) throws ClassNotFoundException, IOException {
+		return new ClassifierNN((MultiLayerPerceptron) NeuralNetwork.createFromFile(neuralnetworklocation), ClassifierConfiguration.getDefaultConfiguration());
 	}
 
 }

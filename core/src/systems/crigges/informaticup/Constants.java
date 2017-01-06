@@ -23,7 +23,6 @@ public class Constants {
 	
 	public static final File trainingRepositoryLocation = new File("./assets/Repositorys.txt");
 	public static final File testRepositoryLocation = new File("./assets/TestRepositorys.txt");
-	public static final File neuralNetworkLocation = new File("./assets/classifierNN.nnet");
-	
+	public static final File neuralNetworkLocation = new File("./assets/classifierNN.nnet");	
 
 }

@@ -19,7 +19,7 @@ public class InputFileReader {
 		analyseRepositoryInput();
 	}
 
-	static class Repository {
+	static class Repository implements Comparable<Repository>{
 
 		private String name;
 		private RepositoryTyp typ;
@@ -40,6 +40,17 @@ public class InputFileReader {
 		public int getTypeIndex() {
 			return typ.getValue();
 		}
+
+		@Override
+		public boolean equals(Object obj) {
+			return name.equals(((Repository) obj).name);
+		}
+
+		@Override
+		public int compareTo(Repository o) {
+			return name.compareTo(o.name);
+		}
+		
 	}
 
 	private void analyseRepositoryInput() throws Exception {

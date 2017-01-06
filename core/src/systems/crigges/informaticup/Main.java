@@ -24,10 +24,22 @@ public class Main {
 		} else {
 			testRepositoryLocation = new File(args[0]);
 		}
-		ClassifierNN neuralNetwork;
+		List<Repository> repositorys;
 		if (testRepositoryLocation.exists()) {
 			try {
-				neuralNetwork = SerializeHelper.deserialize(Constants.neuralNetworkLocation);
+				repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
+			} catch (Exception e2) {
+				testRepositoryLocation = Constants.testRepositoryLocation;
+				repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
+			}
+		} else {
+			testRepositoryLocation = Constants.testRepositoryLocation;
+			repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
+		}
+		ClassifierNN neuralNetwork;
+		if (Constants.neuralNetworkLocation.exists()) {
+			try {
+				neuralNetwork = ClassifierNN.loadFromFile(Constants.neuralNetworkLocation);
 			} catch (Exception e2) {
 				neuralNetwork = createNeuralNetwork();
 			}
@@ -36,11 +48,10 @@ public class Main {
 		}
 
 		try {
-			File inputFile = Constants.trainingRepositoryLocation;
-			String outputFileName = inputFile.getParentFile().getAbsolutePath() + "/"
-					+ inputFile.getName().substring(0, inputFile.getName().indexOf(".")) + "output.txt";
+			String outputFileName = testRepositoryLocation.getParentFile().getAbsolutePath() + "/"
+					+ testRepositoryLocation.getName().substring(0, testRepositoryLocation.getName().indexOf(".")) + "output.txt";
 			System.out.println(outputFileName);
-			List<Repository> repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
+			
 			OutputFileWriter writer = new OutputFileWriter(new File(outputFileName));
 			for (Repository rp : repositorys) {
 				RepositoryTyp type = neuralNetwork.classify(RepoCacher.get(rp.getName()).getCollectedDataSet());
@@ -66,13 +77,11 @@ public class Main {
 		for (Repository rp : repositorys) {
 			try {
 				CollectedDataSet dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
+				dataSet.repositoryType = rp.getTyp();
 				dataSetAll.add(dataSet);
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
+			} catch (Exception e2) {}
 		}
 		ClassifierConfiguration configuration = new ClassifierConfiguration();
-		configuration.collectedDataSet = dataSetAll;
 		configuration.endingDictionary = fileEndingDictionary;
 		configuration.fileNameDictionary = fileNameDictionary;
 		configuration.wordDictionary = wordDictionary;

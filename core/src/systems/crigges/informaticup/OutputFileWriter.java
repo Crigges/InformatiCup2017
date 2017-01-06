@@ -19,6 +19,7 @@ public class OutputFileWriter {
 	}
 	
 	public void close(){
+		writer.flush();
 		writer.close();
 	}
 }

@@ -1,7 +1,6 @@
 package systems.crigges.informaticup;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,71 +20,71 @@ public class CDictionary {
 	private HashMap<RepositoryTyp, WordStatistic> groupWordStatistic = new HashMap<>();
 	private ArrayList<DictionaryEntry> dictionaryWords = new ArrayList<>();
 	private WordStatistic naturalWordStatistic = new WordStatistic();
-	
-	
+
 	public CDictionary(List<Repository> repositorys) throws IOException {
 		List<LoadedRepository> crawlers = new ArrayList<>();
-		
+
 		for (Repository r : repositorys) {
 			try {
 				crawlers.add(new LoadedRepository(RepoCacher.get(r.getName()), r.getTyp()));
-			} catch (IOException | InterruptedException | ExecutionException e) {/**ignore empty or protected repositorys for now */}
+			} catch (IOException | InterruptedException | ExecutionException e) {
+				/** ignore empty or protected repositorys for now */
+			}
 		}
-		
 		clear();
-		for(LoadedRepository crawler : crawlers){
+		for (LoadedRepository crawler : crawlers) {
 			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
 		}
 		generate(Constants.wordDictionaryIntersectionStrength, Constants.wordDictionaryWordCountPerType);
 		SerializeHelper.serialize(Constants.wordDictionaryLocation, dictionaryWords);
-		
+
 		clear();
-		for(LoadedRepository crawler : crawlers){
+		for (LoadedRepository crawler : crawlers) {
 			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());
 		}
 		generate(Constants.fileEndingDictionaryIntersectionStrength, Constants.fileEndingDictionaryWordCountPerType);
 		SerializeHelper.serialize(Constants.fileEndingDictionaryLocation, dictionaryWords);
-		
+
 		clear();
-		for(LoadedRepository crawler : crawlers){
+		for (LoadedRepository crawler : crawlers) {
 			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileNameCount());
 		}
 		generate(Constants.fileNameDictionaryIntersectionStrength, Constants.fileNameDictionaryWordCountPerType);
 		SerializeHelper.serialize(Constants.fileNameDictionaryLocation, dictionaryWords);
 	}
-	
-	private static class LoadedRepository{
+
+	private static class LoadedRepository {
 		private GithubRepoCrawler crawler;
 		private RepositoryTyp type;
-		
+
 		private LoadedRepository(GithubRepoCrawler crawler, RepositoryTyp type) {
 			this.crawler = crawler;
 			this.type = type;
 		}
-		
+
 		private RepositoryTyp getType() {
 			return type;
 		}
-		
-		private Set<Entry<String, Integer>> getWordCount(){
+
+		private Set<Entry<String, Integer>> getWordCount() {
 			return crawler.getWordCount();
 		}
-		
-		private Set<Entry<String, Integer>> getFileEndingCount(){
+
+		private Set<Entry<String, Integer>> getFileEndingCount() {
 			return crawler.getFileEndingCount();
 		}
-		
-		private Set<Entry<String, Integer>> getFileNameCount(){
+
+		private Set<Entry<String, Integer>> getFileNameCount() {
 			return crawler.getFileNameCount();
 		}
-		
+
 	}
-	
-	public static class DictionaryEntry implements Serializable, Comparable<DictionaryEntry>{
+
+	public static class DictionaryEntry implements Serializable, Comparable<DictionaryEntry> {
 		private static final long serialVersionUID = 1L;
 		private String word;
 		private double occurence;
-		
+
 		public DictionaryEntry(String word, double occurence) {
 			this.word = word;
 			this.occurence = occurence;
@@ -106,18 +105,18 @@ public class CDictionary {
 
 		@Override
 		public int compareTo(DictionaryEntry o) {
-			if(word.equals(o.word)){
+			if (word.equals(o.word)) {
 				return 0;
-			}else if(occurence > o.occurence){
+			} else if (occurence > o.occurence) {
 				return 1;
-			}else{
+			} else {
 				return -1;
 			}
-		}	
-		
+		}
+
 	}
-	
-	private void clear(){
+
+	private void clear() {
 		unifiedGroupDictonary.clear();
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			unifiedGroupDictonary.put(type, new WordUnifier());
@@ -125,10 +124,10 @@ public class CDictionary {
 		groupWordStatistic.clear();
 		dictionaryWords.clear();
 		naturalWordStatistic = new WordStatistic();
-		
+
 	}
 
-	private void generate(double intersectionStrength, int wordsPerType) {		
+	private void generate(double intersectionStrength, int wordsPerType) {
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			WordUnifier unifier = unifiedGroupDictonary.get(type);
 			unifier.finish(intersectionStrength);
@@ -148,13 +147,13 @@ public class CDictionary {
 					uniqueWords.add(word.getKey());
 					dictionaryWordStatistic.add(word.getKey(), naturalWordStatistic.getAbsoluteCount(word.getKey()));
 					count++;
-				} else{
+				} else {
 					break;
 				}
 			}
 		}
 		Set<DictionaryEntry> tempWordSet = new TreeSet<DictionaryEntry>();
-		for(String s : uniqueWords){
+		for (String s : uniqueWords) {
 			tempWordSet.add(new DictionaryEntry(s, dictionaryWordStatistic.getStatistic(s)));
 		}
 		dictionaryWords.addAll(tempWordSet);
@@ -163,12 +162,14 @@ public class CDictionary {
 	public static void main(String[] args) throws Exception {
 		List<Repository> list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
 		new CDictionary(list);
-//		for (String word : words) {
-//			System.out.println(word);
-//		}
-//		ArrayList<DictionaryEntry> dictionaryWords = SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
-//		for(DictionaryEntry entry : dictionaryWords){
-//			System.out.println(entry);
-//		}
+
+		// for (String word : words) {
+		// System.out.println(word);
+		// }
+		// ArrayList<DictionaryEntry> dictionaryWords =
+		// SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
+		// for(DictionaryEntry entry : dictionaryWords){
+		// System.out.println(entry);
+		// }
 	}
 }
