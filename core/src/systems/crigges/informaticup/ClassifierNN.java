@@ -30,23 +30,19 @@ import systems.crigges.informaticup.InputFileReader.Repository;
 public class ClassifierNN {
 
 	private ClassifierConfiguration configuration;
-	private int inputNeuronCount;
 	private DataSet trainingSet;
 	private MultiLayerPerceptron neuralNetwork;
 	
-	private int hiddenLayerNeuronCount = 3;
-	private double maxError = 0.42;
+	private int hiddenLayerNeuronCount = 7;
+	private double maxError = 0.01;
 	private double learningRate = 0.2;
-	private final double momentum = 0.7;
+	private final double momentum = 0.4;
 
 	public ClassifierNN(Set<CollectedDataSet> trainDataSet, ClassifierConfiguration configuration) {
 		this.configuration = configuration;
-		inputNeuronCount = configuration.endingDictionary.size() * 2 + configuration.fileNameDictionary.size() * 2
-				+ configuration.wordDictionary.size() * 2 + RatioDataSet.getDefaultRatioCount();
-		System.out.println(inputNeuronCount);
 		createNeuronStructure();
 
-		trainingSet = new DataSet(inputNeuronCount, Constants.numberOfNeuronOutput);
+		trainingSet = new DataSet(configuration.inputNeuronCount, Constants.numberOfNeuronOutput);
 		for (CollectedDataSet dataSet : trainDataSet) {
 			trainNetwork(dataSet);
 			System.out.println("A DataSettrainingConstruction finished");
@@ -72,7 +68,7 @@ public class ClassifierNN {
 
 	private void createNeuronStructure() {
 		neuralNetwork = new MultiLayerPerceptron(
-				Arrays.asList(inputNeuronCount, hiddenLayerNeuronCount, Constants.numberOfNeuronOutput),
+				Arrays.asList(configuration.inputNeuronCount, hiddenLayerNeuronCount, Constants.numberOfNeuronOutput),
 				TransferFunctionType.SIGMOID);
 		MomentumBackpropagation bp = new MomentumBackpropagation();
 		bp.setLearningRate(learningRate);
@@ -104,7 +100,7 @@ public class ClassifierNN {
 		InputDataFormatter formattedInputFolder = new InputDataFormatter(dataSet.fileNameCount,
 				configuration.fileNameDictionary, Constants.fileNameDictionarylogisticValue);
 
-		double[] input = new double[inputNeuronCount];
+		double[] input = new double[configuration.inputNeuronCount];
 
 		int count = 0;
 
@@ -122,10 +118,7 @@ public class ClassifierNN {
 		return input;
 	}
 
-	@SuppressWarnings("deprecation")
 	public RepositoryTyp classify(CollectedDataSet collectedDataSet) {
-		@SuppressWarnings("unchecked")
-		NeuralNetwork<IterativeLearning> neuralNetwork = NeuralNetwork.load("assets//classifier.nnet");
 		// set network input
 		neuralNetwork.setInput(getFormattedInput(collectedDataSet));
 		// calculate network
@@ -138,19 +131,14 @@ public class ClassifierNN {
 		ArrayList<Double> list = new ArrayList<>();
 		for (int i = 0; i < output.length; i++) {
 			list.add(output[i]);
+			System.out.println(i + " " + output[i]);
 		}
 		return RepositoryTyp.values()[list.indexOf(Collections.max(list))];
 	}
 
 	public static void main(String[] args) {
-		ArrayList<DictionaryEntry> fileNameDictionary = null;
-		ArrayList<DictionaryEntry> fileEndingDictionary = null;
-		ArrayList<DictionaryEntry> wordDictionary = null;
 		List<Repository> repositorys = null;
 		try {
-			fileNameDictionary = SerializeHelper.deserialize(Constants.fileNameDictionaryLocation);
-			fileEndingDictionary = SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
-			wordDictionary = SerializeHelper.deserialize(Constants.wordDictionaryLocation);
 			repositorys = new InputFileReader(Constants.trainingRepositoryLocation).getRepositorysAndTypes();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -177,12 +165,16 @@ public class ClassifierNN {
 				e.printStackTrace();
 			}
 		}
-		ClassifierConfiguration configuration = new ClassifierConfiguration();
-		configuration.endingDictionary = fileEndingDictionary;
-		configuration.fileNameDictionary = fileNameDictionary;
-		configuration.wordDictionary = wordDictionary;
 
-		new ClassifierNN(dataSetAll, configuration);
+		try {
+			new ClassifierNN(dataSetAll, ClassifierConfiguration.getDefaultConfiguration());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static ClassifierNN loadFromFile(File neuralnetworklocation) throws ClassNotFoundException, IOException {

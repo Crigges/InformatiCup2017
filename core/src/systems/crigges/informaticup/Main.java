@@ -54,9 +54,11 @@ public class Main {
 			
 			OutputFileWriter writer = new OutputFileWriter(new File(outputFileName));
 			for (Repository rp : repositorys) {
+				try{
 				RepositoryTyp type = neuralNetwork.classify(RepoCacher.get(rp.getName()).getCollectedDataSet());
 				writer.write(rp.getName(), type.toString());
 				System.out.println(rp.getName() + " " + type.toString());
+				}catch(Exception e){}
 			}
 			writer.close();
 		} catch (Exception e2) {
@@ -66,11 +68,6 @@ public class Main {
 	}
 
 	private static ClassifierNN createNeuralNetwork() throws Exception {
-		ArrayList<DictionaryEntry> fileNameDictionary = SerializeHelper
-				.deserialize(Constants.fileNameDictionaryLocation);
-		ArrayList<DictionaryEntry> fileEndingDictionary = SerializeHelper
-				.deserialize(Constants.fileEndingDictionaryLocation);
-		ArrayList<DictionaryEntry> wordDictionary = SerializeHelper.deserialize(Constants.wordDictionaryLocation);
 		List<Repository> repositorys = new InputFileReader(Constants.trainingRepositoryLocation)
 				.getRepositorysAndTypes();
 		Set<CollectedDataSet> dataSetAll = new HashSet<>();
@@ -81,12 +78,8 @@ public class Main {
 				dataSetAll.add(dataSet);
 			} catch (Exception e2) {}
 		}
-		ClassifierConfiguration configuration = new ClassifierConfiguration();
-		configuration.endingDictionary = fileEndingDictionary;
-		configuration.fileNameDictionary = fileNameDictionary;
-		configuration.wordDictionary = wordDictionary;
 
-		return new ClassifierNN(dataSetAll, configuration);
+		return new ClassifierNN(dataSetAll, ClassifierConfiguration.getDefaultConfiguration());
 
 	}
 }
