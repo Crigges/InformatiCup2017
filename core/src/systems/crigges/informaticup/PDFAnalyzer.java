@@ -1,16 +1,11 @@
 package systems.crigges.informaticup;
 
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import javax.imageio.ImageIO;
 
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -106,8 +101,6 @@ public class PDFAnalyzer {
 		for (Entry<String, Integer> e : pdf.getSortedWordCount()) {
 			System.out.println(e);
 		}
-		int i = 0;
-		 pdf.accessMetadata();
 	}
 
 }

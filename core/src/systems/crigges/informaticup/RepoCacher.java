@@ -4,24 +4,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
-
-import org.apache.commons.vfs2.impl.DefaultFileMonitor;
-import org.neuroph.util.NeuralNetworkCODEC;
 import org.nustaq.serialization.FSTConfiguration;
 import org.nustaq.serialization.FSTObjectInput;
 import org.nustaq.serialization.FSTObjectOutput;
-
-import com.badlogic.gdx.graphics.g3d.decals.Decal;
 
 import systems.crigges.informaticup.InputFileReader.Repository;
 
@@ -111,7 +102,7 @@ public class RepoCacher {
 	}
 	
 	private static void analyzeNew(String url, RepoLoadAction whenLoaded) throws InterruptedException, ExecutionException{
-		Future<GithubRepoCrawler> task = executor.submit(new AnalyzeNewTask(url, whenLoaded));
+		executor.submit(new AnalyzeNewTask(url, whenLoaded));
 	}
 
 	private static class AnalyzeNewTask implements Callable<GithubRepoCrawler> {

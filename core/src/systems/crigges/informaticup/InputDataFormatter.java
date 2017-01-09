@@ -1,15 +1,9 @@
 package systems.crigges.informaticup;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
-
 import systems.crigges.informaticup.CDictionary.DictionaryEntry;
 
 public class InputDataFormatter {

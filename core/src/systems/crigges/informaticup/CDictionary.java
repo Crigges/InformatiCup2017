@@ -162,14 +162,5 @@ public class CDictionary {
 	public static void main(String[] args) throws Exception {
 		List<Repository> list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
 		new CDictionary(list);
-
-		// for (String word : words) {
-		// System.out.println(word);
-		// }
-		// ArrayList<DictionaryEntry> dictionaryWords =
-		// SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
-		// for(DictionaryEntry entry : dictionaryWords){
-		// System.out.println(entry);
-		// }
 	}
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import systems.crigges.informaticup.CDictionary.DictionaryEntry;
 import systems.crigges.informaticup.InputFileReader.Repository;
 
 public class RatioDataSet {
