@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import systems.crigges.informaticup.general.Constants;
 import systems.crigges.informaticup.io.SerializeHelper;
 import systems.crigges.informaticup.wordanalytics.Dictionary;
-import systems.crigges.informaticup.wordanalytics.Dictionary.DictionaryEntry;
+import systems.crigges.informaticup.wordanalytics.DictionaryEntry;
 
 public class ClassifierConfiguration {
 	

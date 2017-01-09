@@ -9,8 +9,8 @@ import systems.crigges.informaticup.general.CollectedDataSet;
 import systems.crigges.informaticup.io.RepoCacher;
 import systems.crigges.informaticup.io.SerializeHelper;
 import systems.crigges.informaticup.wordanalytics.Dictionary;
+import systems.crigges.informaticup.wordanalytics.DictionaryEntry;
 import systems.crigges.informaticup.wordanalytics.WordStatistic;
-import systems.crigges.informaticup.wordanalytics.Dictionary.DictionaryEntry;
 
 public class InputDataFormatter {
 	private double[] inputNeurons;

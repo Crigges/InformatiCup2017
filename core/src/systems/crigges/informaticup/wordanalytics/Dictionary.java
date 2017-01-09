@@ -36,21 +36,21 @@ public class Dictionary {
 	private WordStatistic naturalWordStatistic = new WordStatistic();
 
 	/**
-	 * Creates a new dictionary out of the given repositorys.
+	 * Creates a new dictionary out of the given repositories.
 	 * 
-	 * @param repositorys
-	 *            Repositorys used to create the dictionary
+	 * @param repositories
+	 *            Repositories used to create the dictionary
 	 * @throws IOException
 	 *             if Dictionary could not be written to disc
 	 * @see Constants
 	 */
-	public Dictionary(List<RepositoryDescriptor> repositorys) throws IOException {
+	public Dictionary(List<RepositoryDescriptor> repositories) throws IOException {
 		List<LoadedRepository> crawlers = new ArrayList<>();
-		for (RepositoryDescriptor r : repositorys) {
+		for (RepositoryDescriptor r : repositories) {
 			try {
 				crawlers.add(new LoadedRepository(RepoCacher.get(r.getName()), r.getTyp()));
 			} catch (IOException | InterruptedException | ExecutionException e) {
-				/** ignore empty or protected repositorys for now */
+				/** ignore empty or protected repositories for now */
 			}
 		}
 		clear();
@@ -77,6 +77,7 @@ public class Dictionary {
 
 	/**
 	 * Simple wrapper class to bind the {@link RepositoryTyp} to the
+	 * {@link RepositoryCrawler}
 	 */
 	private static class LoadedRepository {
 		private RepositoryCrawler crawler;
@@ -105,42 +106,9 @@ public class Dictionary {
 
 	}
 
-	public static class DictionaryEntry implements Serializable, Comparable<DictionaryEntry> {
-		private static final long serialVersionUID = 1L;
-		private String word;
-		private double occurence;
-
-		public DictionaryEntry(String word, double occurence) {
-			this.word = word;
-			this.occurence = occurence;
-		}
-
-		public String getWord() {
-			return word;
-		}
-
-		public double getOccurence() {
-			return occurence;
-		}
-
-		@Override
-		public String toString() {
-			return "DictionaryEntry [word=" + word + ", occurence=" + occurence + "]";
-		}
-
-		@Override
-		public int compareTo(DictionaryEntry o) {
-			if (word.equals(o.word)) {
-				return 0;
-			} else if (occurence > o.occurence) {
-				return 1;
-			} else {
-				return -1;
-			}
-		}
-
-	}
-
+	/**
+	 * Clears the previous generated Dictionary and prepares a new one.
+	 */
 	private void clear() {
 		unifiedGroupDictonary.clear();
 		for (RepositoryTyp type : RepositoryTyp.values()) {
@@ -152,6 +120,18 @@ public class Dictionary {
 
 	}
 
+	/**
+	 * Generates the dictionary using the words inside the
+	 * <tt>unifiedGroupDictonary</tt> with the given parameters.
+	 * 
+	 * @param intersectionStrength
+	 *            Defines the intersection strength between all repositories of
+	 *            the same type that's needed for a word to be kept for further
+	 *            analysis.
+	 * @param wordsPerType
+	 *            Words per {@link RepositoryTyp} included into the dictionary.
+	 *            Duplicates does count.
+	 */
 	private void generate(double intersectionStrength, int wordsPerType) {
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			WordUnifier unifier = unifiedGroupDictonary.get(type);
@@ -184,8 +164,18 @@ public class Dictionary {
 		dictionaryWords.addAll(tempWordSet);
 	}
 
+	/**
+	 * Main method to generate a dictionary using the parameter defined inside
+	 * {@link Constants}
+	 * 
+	 * @param args
+	 *            All <tt>args</tt> are ignored
+	 * @throws Exception
+	 *             if anything major goes wrong
+	 */
 	public static void main(String[] args) throws Exception {
-		List<RepositoryDescriptor> list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
+		List<RepositoryDescriptor> list = new InputFileReader(Constants.trainingRepositoryLocation)
+				.getRepositorysAndTypes();
 		new Dictionary(list);
 	}
 }
