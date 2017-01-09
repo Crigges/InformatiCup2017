@@ -1,5 +1,6 @@
 package systems.crigges.informaticup.wordanalytics;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
@@ -8,12 +9,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class WordCounter {
+/**
+ * This class offers multithreaded word counting for unformatted Strings
+ * 
+ * @author Rami Aly & Crigges
+ */
+public class WordCounter implements Closeable {
 	private Scanner scanner;
 	private PipedInputStream in;
 	private PipedOutputStream out;
@@ -22,7 +27,14 @@ public class WordCounter {
 	private long totalWordCount = 0;
 	private long numberCount = 0;
 
-	public WordCounter(PipedOutputStream out) {
+	/**
+	 * Private constructor which setups the streams and <tt>Scanner</tt> and
+	 * also starts the analyze thread.
+	 * 
+	 * @param out
+	 *            The piped stream where the formatted strings are written to
+	 */
+	private WordCounter(PipedOutputStream out) {
 		this.out = out;
 		try {
 			in = new PipedInputStream(out);
@@ -35,10 +47,20 @@ public class WordCounter {
 		analyzer.start();
 	}
 
+	/**
+	 * Creates a new WordCounter with a empty word list
+	 */
 	public WordCounter() {
 		this(new PipedOutputStream());
 	}
 
+	/**
+	 * Offers a (unformatted) String to the counter. The String will be
+	 * formatted heavily to get as much matches as possible.
+	 * 
+	 * @param text
+	 *            The <tt>String</tt> fed to the counter
+	 */
 	public void feed(String text) {
 		text = text + " ";
 		text = text.replaceAll("-" + System.lineSeparator(), "");
@@ -47,6 +69,7 @@ public class WordCounter {
 		text = text.replaceAll("\\p{M}", "");
 		text = text.replaceAll("ß", "ss");
 		text = text.replaceAll("[^\\p{Alpha}\\p{Digit}]+", " ");
+		text = text.toLowerCase();
 		if (text != null) {
 			try {
 				out.write(text.getBytes());
@@ -56,6 +79,10 @@ public class WordCounter {
 		}
 	}
 
+	/**
+	 * Closes the Wordcounter. No further <tt>String</tt>s will be accepted.
+	 * Also ensures that remaining String are analyzed.
+	 */
 	public void close() {
 		try {
 			out.flush();
@@ -68,27 +95,47 @@ public class WordCounter {
 		}
 	}
 
-	public Set<Map.Entry<String, Integer>> getSortedEntrys() {
+	/**
+	 * Returns a <tt>Set</tt> of <tt>Map</tt> entries ordered by their
+	 * occurrence inside the map
+	 * 
+	 * @return The sorted entries
+	 */
+	public Set<Map.Entry<String, Integer>> getSortedEntries() {
 		return wordCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
 				.entrySet();
 	}
 
+	/**
+	 * Get the total count of all words offered to the WordCounter
+	 * 
+	 * @return The total word count
+	 */
 	public long getTotalWordCount() {
 		return totalWordCount;
 	}
-	
+
+	/**
+	 * Get the total count of all numbers offered to the WordCounter
+	 * 
+	 * @return The total number count
+	 */
 	public long getNumberCount() {
 		return numberCount;
 	}
 
+	/**
+	 * Parse the submitted strings to gather the word count by using a
+	 * <tt>HashMap</tt>
+	 */
 	private void parseInput() {
 		while (scanner.hasNext()) {
 			String next = scanner.next();
 			if (next.equals("")) {
 				continue;
 			}
-			if(next.matches("[0-9]+")){
+			if (next.matches("[0-9]+")) {
 				numberCount++;
 				continue;
 			}
@@ -102,15 +149,12 @@ public class WordCounter {
 		}
 	}
 
-	public static void main(String[] args) throws InterruptedException {
-		WordCounter w = new WordCounter();
-		w.feed("Skunks erreichen eine Kopfrumpflänge von etwa 12 bis maximal etwa 51 Zentimetern, eine Schwanzlänge von 7 bis 41 Zentimeter und ein Gewicht von 0,2 bis 4,5 Kilogramm. Sie sind entsprechend kleine bis mittelgroße Raubtiere und erreichen eine Körperlänge, die bei den größeren Arten etwa der einer kleinen Hauskatze entspricht, während die kleineren Arten in etwa die Größe eines Eichhörnchens haben. Zwischen den Arten kommt es dabei zu starken Überschneidungen der Körpergrößen. Tendenziell sind vor allem die drei nördlicher lebenden Arten der Weißrüsselskunks (Ferkelskunk, Amazonas-Skunk und Anden-Skunk) mit einer Kopf-Rumpf-Länge von bis zu etwa 50 Zentimeter die größten Vertreter der Skunks. Ebenfalls in dieser Größenordnung sind auch die asiatischen Stinkdachse, die jedoch einen deutlich kürzeren Schwanz haben. Der Streifenskunk liegt mit einer Kopf-Rumpf-Länge von bis zu etwa 40 Zentimeter hinter diesen Arten, ist zusammen mit dem sehr langen Schwanz jedoch deutlich länger als die Stinkdachse. Der Haubenskunk, der Patagonische Skunk sowie die Arten der Fleckenskunks werden bis etwa 30 Zentimeter lang, wobei der Zwerg-Fleckenskunk aus Mexiko mit einer Kopf-Rumpf-Länge von maximal 21 Zentimetern die kleinste Art der Skunks ist.Alle Skunks sind durch ihr kontrastreiches Fell gekennzeichnet. Die Grundfarbe ist schwarz oder dunkelbraun, das Gesicht, der Rumpf und auch der Schwanz sind mit weißen Streifen oder Flecken versehen. Der Rumpf ist langgestreckt und eher schlank und die Beine sind verhältnismäßig kurz. Insbesondere die Vorderpfoten sind mit langen, gebogenen Krallen ausgestattet, die hervorragend zum Graben geeignet sind. Der Schwanz ist bei allen amerikanischen Arten buschig, bei den Stinkdachsen jedoch nur sehr kurz ausgebildet. Die Schnauze ist bei den meisten Arten langgestreckt, Augen und Ohren sind relativ klein.");
-		w.close();
-		for (Entry<String, Integer> entry : w.getSortedEntrys()) {
-			System.out.println(entry);
-		}
-	}
-
+	/**
+	 * Returns the backing HashMap for this WordCounter. Any changes done to
+	 * this map will influence the WordCounter as well.
+	 * 
+	 * @return the backing HashMap
+	 */
 	public HashMap<String, Integer> getEntryMap() {
 		return wordCount;
 	}

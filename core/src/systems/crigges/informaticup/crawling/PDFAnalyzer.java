@@ -41,7 +41,7 @@ public class PDFAnalyzer {
 			WordCounter counter = new WordCounter();
 			counter.feed(stripper.getText(pd));
 			counter.close();
-			return counter.getSortedEntrys();
+			return counter.getSortedEntries();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
