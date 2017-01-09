@@ -45,7 +45,7 @@ public class RatioDataSet {
 				inputNeurons.add(0.);
 			}
 		}
-
+System.out.println( normValues.get(0) + " " +  normValues.get(1) + " " +  normValues.get(2));
 		if (dataSet.fileCount > 0) {
 			double d = logistic.calc(((double) dataSet.mediaCount) / dataSet.fileCount / normValues.get(1));
 			if (d > 0) {

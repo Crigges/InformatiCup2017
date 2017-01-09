@@ -33,10 +33,10 @@ public class ClassifierNN {
 	private DataSet trainingSet;
 	private MultiLayerPerceptron neuralNetwork;
 	
-	private int hiddenLayerNeuronCount = 12;
-	private double maxError = 0.01;
-	private double learningRate = 0.2;
-	private final double momentum = 0.4;
+	private int hiddenLayerNeuronCount = 9;
+	private double maxError = 0.005;
+	private double learningRate = 0.1;
+	private final double momentum = 0.2;
 
 	public ClassifierNN(Set<CollectedDataSet> trainDataSet, ClassifierConfiguration configuration) {
 		this.configuration = configuration;
