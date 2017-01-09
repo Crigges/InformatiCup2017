@@ -10,23 +10,27 @@ public class ClassifierConfiguration {
 	public ArrayList<DictionaryEntry> endingDictionary;
 	public ArrayList<DictionaryEntry> fileNameDictionary;
 	public int inputNeuronCount;
+	public ArrayList<Double> normRatioValues;
 
 	
 	public static ClassifierConfiguration getDefaultConfiguration() throws ClassNotFoundException, IOException{
 		ArrayList<DictionaryEntry> fileNameDictionary = null;
 		ArrayList<DictionaryEntry> fileEndingDictionary = null;
 		ArrayList<DictionaryEntry> wordDictionary = null;
+		ArrayList<Double> normRatioValues = null;
 		fileNameDictionary = SerializeHelper.deserialize(Constants.fileNameDictionaryLocation);
 		fileEndingDictionary = SerializeHelper.deserialize(Constants.fileEndingDictionaryLocation);
 		wordDictionary = SerializeHelper.deserialize(Constants.wordDictionaryLocation);
+		normRatioValues = SerializeHelper.deserialize(Constants.averageRatioValuesLocation);
 		int inputNeuronCount = fileEndingDictionary.size() * 2 + fileNameDictionary.size() * 2
-				+ wordDictionary.size() * 2 + RatioDataSet.getDefaultRatioCount();;
+				+ wordDictionary.size() * 2 + 2 * RatioDataSet.getDefaultRatioCount();
 
 		ClassifierConfiguration configuration = new ClassifierConfiguration();
 		configuration.endingDictionary = fileEndingDictionary;
 		configuration.fileNameDictionary = fileNameDictionary;
 		configuration.wordDictionary = wordDictionary;
 		configuration.inputNeuronCount = inputNeuronCount;
+		configuration.normRatioValues = normRatioValues;
 		return configuration;
 	}
 }

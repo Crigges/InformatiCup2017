@@ -33,7 +33,7 @@ public class ClassifierNN {
 	private DataSet trainingSet;
 	private MultiLayerPerceptron neuralNetwork;
 	
-	private int hiddenLayerNeuronCount = 7;
+	private int hiddenLayerNeuronCount = 12;
 	private double maxError = 0.01;
 	private double learningRate = 0.2;
 	private final double momentum = 0.4;
@@ -45,8 +45,8 @@ public class ClassifierNN {
 		trainingSet = new DataSet(configuration.inputNeuronCount, Constants.numberOfNeuronOutput);
 		for (CollectedDataSet dataSet : trainDataSet) {
 			trainNetwork(dataSet);
-			System.out.println("A DataSettrainingConstruction finished");
 		}
+		System.out.println("Creating Training-Data Finished");
 		BackPropagation learningRule = neuralNetwork.getLearningRule();
 		neuralNetwork.learnInNewThread(trainingSet);
 		int i = learningRule.getCurrentIteration();
@@ -92,7 +92,7 @@ public class ClassifierNN {
 	}
 
 	private double[] getFormattedInput(CollectedDataSet dataSet) {
-		RatioDataSet ratioDataSet = new RatioDataSet(dataSet);
+		RatioDataSet ratioDataSet = new RatioDataSet(dataSet, Constants.ratioLogisticValue, configuration.normRatioValues);
 		InputDataFormatter formattedInputWords = new InputDataFormatter(dataSet.wordCount, configuration.wordDictionary,
 				Constants.wordDictionarylogisticValue);
 		InputDataFormatter formattedInputEnding = new InputDataFormatter(dataSet.endingCount,
@@ -108,6 +108,7 @@ public class ClassifierNN {
 		for (int i = 0; i < ratioDataSet.getInputNeurons().size(); i++) {
 			Double d = ratioDataSet.getInputNeurons().get(i);
 			list[i] = d.doubleValue();
+			System.out.println(d.doubleValue());
 		}
 		addDoublesToArray(input, list, count);
 		addDoublesToArray(input, formattedInputWords.getInputNeurons(), count += list.length);
