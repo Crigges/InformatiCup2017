@@ -20,7 +20,7 @@ import org.neuroph.nnet.learning.MomentumBackpropagation;
 import org.neuroph.util.TransferFunctionType;
 
 import systems.crigges.informaticup.general.CollectedDataSet;
-import systems.crigges.informaticup.general.Constants;
+import systems.crigges.informaticup.general.ClassifierConfiguration;
 import systems.crigges.informaticup.general.RepositoryDescriptor;
 import systems.crigges.informaticup.general.RepositoryTyp;
 import systems.crigges.informaticup.io.InputFileReader;
@@ -41,7 +41,7 @@ public class ClassifierNetwork {
 		this.configuration = configuration;
 		createNeuronStructure();
 
-		trainingSet = new DataSet(configuration.inputNeuronCount, Constants.numberOfNeuronOutput);
+		trainingSet = new DataSet(configuration.inputNeuronCount, configuration.numberOfNeuronOutput);
 		for (CollectedDataSet dataSet : trainDataSet) {
 			trainNetwork(dataSet);
 		}
@@ -57,7 +57,7 @@ public class ClassifierNetwork {
 			}
 		}
 
-		neuralNetwork.save(Constants.neuralNetworkLocation.getAbsolutePath());
+		neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
 	}
 	
 	public ClassifierNetwork(MultiLayerPerceptron neuralNetwork, ClassifierConfiguration configuration){
@@ -67,7 +67,7 @@ public class ClassifierNetwork {
 
 	private void createNeuronStructure() {
 		neuralNetwork = new MultiLayerPerceptron(
-				Arrays.asList(configuration.inputNeuronCount, hiddenLayerNeuronCount, Constants.numberOfNeuronOutput),
+				Arrays.asList(configuration.inputNeuronCount, hiddenLayerNeuronCount, configuration.numberOfNeuronOutput),
 				TransferFunctionType.SIGMOID);
 		MomentumBackpropagation bp = new MomentumBackpropagation();
 		bp.setLearningRate(learningRate);
@@ -91,13 +91,13 @@ public class ClassifierNetwork {
 	}
 
 	private double[] getFormattedInput(CollectedDataSet dataSet) {
-		RatioDataSet ratioDataSet = new RatioDataSet(dataSet, Constants.ratioLogisticValue, configuration.normRatioValues);
+		RatioDataSet ratioDataSet = new RatioDataSet(dataSet, configuration.ratioLogisticValue, configuration.normRatioValues);
 		InputDataFormatter formattedInputWords = new InputDataFormatter(dataSet.wordCount, configuration.wordDictionary,
-				Constants.wordDictionarylogisticValue);
+				configuration.wordDictionarylogisticValue);
 		InputDataFormatter formattedInputEnding = new InputDataFormatter(dataSet.endingCount,
-				configuration.endingDictionary, Constants.fileEndingDictionaryLogisticValue);
+				configuration.fileEndingDictionary, configuration.fileEndingDictionaryLogisticValue);
 		InputDataFormatter formattedInputFolder = new InputDataFormatter(dataSet.fileNameCount,
-				configuration.fileNameDictionary, Constants.fileNameDictionarylogisticValue);
+				configuration.fileNameDictionary, configuration.fileNameDictionarylogisticValue);
 
 		double[] input = new double[configuration.inputNeuronCount];
 
@@ -136,10 +136,11 @@ public class ClassifierNetwork {
 		return RepositoryTyp.values()[list.indexOf(Collections.max(list))];
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
+		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
 		List<RepositoryDescriptor> repositorys = null;
 		try {
-			repositorys = new InputFileReader(Constants.trainingRepositoryLocation).getRepositorysAndTypes();
+			repositorys = new InputFileReader(config.trainingRepositoryLocation).getRepositorysAndTypes();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -166,19 +167,11 @@ public class ClassifierNetwork {
 			}
 		}
 
-		try {
-			new ClassifierNetwork(dataSetAll, ClassifierConfiguration.getDefaultConfiguration());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new ClassifierNetwork(dataSetAll, config);
 	}
 
 	public static ClassifierNetwork loadFromFile(File neuralnetworklocation) throws ClassNotFoundException, IOException {
-		return new ClassifierNetwork((MultiLayerPerceptron) NeuralNetwork.createFromFile(neuralnetworklocation), ClassifierConfiguration.getDefaultConfiguration());
+		return new ClassifierNetwork((MultiLayerPerceptron) NeuralNetwork.createFromFile(neuralnetworklocation), ClassifierConfiguration.getDefault());
 	}
 
 }

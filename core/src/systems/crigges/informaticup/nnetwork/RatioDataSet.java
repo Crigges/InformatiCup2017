@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import systems.crigges.informaticup.general.CollectedDataSet;
-import systems.crigges.informaticup.general.Constants;
+import systems.crigges.informaticup.general.ClassifierConfiguration;
 import systems.crigges.informaticup.general.RepositoryDescriptor;
 import systems.crigges.informaticup.general.RepositoryTyp;
 import systems.crigges.informaticup.io.InputFileReader;
@@ -109,11 +109,12 @@ System.out.println( normValues.get(0) + " " +  normValues.get(1) + " " +  normVa
 		return defaultSet.getInputNeurons().size();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
+		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
 		List<RepositoryDescriptor> repositorys = null;
 		WordStatistic ratios = new WordStatistic();
 		try {
-			repositorys = new InputFileReader(Constants.trainingRepositoryLocation).getRepositorysAndTypes();
+			repositorys = new InputFileReader(config.trainingRepositoryLocation).getRepositorysAndTypes();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -147,7 +148,7 @@ System.out.println( normValues.get(0) + " " +  normValues.get(1) + " " +  normVa
 				// ratios.getStatistic("learningReposSubscribeToStaredRatio"),
 				ratios.getStatistic("learningReposNumberToWordRatio"));
 		try {
-			SerializeHelper.serialize(Constants.averageRatioValuesLocation, new ArrayList<>(list));
+			SerializeHelper.serialize(config.averageRatioValuesLocation, new ArrayList<>(list));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

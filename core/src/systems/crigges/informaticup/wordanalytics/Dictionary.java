@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 
 import systems.crigges.informaticup.crawling.RepositoryCrawler;
-import systems.crigges.informaticup.general.Constants;
+import systems.crigges.informaticup.general.ClassifierConfiguration;
 import systems.crigges.informaticup.general.RepositoryDescriptor;
 import systems.crigges.informaticup.general.RepositoryTyp;
 import systems.crigges.informaticup.io.InputFileReader;
@@ -22,12 +22,12 @@ import systems.crigges.informaticup.io.SerializeHelper;
 
 /**
  * This class generates the dictionarys which are used as input for the neural
- * Network. The generation parameters of the {@link Constants} class are used.
+ * Network. The generation parameters of the {@link ClassifierConfiguration} class are used.
  * 
  * @author Rami Aly & Andre Schurat
  * @see WordStatistic
  * @see WordUnifier
- * @see Constants
+ * @see ClassifierConfiguration
  */
 public class Dictionary {
 	private HashMap<RepositoryTyp, WordUnifier> unifiedGroupDictonary = new HashMap<>();
@@ -42,9 +42,9 @@ public class Dictionary {
 	 *            Repositories used to create the dictionary
 	 * @throws IOException
 	 *             if Dictionary could not be written to disc
-	 * @see Constants
+	 * @see ClassifierConfiguration
 	 */
-	public Dictionary(List<RepositoryDescriptor> repositories) throws IOException {
+	public Dictionary(List<RepositoryDescriptor> repositories, ClassifierConfiguration config) throws IOException {
 		List<LoadedRepository> crawlers = new ArrayList<>();
 		for (RepositoryDescriptor r : repositories) {
 			try {
@@ -57,22 +57,22 @@ public class Dictionary {
 		for (LoadedRepository crawler : crawlers) {
 			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
 		}
-		generate(Constants.wordDictionaryIntersectionStrength, Constants.wordDictionaryWordCountPerType);
-		SerializeHelper.serialize(Constants.wordDictionaryLocation, dictionaryWords);
+		generate(config.wordDictionaryIntersectionStrength, config.wordDictionaryWordCountPerType);
+		SerializeHelper.serialize(config.wordDictionaryLocation, dictionaryWords);
 
 		clear();
 		for (LoadedRepository crawler : crawlers) {
 			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());
 		}
-		generate(Constants.fileEndingDictionaryIntersectionStrength, Constants.fileEndingDictionaryWordCountPerType);
-		SerializeHelper.serialize(Constants.fileEndingDictionaryLocation, dictionaryWords);
+		generate(config.fileEndingDictionaryIntersectionStrength, config.fileEndingDictionaryWordCountPerType);
+		SerializeHelper.serialize(config.fileEndingDictionaryLocation, dictionaryWords);
 
 		clear();
 		for (LoadedRepository crawler : crawlers) {
 			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileNameCount());
 		}
-		generate(Constants.fileNameDictionaryIntersectionStrength, Constants.fileNameDictionaryWordCountPerType);
-		SerializeHelper.serialize(Constants.fileNameDictionaryLocation, dictionaryWords);
+		generate(config.fileNameDictionaryIntersectionStrength, config.fileNameDictionaryWordCountPerType);
+		SerializeHelper.serialize(config.fileNameDictionaryLocation, dictionaryWords);
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class Dictionary {
 
 	/**
 	 * Main method to generate a dictionary using the parameter defined inside
-	 * {@link Constants}
+	 * {@link ClassifierConfiguration}
 	 * 
 	 * @param args
 	 *            All <tt>args</tt> are ignored
@@ -174,8 +174,8 @@ public class Dictionary {
 	 *             if anything major goes wrong
 	 */
 	public static void main(String[] args) throws Exception {
-		List<RepositoryDescriptor> list = new InputFileReader(Constants.trainingRepositoryLocation)
-				.getRepositorysAndTypes();
-		new Dictionary(list);
+		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
+		List<RepositoryDescriptor> list = new InputFileReader(config.testRepositoryLocation).getRepositorysAndTypes();
+		new Dictionary(list, config);
 	}
 }

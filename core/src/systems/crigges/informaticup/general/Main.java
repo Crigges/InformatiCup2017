@@ -8,18 +8,18 @@ import java.util.Set;
 import systems.crigges.informaticup.io.InputFileReader;
 import systems.crigges.informaticup.io.OutputFileWriter;
 import systems.crigges.informaticup.io.RepoCacher;
-import systems.crigges.informaticup.nnetwork.ClassifierConfiguration;
 import systems.crigges.informaticup.nnetwork.ClassifierNetwork;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
+		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
 		File testRepositoryLocation = null;
 		if (args.length > 1) {
 			System.out.println("Invalid Input");
 			return;
 		} else if (args.length == 0) {
-			testRepositoryLocation = Constants.testRepositoryLocation;
+			testRepositoryLocation = config.testRepositoryLocation;
 		} else {
 			testRepositoryLocation = new File(args[0]);
 		}
@@ -28,22 +28,22 @@ public class Main {
 			try {
 				repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
 			} catch (Exception e2) {
-				testRepositoryLocation = Constants.testRepositoryLocation;
+				testRepositoryLocation = config.testRepositoryLocation;
 				repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
 			}
 		} else {
-			testRepositoryLocation = Constants.testRepositoryLocation;
+			testRepositoryLocation = config.testRepositoryLocation;
 			repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
 		}
 		ClassifierNetwork neuralNetwork;
-		if (Constants.neuralNetworkLocation.exists()) {
+		if (config.neuralNetworkLocation.exists()) {
 			try {
-				neuralNetwork = ClassifierNetwork.loadFromFile(Constants.neuralNetworkLocation);
+				neuralNetwork = ClassifierNetwork.loadFromFile(config.neuralNetworkLocation);
 			} catch (Exception e2) {
-				neuralNetwork = createNeuralNetwork();
+				neuralNetwork = createNeuralNetwork(config);
 			}
 		} else {
-			neuralNetwork = createNeuralNetwork();
+			neuralNetwork = createNeuralNetwork(config);
 		}
 
 		try {
@@ -67,8 +67,8 @@ public class Main {
 
 	}
 
-	private static ClassifierNetwork createNeuralNetwork() throws Exception {
-		List<RepositoryDescriptor> repositorys = new InputFileReader(Constants.trainingRepositoryLocation)
+	private static ClassifierNetwork createNeuralNetwork(ClassifierConfiguration config) throws Exception {
+		List<RepositoryDescriptor> repositorys = new InputFileReader(config.trainingRepositoryLocation)
 				.getRepositorysAndTypes();
 		Set<CollectedDataSet> dataSetAll = new HashSet<>();
 		for (RepositoryDescriptor rp : repositorys) {
@@ -79,7 +79,7 @@ public class Main {
 			} catch (Exception e2) {}
 		}
 
-		return new ClassifierNetwork(dataSetAll, ClassifierConfiguration.getDefaultConfiguration());
+		return new ClassifierNetwork(dataSetAll, ClassifierConfiguration.getDefault());
 
 	}
 }
