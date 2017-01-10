@@ -24,7 +24,7 @@ import systems.crigges.informaticup.io.SerializeHelper;
  * This class generates the dictionarys which are used as input for the neural
  * Network. The generation parameters of the {@link Constants} class are used.
  * 
- * @author Rami Aly & Crigges
+ * @author Rami Aly & Andre Schurat
  * @see WordStatistic
  * @see WordUnifier
  * @see Constants

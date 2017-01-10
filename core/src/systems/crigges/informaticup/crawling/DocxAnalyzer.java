@@ -12,10 +12,10 @@ import org.apache.poi.xwpf.usermodel.XWPFPictureData;
 
 /**
  * This class allows simple text and image extraction out of Mircosoft's Office
- * .docx files. Files need to be passed virtual as array of bytes for faster
+ * .docx files. Files need to be passed virtual as an array of bytes for faster
  * processing.
  * 
- * @author Rami Aly & Crigges
+ * @author Rami Aly & Andre Schurat
  */
 public class DocxAnalyzer {
 

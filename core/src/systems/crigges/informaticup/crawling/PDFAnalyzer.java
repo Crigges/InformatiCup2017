@@ -19,46 +19,50 @@ import org.apache.pdfbox.text.PDFTextStripper;
 
 import systems.crigges.informaticup.wordanalytics.WordCounter;
 
+/**
+ * This class allows simple text and image extraction out of the Portable
+ * Document Format (.pdf) files. Files need to be passed virtual as an array of
+ * bytes for faster processing.
+ * 
+ * @author Rami Aly & Andre Schurat
+ */
 public class PDFAnalyzer {
 
 	private PDDocument pd;
 
-	public PDFAnalyzer(File pfd) throws IOException {
-		pd = PDDocument.load(pfd);
-	}
-	
-	public PDFAnalyzer(InputStream pfd) throws IOException {
-		pd = PDDocument.load(pfd);
-	}
-	
+	/**
+	 * Creates a new PDFAnalyzer out of the given file.
+	 * 
+	 * @param pfg
+	 *            the .pdf file represented as byte array
+	 * @throws IOException
+	 *             if file can't be read or is protected
+	 */
 	public PDFAnalyzer(byte[] pdf) throws IOException {
 		pd = PDDocument.load(pdf);
 	}
 
-	public Set<Map.Entry<String, Integer>> getSortedWordCount() {
-		try {
-			PDFTextStripper stripper = new PDFTextStripper();
-			WordCounter counter = new WordCounter();
-			counter.feed(stripper.getText(pd));
-			counter.close();
-			return counter.getSortedEntries();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public String getRawText(){
+	/**
+	 * Extracts the raw unformatted text out of the document.
+	 * 
+	 * @return the raw text as String
+	 * @throws IOException
+	 *             if file can't be read or is protected
+	 */
+	public String getRawText() throws IOException {
 		PDFTextStripper stripper;
-		try {
-			stripper = new PDFTextStripper();
-			return stripper.getText(pd);
-		} catch (IOException e) {
-			return "";
-		}
-		
+		stripper = new PDFTextStripper();
+		return stripper.getText(pd);
 	}
 
+	/**
+	 * Recursive function to get the amount of images stored inside the
+	 * document. Images them self aren't stored to save heap space.
+	 * 
+	 * @return the amount of images inside the document
+	 * @throws IOException
+	 *             if file can't be read or is protected
+	 */
 	public int getImageCount() throws IOException {
 		int imageCount = 0;
 		for (PDPage page : pd.getPages()) {
@@ -68,12 +72,22 @@ public class PDFAnalyzer {
 		return imageCount;
 	}
 
+	/**
+	 * Recursive function to get the amount of images stored inside the given
+	 * page. Images them self aren't stored to save heap space.
+	 * 
+	 * @param resources
+	 *            the page where images should be counted in
+	 * @return the amount of images inside the given page
+	 * @throws IOException
+	 *             if file can't be read or is protected
+	 */
 	private int getImagesFromResources(PDResources resources) throws IOException {
 		int imageCount = 0;
-		if(resources != null){
+		if (resources != null) {
 			for (COSName xObjectName : resources.getXObjectNames()) {
 				PDXObject xObject = resources.getXObject(xObjectName);
-	
+
 				if (xObject instanceof PDFormXObject) {
 					imageCount += getImagesFromResources(((PDFormXObject) xObject).getResources());
 				} else if (xObject instanceof PDImageXObject) {
@@ -83,26 +97,4 @@ public class PDFAnalyzer {
 		}
 		return imageCount;
 	}
-
-	public void accessMetadata() {
-		PDDocumentInformation info = pd.getDocumentInformation();
-		System.out.println("Page Count=" + pd.getNumberOfPages());
-		System.out.println("Title=" + info.getTitle());
-		System.out.println("Author=" + info.getAuthor());
-		System.out.println("Subject=" + info.getSubject());
-		System.out.println("Keywords=" + info.getKeywords());
-		System.out.println("Creator=" + info.getCreator());
-		System.out.println("Producer=" + info.getProducer());
-		System.out.println("Creation Date=" + info.getCreationDate());
-		System.out.println("Modification Date=" + info.getModificationDate());
-		System.out.println("Trapped=" + info.getTrapped());
-	}
-
-	public static void main(String[] args) throws IOException {
-		PDFAnalyzer pdf = new PDFAnalyzer(new File("assets\\Nahostkonflikt.pdf"));
-		for (Entry<String, Integer> e : pdf.getSortedWordCount()) {
-			System.out.println(e);
-		}
-	}
-
 }
