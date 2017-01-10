@@ -60,6 +60,34 @@ public class ClassifierNetwork {
 		neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
 	}
 	
+	public int getHiddenLayerNeuronCount() {
+		return hiddenLayerNeuronCount;
+	}
+
+	public void setHiddenLayerNeuronCount(int hiddenLayerNeuronCount) {
+		this.hiddenLayerNeuronCount = hiddenLayerNeuronCount;
+	}
+
+	public double getMaxError() {
+		return maxError;
+	}
+
+	public void setMaxError(double maxError) {
+		this.maxError = maxError;
+	}
+
+	public double getLearningRate() {
+		return learningRate;
+	}
+
+	public void setLearningRate(double learningRate) {
+		this.learningRate = learningRate;
+	}
+
+	public double getMomentum() {
+		return momentum;
+	}
+
 	public ClassifierNetwork(MultiLayerPerceptron neuralNetwork, ClassifierConfiguration configuration){
 		this.neuralNetwork = neuralNetwork;
 		this.configuration = configuration;
