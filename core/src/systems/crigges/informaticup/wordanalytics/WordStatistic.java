@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * This Classes creates a statistic representation of the word occurrence for
  * all entries added to it. It is used inside the {@link Dictionary} class to
- * determinate which words are added to the dictionary.
+ * determinate which words are added to a dictionary.
  * 
  * @author Rami Aly & Andre Schurat
  * @see WordUnifier
