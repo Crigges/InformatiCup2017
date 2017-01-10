@@ -10,12 +10,30 @@ import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.IOUtils;
 
+/**
+ * This class access the Github API to gather the Zipball for a given
+ * repository. It supports on the fly deflating and stores the file Virtually
+ * for faster processing.
+ * 
+ * @author Rami Aly & Andre Schurat
+ * @see VirtualFile
+ */
 public class ZipballGrabber {
-	
+
+	/**
+	 * Grabs the Zipball for the given repository and deflates it into a list of
+	 * {@link VirtualFile}s
+	 * 
+	 * @param hostUrl
+	 *            the host url to the repository
+	 * @return a list of {@link VirtualFile}s contained inside the zipball
+	 * @throws IOException
+	 *             if any connection problems occur or the url is invaild
+	 */
 	public static ArrayList<VirtualFile> grabVirtual(String hostUrl) throws IOException {
 		URL url = new URL(hostUrl);
 		URLConnection connection = url.openConnection();
-		
+
 		ArrayList<VirtualFile> files = new ArrayList<>();
 		ZipInputStream zipIn = new ZipInputStream(connection.getInputStream());
 		ZipEntry entry = zipIn.getNextEntry();
@@ -24,7 +42,7 @@ public class ZipballGrabber {
 			if (!entry.isDirectory()) {
 				byte[] data = IOUtils.toByteArray(zipIn);
 				files.add(new VirtualFile(new File(filePath).getName(), data, false));
-			}else{
+			} else {
 				files.add(new VirtualFile(entry.getName(), null, true));
 			}
 			zipIn.closeEntry();
