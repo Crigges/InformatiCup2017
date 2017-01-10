@@ -6,13 +6,35 @@ import net.sf.jmimemagic.MagicMatch;
 import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
-public class VirtualFile{
+/**
+ * This class is used to save files virtually inside the heap to improve the
+ * performance of further processing. Additionally it tries to figure out the
+ * file's {@link FileType} using the Internet Media Type and analyzing file
+ * endings.
+ * 
+ * @author Rami Aly & Andre Schurat
+ * @see FileType
+ * @see ZipballGrabber
+ */
+public class VirtualFile {
 	private String name;
 	private byte[] data;
 	private FileType type;
 	private String mimeType;
 	private boolean isFolder;
 
+	/**
+	 * Creates a new VirtualFile with the given name. The {@link FileType} is
+	 * guess automatically. If the FileType reveals that no further processing
+	 * is possible the file's content is removed from the heap.
+	 * 
+	 * @param name
+	 *            the name of the file or folder
+	 * @param data
+	 *            the data of the file, may be null if it is a folder
+	 * @param folder
+	 *            weather it is a folder or not
+	 */
 	public VirtualFile(String name, byte[] data, boolean folder) {
 		this.name = name;
 		this.data = data;
@@ -27,11 +49,11 @@ public class VirtualFile{
 				match = Magic.getMagicMatch(data);
 				mimeType = match.getMimeType();
 			} catch (MagicParseException | MagicMatchNotFoundException | MagicException e) {
-				if (isFileBinary(data)) {
+				if (isFileBinary()) {
 					mimeType = "unknown";
-				}else{
+				} else {
 					mimeType = "text";
-				}	
+				}
 			}
 			name = name.toLowerCase();
 			if (name.endsWith("pdf")) {
@@ -53,23 +75,38 @@ public class VirtualFile{
 			}
 		}
 	}
-	
+
+	/**
+	 * Returns the file's content as byte array. May be null if {@link FileType}
+	 * is binary or this represents a folder.
+	 * 
+	 * @return the file's content as byte array
+	 */
 	public byte[] getData() {
 		return data;
 	}
-	
+
+	/**
+	 * Returns the file's name
+	 * @return the file's name
+	 */
 	public String getName() {
 		return name;
 	}
-	
+
+	/**
+	 * Returns the file's type
+	 * @return the file's type
+	 */
 	public FileType getType() {
 		return type;
 	}
 
 	/**
-	 * Guess whether given file is binary.
+	 * Additionally guess to determinate if file is binary.
+	 * @return whether the file is guessed binary
 	 */
-	public static boolean isFileBinary(byte[] data) {
+	private boolean isFileBinary() {
 		int size = data.length;
 		if (size > 1024) {
 			size = 1024;
@@ -88,7 +125,7 @@ public class VirtualFile{
 			else
 				other++;
 		}
-		if (other == 0){
+		if (other == 0) {
 			return false;
 		}
 		return 100 * other / (ascii + other) > 95;
