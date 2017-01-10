@@ -31,33 +31,74 @@ import systems.crigges.informaticup.general.CollectedDataSet;
 import systems.crigges.informaticup.io.RepoCacher;
 import systems.crigges.informaticup.wordanalytics.WordCounter;
 
+/**
+ * This class mainly creates a {@link CollectedDataSet} out of a repository url.
+ * It's fully serializable and threadsafe. Since it is meant to be used for
+ * hundreds of repositories in a row it aims for just a single API request per
+ * repository. For a already Multithreaded cached implementation checkout
+ * {@link RepoCacher}
+ * 
+ * @author Rami Aly & Andre Schurat
+ * @see CollectedDataSet
+ * @see RepoCacher
+ * @see ZipballGrabber
+ * @see PDFAnalyzer
+ * @see PptxAnalyzer
+ * @see DocxAnalyzer
+ */
 public class RepositoryCrawler implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private transient ArrayList<VirtualFile> fileList;
 	private HashMap<String, Integer> wordCount;
 	private HashMap<String, Integer> fileEndingCount;
 	private HashMap<String, Integer> fileNameCount;
-	
+
 	private long totalWordCount;
 	private int mediaCount;
 	private String repoName;
 	private int repoSize;
 	private int fileCount;
+	@SuppressWarnings("unused")
 	private int subscribedCount;
+	@SuppressWarnings("unused")
 	private int staredCount;
 	private long numberCount;
-	
 
+	/**
+	 * Creates a new RepositoryCrawler from the given url. Note: Depending on
+	 * your hardware and you Internet connection crawling of big repositories
+	 * may take some time. Therefore it's highly recommend to use the
+	 * {@link RepoCacher} instead of this direct constructor.
+	 * 
+	 * @param url
+	 *            the url referring to the repository. e.g:
+	 *            https://github.com/username/repositoryname
+	 * @throws IOException
+	 *             if url is malformed and or Internet connection does not work
+	 */
 	public RepositoryCrawler(String url) throws IOException {
 		repoName = getRepoNameFromURL(url);
 		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + repoName + "/zipball");
 		analyzeRepo();
 	}
 
+	/**
+	 * Simple convert function to split the repository name apart from the url
+	 * 
+	 * @param url
+	 *            the url where the name is been taken of
+	 * @return the url's repository name
+	 */
 	private String getRepoNameFromURL(String url) {
 		return url.replace("https://github.com/", "");
 	}
-	
+
+	/**
+	 * Main analyze function containing the general analyzing structure
+	 * 
+	 * @throws IOException
+	 *             if url is malformed and or Internet connection does not work
+	 */
 	private void analyzeRepo() throws IOException {
 		calcRepoSize();
 		inflateFileList();
@@ -66,12 +107,22 @@ public class RepositoryCrawler implements Serializable {
 		calcFileNameCount();
 	}
 
-	private void calcRepoSize() throws IOException{
+	/**
+	 * Calculates the repository size by checking the zipball size.
+	 * 
+	 * @throws IOException
+	 */
+	private void calcRepoSize() throws IOException {
 		URL url = new URL("https://api.github.com/repos/" + repoName + "/zipball");
 		URLConnection connection = url.openConnection();
 		repoSize = connection.getContentLength();
 	}
-	
+
+	/**
+	 * Checks for any Zipfiles inside the Zipball. This function does not work
+	 * recursive for performance and loophole reasons. It abourts if Zipfiles
+	 * are not deflateable.
+	 */
 	private void inflateFileList() {
 		ArrayList<VirtualFile> res = new ArrayList<>();
 		res.addAll(fileList);
@@ -96,13 +147,16 @@ public class RepositoryCrawler implements Serializable {
 					zipIn.close();
 				}
 			} catch (Exception e) {
-				//Abort deflation in case of an error
+				// Abort deflation in case of an error
 			}
 		}
 		fileList = res;
 		fileCount = fileList.size();
 	}
 
+	/**
+	 * Counts the occurrence of different file endings for all found files
+	 */
 	private void calcFileEndingCount() {
 		WordCounter endingCounter = new WordCounter();
 		for (VirtualFile c : fileList) {
@@ -120,14 +174,18 @@ public class RepositoryCrawler implements Serializable {
 		endingCounter.close();
 		fileEndingCount = endingCounter.getEntryMap();
 	}
-	
-	private void calcWordCount(){
+
+	/**
+	 * Counts the occurrence of different words for all found Files using the
+	 * analyzer classes to extract the raw strings.
+	 */
+	private void calcWordCount() {
 		WordCounter wordCounter = new WordCounter();
 		for (VirtualFile f : fileList) {
-			try {		
+			try {
 				if (f.getName().toLowerCase().equals("readme.md")) {
 					StringBuilder builder = new StringBuilder();
-					for(int i = 1; i<=5; i++){
+					for (int i = 1; i <= 5; i++) {
 						builder.append(new String(f.getData()));
 					}
 					wordCounter.feed(builder.toString());
@@ -149,7 +207,8 @@ public class RepositoryCrawler implements Serializable {
 					mediaCount += ana.getImages().size();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				// any errors are ignored since some files may be damaged or
+				// protected
 			}
 		}
 		wordCounter.close();
@@ -157,14 +216,17 @@ public class RepositoryCrawler implements Serializable {
 		totalWordCount = wordCounter.getTotalWordCount();
 		numberCount = wordCounter.getNumberCount();
 	}
-	
+
+	/**
+	 * Counts the occurrence of different file names for all found files
+	 */
 	private void calcFileNameCount() {
 		WordCounter nameCounter = new WordCounter();
 		for (VirtualFile f : fileList) {
 			String name = new File(f.getName()).getName();
-			if(name.contains(".")){
+			if (name.contains(".")) {
 				nameCounter.feed(name.substring(0, name.lastIndexOf(".")));
-			}else{
+			} else {
 				nameCounter.feed(name);
 			}
 		}
@@ -172,85 +234,136 @@ public class RepositoryCrawler implements Serializable {
 		fileNameCount = nameCounter.getEntryMap();
 	}
 
+	/**
+	 * Returns a deflated list of files contained inside the repository
+	 * <strong>Note</strong>: If this instance was obtained by the
+	 * {@link RepoCacher} this method will return null.
+	 * 
+	 * @return all files contained inside the repository.
+	 */
 	public List<VirtualFile> getFullContent() {
 		return fileList;
 	}
 
+	/**
+	 * Returns the absolute word count of all words found in any file of the
+	 * repository
+	 * 
+	 * @return the repository's word count
+	 */
 	public Set<Entry<String, Integer>> getWordCount() {
 		return wordCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
 				.entrySet();
 	}
-	
+
+	/**
+	 * Returns the absolute file ending count of all files found inside the
+	 * repository
+	 * 
+	 * @return the repository's file ending count
+	 */
 	public Set<Entry<String, Integer>> getFileEndingCount() {
 		return fileEndingCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
 				.entrySet();
 	}
-	
+
+	/**
+	 * Returns the absolute file name count of all files found inside the
+	 * repository
+	 * 
+	 * @return the repository's file name count
+	 */
 	public Set<Entry<String, Integer>> getFileNameCount() {
 		return fileNameCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
 				.entrySet();
 	}
 
+	/**
+	 * Returns the repository's name
+	 * 
+	 * @return the repository's name
+	 */
 	public String getRepoName() {
 		return repoName;
 	}
 
+	/**
+	 * Returns the repository's media count across all files found inside the
+	 * repository.
+	 * 
+	 * @return the repository's media count
+	 */
 	public int getMediaCount() {
 		return mediaCount;
 	}
 
+	/**
+	 * Returns the total word count of all words found in across all
+	 * repositories.
+	 * 
+	 * @return the repository's total word count
+	 */
 	public long getTotalWordCount() {
 		return totalWordCount;
 	}
-	
+
+	/**
+	 * Returns the repository's file count
+	 * 
+	 * @return the repository's file count
+	 */
 	public int getFileCount() {
 		return fileCount;
 	}
-	
+
+	/**
+	 * Returns the repository's size in bytes based on the zipball size
+	 * 
+	 * @return the repository's size
+	 */
 	public int getRepoSize() {
 		return repoSize;
 	}
-	
-	public int getSubscribedCount() {
-		return subscribedCount;
-	}
-	
-	public int getStaredCount() {
-		return staredCount;
-	}
-	
+
+	/**
+	 * Returns the number count of all numbers found in across all repositories.
+	 * 
+	 * @return the repository's number count
+	 */
 	public long getNumberCount() {
 		return numberCount;
 	}
-	
-	public CollectedDataSet getCollectedDataSet(){
+
+	/**
+	 * Returns a {@link CollectedDataSet} which represents a dataclass
+	 * containing all information which the crawler can gather.
+	 * 
+	 * @return the CollectedDataSet of this crawler
+	 */
+	public CollectedDataSet getCollectedDataSet() {
 		CollectedDataSet set = new CollectedDataSet();
 		set.endingCount = getFileEndingCount();
 		set.fileCount = getFileCount();
 		set.fileNameCount = getFileNameCount();
 		set.mediaCount = getMediaCount();
 		set.repoSize = repoSize;
-		set.staredCount = getStaredCount();
-		set.subscribedCount = getSubscribedCount();
 		set.totalWordCount = getTotalWordCount();
 		set.wordCount = getWordCount();
 		set.numberCount = getNumberCount();
 		return set;
 	}
-
-	public static void main(String[] args) throws MalformedURLException, IOException, MagicParseException,
-			NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InterruptedException, ExecutionException {
+	
+	
+	public static void main(String[] args)
+			throws MalformedURLException, IOException, MagicParseException, NoSuchFieldException, SecurityException,
+			IllegalArgumentException, IllegalAccessException, InterruptedException, ExecutionException {
 		Field f = MagicParser.class.getDeclaredField("log");
 		f.setAccessible(true);
 		RepositoryCrawler crawler = RepoCacher.get("https://github.com/Crigges/Clickwars");
 		System.out.println(crawler.getCollectedDataSet());
-//		for(Entry<String, Integer> entry : crawler.getWordCount()){
-//			System.out.println(entry);
-//		}
-
 	}
 
 }

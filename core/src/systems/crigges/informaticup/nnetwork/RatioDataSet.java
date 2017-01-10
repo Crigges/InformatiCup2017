@@ -103,8 +103,6 @@ System.out.println( normValues.get(0) + " " +  normValues.get(1) + " " +  normVa
 		dataSet.numberCount = 1;
 		dataSet.repositoryType = RepositoryTyp.OTHER;
 		dataSet.repoSize = 1;
-		dataSet.staredCount = 1;
-		dataSet.subscribedCount = 1;
 		dataSet.totalWordCount = 1;
 		RatioDataSet defaultSet = new RatioDataSet(dataSet);
 		System.out.println(defaultSet.getInputNeurons().size());
