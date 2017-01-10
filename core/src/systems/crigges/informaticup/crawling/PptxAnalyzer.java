@@ -14,14 +14,34 @@ import org.apache.poi.xslf.usermodel.XSLFShape;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFTextShape;
 
+/**
+ * This class allows simple text and image extraction out of Mircosoft's Office
+ * .pptx files. Files need to be passed virtual as an array of bytes for faster
+ * processing.
+ * 
+ * @author Rami Aly & Andre Schurat
+ */
 public class PptxAnalyzer {
 
 	private XMLSlideShow ppt;
 
+	/**
+	 * Creates a new PptxAnalyzer out of the given file.
+	 * 
+	 * @param data
+	 *            the .pptx file represented as byte array
+	 * @throws IOException
+	 *             if file can't be read or is protected
+	 */
 	public PptxAnalyzer(byte[] data) throws IOException {
 		ppt = new XMLSlideShow(new ByteArrayInputStream(data));
 	}
 
+	/**
+	 * Extracts the raw unformatted text out of the presentation.
+	 * 
+	 * @return the raw text as String
+	 */
 	public String getRawText() {
 		StringBuilder builder = new StringBuilder();
 		for (XSLFSlide slide : ppt.getSlides()) {
@@ -36,26 +56,22 @@ public class PptxAnalyzer {
 		return builder.toString();
 	}
 
-	 public List<XSLFPictureShape> getImages() {
-		 ArrayList<XSLFPictureShape> res = new ArrayList<>();
-		 for (XSLFSlide slide : ppt.getSlides()) {
-				XSLFShape[] shapes = slide.getShapes();
-				for (XSLFShape shape : shapes) {
-					if (shape instanceof XSLFPictureShape) {
-						res.add((XSLFPictureShape) shape);
-					}
+	/**
+	 * Extracts all images out of the document.
+	 * 
+	 * @return the List of images contained inside the document
+	 */
+	public List<XSLFPictureShape> getImages() {
+		ArrayList<XSLFPictureShape> res = new ArrayList<>();
+		for (XSLFSlide slide : ppt.getSlides()) {
+			XSLFShape[] shapes = slide.getShapes();
+			for (XSLFShape shape : shapes) {
+				if (shape instanceof XSLFPictureShape) {
+					res.add((XSLFPictureShape) shape);
 				}
 			}
+		}
 		return res;
-	 }
-
-	public static void main(String[] args) throws Exception {
-		PptxAnalyzer doc = new PptxAnalyzer(Files.readAllBytes(new File("./assets/testPpt.pptx").toPath()));
-		String s = doc.getRawText();
-		PrintWriter writer = new PrintWriter(new File("./test/pptextract.txt"));
-		writer.print(s);
-		writer.close();
-		System.out.println(doc.getImages().size());
 	}
 
 }

@@ -9,7 +9,7 @@ import net.sf.jmimemagic.MagicParseException;
 public class VirtualFile{
 	private String name;
 	private byte[] data;
-	private SuperMimeType type;
+	private FileType type;
 	private String mimeType;
 	private boolean isFolder;
 
@@ -18,9 +18,9 @@ public class VirtualFile{
 		this.data = data;
 		isFolder = folder;
 		if (isFolder) {
-			type = SuperMimeType.Folder;
+			type = FileType.Folder;
 		} else if (data == null) {
-			type = SuperMimeType.Binary;
+			type = FileType.Binary;
 		} else {
 			MagicMatch match;
 			try {
@@ -35,20 +35,20 @@ public class VirtualFile{
 			}
 			name = name.toLowerCase();
 			if (name.endsWith("pdf")) {
-				type = SuperMimeType.PDF;
+				type = FileType.PDF;
 			} else if (name.endsWith("docx")) {
-				type = SuperMimeType.Word;
+				type = FileType.Word;
 			} else if (name.endsWith("pptx")) {
-				type = SuperMimeType.PowerPoint;
+				type = FileType.PowerPoint;
 			} else if (name.endsWith("png") || name.endsWith("jpg") || name.startsWith("image")) {
-				type = SuperMimeType.Image;
+				type = FileType.Image;
 				data = null;
 			} else if (name.endsWith("zip") || mimeType.endsWith("zip")) {
-				type = SuperMimeType.Zip;
+				type = FileType.Zip;
 			} else if (mimeType.startsWith("text") || name.endsWith("txt") || name.endsWith("md")) {
-				type = SuperMimeType.Text;
+				type = FileType.Text;
 			} else {
-				type = SuperMimeType.Binary;
+				type = FileType.Binary;
 				data = null;
 			}
 		}
@@ -62,7 +62,7 @@ public class VirtualFile{
 		return name;
 	}
 	
-	public SuperMimeType getType() {
+	public FileType getType() {
 		return type;
 	}
 

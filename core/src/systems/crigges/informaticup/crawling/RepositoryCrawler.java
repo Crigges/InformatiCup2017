@@ -78,7 +78,7 @@ public class RepositoryCrawler implements Serializable {
 		for (Iterator<VirtualFile> iterator = fileList.iterator(); iterator.hasNext();) {
 			try {
 				VirtualFile f = iterator.next();
-				if (f.getType() == SuperMimeType.Zip) {
+				if (f.getType() == FileType.Zip) {
 
 					ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(f.getData()));
 					ZipEntry entry = zipIn.getNextEntry();
@@ -106,7 +106,7 @@ public class RepositoryCrawler implements Serializable {
 	private void calcFileEndingCount() {
 		WordCounter endingCounter = new WordCounter();
 		for (VirtualFile c : fileList) {
-			if (c.getType() != SuperMimeType.Folder) {
+			if (c.getType() != FileType.Folder) {
 				String name = c.getName();
 				String ending;
 				if (name.contains(".")) {
@@ -131,19 +131,19 @@ public class RepositoryCrawler implements Serializable {
 						builder.append(new String(f.getData()));
 					}
 					wordCounter.feed(builder.toString());
-				} else if (f.getType() == SuperMimeType.Text) {
+				} else if (f.getType() == FileType.Text) {
 					wordCounter.feed(new String(f.getData()));
-				} else if (f.getType() == SuperMimeType.Word) {
+				} else if (f.getType() == FileType.Word) {
 					DocxAnalyzer ana = new DocxAnalyzer(f.getData());
 					wordCounter.feed(ana.getRawText());
 					mediaCount += ana.getImages().size();
-				} else if (f.getType() == SuperMimeType.PDF) {
+				} else if (f.getType() == FileType.PDF) {
 					PDFAnalyzer ana = new PDFAnalyzer(f.getData());
 					wordCounter.feed(ana.getRawText());
 					mediaCount += ana.getImageCount();
-				} else if (f.getType() == SuperMimeType.Image) {
+				} else if (f.getType() == FileType.Image) {
 					mediaCount++;
-				} else if (f.getType() == SuperMimeType.PowerPoint) {
+				} else if (f.getType() == FileType.PowerPoint) {
 					PptxAnalyzer ana = new PptxAnalyzer(f.getData());
 					wordCounter.feed(ana.getRawText());
 					mediaCount += ana.getImages().size();
