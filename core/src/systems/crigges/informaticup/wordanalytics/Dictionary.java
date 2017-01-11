@@ -176,6 +176,11 @@ public class Dictionary {
 	public static void main(String[] args) throws Exception {
 		ClassifierConfiguration config = ClassifierConfiguration.getDefaultWithoutDictionaries();
 		List<RepositoryDescriptor> list = new InputFileReader(config.trainingRepositoryLocation).getRepositorysAndTypes();
+		RepoCacher.initThreadPool(6);
+		for(RepositoryDescriptor repo : list){
+			RepoCacher.getThreaded(repo.getName(), (RepositoryCrawler c) -> {});
+		}
+		RepoCacher.shutdownThreadPool();
 		new Dictionary(list, config);
 	}
 }
