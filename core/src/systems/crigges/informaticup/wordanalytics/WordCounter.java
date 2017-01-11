@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * This class offers multithreaded word counting for unformatted Strings
  * 
- * @author Rami Aly & Crigges
+ * @author Rami Aly & Andre Schurat
  */
 public class WordCounter implements Closeable {
 	private Scanner scanner;

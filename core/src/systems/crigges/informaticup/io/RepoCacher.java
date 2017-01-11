@@ -55,6 +55,7 @@ public class RepoCacher {
 				in.close();
 				return repo;
 			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
 				f.delete();
 				RepositoryCrawler repo = new RepositoryCrawler(url);
 				put(repo);

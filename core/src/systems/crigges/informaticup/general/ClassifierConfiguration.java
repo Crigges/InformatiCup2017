@@ -88,5 +88,54 @@ public class ClassifierConfiguration {
 		return configuration;
 	}
 	
+	public static ClassifierConfiguration getDefaultWithoutDictionaries() throws ClassNotFoundException, IOException{
+		ClassifierConfiguration configuration = new ClassifierConfiguration();
+		configuration.wordDictionaryLocation = new File("./assets/wordDictionary.ser");
+		configuration.fileNameDictionaryLocation = new File("./assets/fileNameDictionary.ser");
+		configuration.fileEndingDictionaryLocation = new File("./assets/fileEndingDictionary.ser");
+		configuration.averageRatioValuesLocation = new File("./assets/averageRatioValues");
+		configuration.trainingRepositoryLocation = new File("./assets/Repositorys.txt");
+		configuration.testRepositoryLocation = new File("./assets/TestRepositorys.txt");
+		configuration.neuralNetworkLocation = new File("./assets/classifierNN.nnet");
+		
+		configuration.wordDictionaryIntersectionStrength = 0.25;
+		configuration.wordDictionaryWordCountPerType = 10;
+		
+		configuration.wordDictionarylogisticValue = 0.3;	
+		configuration.fileNameDictionaryIntersectionStrength = 0.25;
+		
+		configuration.fileNameDictionaryWordCountPerType = 10;
+		configuration.fileNameDictionarylogisticValue = 0.3;
+		
+		configuration.fileEndingDictionaryIntersectionStrength = 0.08;
+		configuration.fileEndingDictionaryWordCountPerType = 10;
+		
+		configuration.recreateDictionary = false;
+
+		configuration.fileEndingDictionaryLogisticValue = 0.3;
+		
+		configuration.numberOfNeuronOutput = 7;
+		
+		configuration.readmeInfluenceFactor = 10;
+		
+		configuration.ratioLogisticValue = 0.0005;
+		
+		configuration.normRatioValues = SerializeHelper.deserialize(configuration.averageRatioValuesLocation);
+		
+		return configuration;
+	}
+	
+	public static ClassifierConfiguration getOnlyDefaultLocations() throws ClassNotFoundException, IOException{
+		ClassifierConfiguration configuration = new ClassifierConfiguration();
+		configuration.wordDictionaryLocation = new File("./assets/wordDictionary.ser");
+		configuration.fileNameDictionaryLocation = new File("./assets/fileNameDictionary.ser");
+		configuration.fileEndingDictionaryLocation = new File("./assets/fileEndingDictionary.ser");
+		configuration.averageRatioValuesLocation = new File("./assets/averageRatioValues");
+		configuration.trainingRepositoryLocation = new File("./assets/Repositorys.txt");
+		configuration.testRepositoryLocation = new File("./assets/TestRepositorys.txt");
+		configuration.neuralNetworkLocation = new File("./assets/classifierNN.nnet");
+		
+		return configuration;
+	}
 
 }

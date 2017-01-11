@@ -174,8 +174,8 @@ public class Dictionary {
 	 *             if anything major goes wrong
 	 */
 	public static void main(String[] args) throws Exception {
-		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
-		List<RepositoryDescriptor> list = new InputFileReader(config.testRepositoryLocation).getRepositorysAndTypes();
+		ClassifierConfiguration config = ClassifierConfiguration.getDefaultWithoutDictionaries();
+		List<RepositoryDescriptor> list = new InputFileReader(config.trainingRepositoryLocation).getRepositorysAndTypes();
 		new Dictionary(list, config);
 	}
 }

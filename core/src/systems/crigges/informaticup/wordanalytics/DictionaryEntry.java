@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Additionally it provides word and occurrence based comparability with other
  * <tt>DictionaryEntry</tt>s.
  * 
- * @author Rami Aly & Crigges
+ * @author Rami Aly & Andre Schurat
  * @see Dictionary
  */
 public class DictionaryEntry implements Serializable, Comparable<DictionaryEntry> {
