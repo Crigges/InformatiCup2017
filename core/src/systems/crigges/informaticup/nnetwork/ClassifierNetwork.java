@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -18,6 +19,7 @@ import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
 import org.neuroph.util.TransferFunctionType;
+import org.neuroph.util.random.RangeRandomizer;
 
 import systems.crigges.informaticup.general.CollectedDataSet;
 import systems.crigges.informaticup.general.ClassifierConfiguration;
@@ -32,11 +34,6 @@ public class ClassifierNetwork {
 	private DataSet trainingSet;
 	private MultiLayerPerceptron neuralNetwork;
 	
-	private int hiddenLayerNeuronCount = 9;
-	private double maxError = 0.005;
-	private double learningRate = 0.1;
-	private final double momentum = 0.2;
-
 	public ClassifierNetwork(Set<CollectedDataSet> trainDataSet, ClassifierConfiguration configuration) {
 		this.configuration = configuration;
 		createNeuronStructure();
@@ -60,33 +57,6 @@ public class ClassifierNetwork {
 		neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
 	}
 	
-	public int getHiddenLayerNeuronCount() {
-		return hiddenLayerNeuronCount;
-	}
-
-	public void setHiddenLayerNeuronCount(int hiddenLayerNeuronCount) {
-		this.hiddenLayerNeuronCount = hiddenLayerNeuronCount;
-	}
-
-	public double getMaxError() {
-		return maxError;
-	}
-
-	public void setMaxError(double maxError) {
-		this.maxError = maxError;
-	}
-
-	public double getLearningRate() {
-		return learningRate;
-	}
-
-	public void setLearningRate(double learningRate) {
-		this.learningRate = learningRate;
-	}
-
-	public double getMomentum() {
-		return momentum;
-	}
 
 	public ClassifierNetwork(MultiLayerPerceptron neuralNetwork, ClassifierConfiguration configuration){
 		this.neuralNetwork = neuralNetwork;
@@ -95,12 +65,15 @@ public class ClassifierNetwork {
 
 	private void createNeuronStructure() {
 		neuralNetwork = new MultiLayerPerceptron(
-				Arrays.asList(configuration.inputNeuronCount, hiddenLayerNeuronCount, configuration.numberOfNeuronOutput),
+				Arrays.asList(configuration.inputNeuronCount, configuration.hiddenLayerNeuronCount, configuration.numberOfNeuronOutput),
 				TransferFunctionType.SIGMOID);
 		MomentumBackpropagation bp = new MomentumBackpropagation();
-		bp.setLearningRate(learningRate);
-		bp.setMaxError(maxError);
-		bp.setMomentum(momentum);
+		bp.setLearningRate(configuration.learningRate);
+		bp.setMaxError(configuration.maxError);
+		bp.setMomentum(configuration.momentum);
+		RangeRandomizer random = new RangeRandomizer(-0.7, 0.7);
+		random.setRandomGenerator(new Random(1));
+		neuralNetwork.randomizeWeights(random);
 		neuralNetwork.setLearningRule(bp);
 	}
 

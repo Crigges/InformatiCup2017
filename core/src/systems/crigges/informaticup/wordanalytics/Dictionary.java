@@ -64,21 +64,21 @@ public class Dictionary {
 		// SerializeHelper.serialize(config.wordDictionaryLocation,
 		// dictionaryWords);
 		//
-		// clear();
-		// for (LoadedRepository crawler : crawlers) {
-		// unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());
-		// }
-		// generate(config.fileEndingDictionaryIntersectionStrength,
-		// config.fileEndingDictionaryWordCountPerType);
-		// SerializeHelper.serialize(config.fileEndingDictionaryLocation,
-		// dictionaryWords);
+		 clear();
+		 for (LoadedRepository crawler : crawlers) {
+		 unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());
+		 }
+		 generate(config.fileEndingDictionaryIntersectionStrength,
+		 config.fileEndingDictionaryWordCountPerType);
+		 SerializeHelper.serialize(config.fileEndingDictionaryLocation,
+		 dictionaryWords);
 
-		clear();
-		for (LoadedRepository crawler : crawlers) {
-			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileNameCount());
-		}
-		generate(config.fileNameDictionaryIntersectionStrength, config.fileNameDictionaryWordCountPerType);
-		SerializeHelper.serialize(config.fileNameDictionaryLocation, dictionaryWords);
+//		clear();
+//		for (LoadedRepository crawler : crawlers) {
+//			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileNameCount());
+//		}
+//		generate(config.fileNameDictionaryIntersectionStrength, config.fileNameDictionaryWordCountPerType);
+//		SerializeHelper.serialize(config.fileNameDictionaryLocation, dictionaryWords);
 	}
 
 	

@@ -37,6 +37,14 @@ public class ClassifierConfiguration {
 	
 	public int numberOfNeuronOutput;
 	
+	public int hiddenLayerNeuronCount;
+	
+	public double maxError;
+	
+	public double learningRate;
+	
+	public double momentum;
+	
 	public double ratioLogisticValue;
 	
 	public ArrayList<DictionaryEntry> wordDictionary;
@@ -60,14 +68,18 @@ public class ClassifierConfiguration {
 		configuration.wordDictionaryWordCountPerType = 10;
 		
 		configuration.wordDictionarylogisticValue = 0.3;	
-		configuration.fileNameDictionaryIntersectionStrength = 0.25;
 		
+		configuration.fileNameDictionaryIntersectionStrength = 0.25;
 		configuration.fileNameDictionaryWordCountPerType = 150;
 		configuration.fileNameDictionarylogisticValue = 0.2;
 		
-		configuration.fileEndingDictionaryIntersectionStrength = 0.08;
-		configuration.fileEndingDictionaryWordCountPerType = 10;
+		configuration.fileEndingDictionaryIntersectionStrength = 0.01;
+		configuration.fileEndingDictionaryWordCountPerType = 50;
 		
+		configuration.hiddenLayerNeuronCount = 15;
+		configuration.maxError = 0.01;
+		configuration.learningRate = 0.1;
+		configuration.momentum = 0.2;
 		configuration.recreateDictionary = false;
 
 		configuration.fileEndingDictionaryLogisticValue = 0.3;
@@ -112,6 +124,11 @@ public class ClassifierConfiguration {
 		
 		configuration.recreateDictionary = false;
 
+		configuration.hiddenLayerNeuronCount = 15;
+		configuration.maxError = 0.001;
+		configuration.learningRate = 0.1;
+		configuration.momentum = 0.2;
+		
 		configuration.fileEndingDictionaryLogisticValue = 0.3;
 		
 		configuration.numberOfNeuronOutput = 7;

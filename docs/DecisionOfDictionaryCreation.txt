@@ -1,0 +1,60 @@
+10
+0.08
+0.08
+css  scss  gif  csv  js  py  xml  md  json  yml  html  class  jpg  cc  filehasnoending  cpp  c  tex  gitignore  h  png  rb  txt  iwa  pdf  
+10
+0.2
+0.2
+filehasnoending  jpg  cpp  css  c  svg  scss  gif  gitignore  csv  h  png  js  py  txt  pdf  xml  md  json  html  
+20
+0.08
+0.08
+css  gif  scss  rdx  csv  rmd  js  py  gitattributes  eot  ds  java  erb  sh  xml  tsv  md  json  yml  jpeg  lock  html  class  jpg  cc  filehasnoending  zip  cpp  c  ini  svg  tex  gitignore  ttf  h  png  go  rdata  less  store  m  rb  txt  rdb  iwa  pdf  
+50
+0.08
+0.08
+hh  css  ps  bin  csv  py  conf  eot  patch  java  exe  xml  tmp  pem  lock  jar  apl  otf  zip  in  tex  png  eps  rb  gitkeep  log  js  out  rst  plist  erb  sh  markdown  jpeg  woff2  map  key  cc  mat  xlsx  c  d  pxm  svg  cfg  rtf  gitignore  f  rhistory  h  rdata  store  k  m  rda  o  docx  cs  txt  rdb  r  s  php  data  scss  rdx  rmd  project  ds  ico  dat  md  mf  html  ipynb  mk  yaml  filehasnoending  mm  cpp  lisp  less  pro  woff  pptx  graffle  psd  gif  gitattributes  glsl  sql  rels  qml  dtd  tsv  json  yml  class  jpg  htm  ini  dll  ttf  go  geojson  iwa  pdf  coffee  pl  properties  
+50
+0.5
+0.5
+css  scss  gif  csv  js  eot  ds  md  yml  json  jpeg  html  woff2  map  filehasnoending  jpg  otf  svg  gitignore  ttf  h  png  store  woff  rb  txt  pdf  php  
+100
+0.05
+0.05
+css  ps  fig  csv  sbx  py  bak  patch  java  exe  bat  brd  xml  jar  apl  ipc  apk  cache  tex  png  ai  rb  node  groovy  gitkeep  sty  rsa  ru  pod  jsp  suo  jsx  tga  rst  sf  dxf  indd  sh  epub  markdown  jpeg  gypi  seq  key  cc  xlsx  art  c  qrc  d  svg  cfg  rtf  f  gitignore  tgz  rhistory  h  hpp  launch  store  svm  k  fls  m  rda  o  docx  cs  gradle  txt  q  rdb  r  s  cv  rdf  orig  lhs  asm  config  db  ts  rds  npmignore  lib  scss  mkd  rdx  project  latexmk  ds  empty  loaded  tif  ref  ui  ico  ipynb  yaml  swift  test  sqlite  opf  pod6  pri  lisp  prj  pro  list  idl  pptx  vm  shp  graffle  psd  shx  aux  xsd  gitattributes  fs  rels  xsl  sig  json  class  htm  dll  go  ent  topojson  wav  xhtml  pdb  prefs  mp4  geojson  iwa  cproject  pdf  gz  npy  obj  coffee  hdr  hh  styl  vert  bin  conf  eot  hs  nojekyll  qdoc  mov  tmp  pem  lock  editorconfig  otf  zip  7z  large  in  sla  fodt  eps  cls  doc  odp  cmd  odt  hgd  log  thumb  js  kml  out  plist  erb  strings  pgp  woff2  map  erl  mat  ncx  pxm  fdb  rdata  tps  php  pyc  data  bmp  rmd  base64  dat  pip  md  mf  html  mk  drl  filehasnoending  mm  textmpl  cpp  tar  mtl  tree  dbf  less  webp  woff  rdoc  keep  gitmodules  dsn  gyp  frag  gif  scala  jade  iml  glsl  sql  qml  dtd  tsv  yml  rpres  rou  attr  jpg  tcp  inf  dts  original  ini  manifest  inl  ttf  m4v  build  csh  pk  pl  properties  xls  sbn  po  
+100
+0.5
+0.5
+css  scss  gif  csv  js  eot  ds  md  yml  json  jpeg  html  woff2  map  filehasnoending  jpg  otf  svg  gitignore  ttf  h  png  store  woff  rb  txt  pdf  php  
+50
+0.3
+0.3
+css  ps  scss  csv  py  eot  ds  ico  xml  tmp  md  lock  html  apl  filehasnoending  otf  zip  cpp  in  png  lisp  eps  less  woff  rb  graffle  psd  gif  js  erb  sh  json  yml  jpeg  woff2  map  jpg  c  pxm  svg  rtf  gitignore  f  ttf  h  store  k  txt  pdf  php  
+1000
+0.3
+0.3
+css  ps  scss  csv  py  eot  ds  ico  xml  tmp  md  lock  html  apl  filehasnoending  otf  zip  cpp  in  png  lisp  eps  less  woff  rb  graffle  psd  gif  js  erb  sh  json  yml  jpeg  woff2  map  jpg  c  pxm  svg  rtf  gitignore  f  ttf  h  store  k  txt  pdf  php  
+1000
+0.2
+0.2
+css  ps  scss  csv  py  conf  eot  ds  java  ico  xml  tmp  md  lock  html  apl  filehasnoending  otf  zip  cpp  in  tex  png  lisp  eps  less  woff  rb  graffle  psd  gif  js  erb  sh  json  yml  jpeg  woff2  map  jpg  c  pxm  svg  cfg  rtf  gitignore  f  ttf  h  store  k  txt  pdf  php  
+1000
+0.1
+0.1
+css  ps  def  bin  csv  py  conf  eot  patch  nojekyll  java  exe  bat  xml  tmp  lock  editorconfig  jar  apl  zip  otf  ac  in  tex  png  eps  am  rb  rc  sln  cmd  template  log  js  example  out  rst  plist  erb  sh  jpeg  woff2  map  key  cc  xlsx  c  qrc  pxm  svg  cfg  rtf  gitignore  f  h  hpp  rdata  store  k  m  icns  o  docx  cs  txt  rdb  r  cmake  php  config  db  data  scss  rdx  rmd  project  pyx  spec  ds  ico  dat  md  mf  html  ipynb  mk  yaml  info  filehasnoending  mm  cpp  lisp  less  pro  woff  pptx  proto  gitmodules  graffle  psd  mailmap  gif  xsd  gitattributes  sql  rels  xsl  qml  desktop  dtd  tsv  json  yml  class  inc  jpg  ini  dll  ttf  pbxproj  readme  prefs  pdf  gz  coffee  pl  properties  
+1000
+0.05
+0.05
+def  sbt  egg  fig  3ad5e3db0d0300312d33231e7c2a6c8d  sbx  bak  der  bar  bat  xml  dex  sch  vim  ipc  bowerrc  ac  scr  tex  xcscheme  profile  ai  raw  diff  am  version  ap  deflate  gitkeep  guess  eslintignore  jsp  jsx  example  tga  26c9d24eb6305ea2106c26bdca38012e  wmf  sed  indd  epub  jpeg  seq  policy  cc  a  xlsx  c  d  xquery  cfg  learn  f  gitignore  tgz  g  h  hpp  i  k  l  fls  m  icns  rda  o  gnu  cs  q  rdb  r  cu  s  cv  xpm  t  rdf  y  z  config  db  lgpl3  rds  cgi  scss  lgpl  rdx  cvsignore  ds  empty  tif  ref  vml  vcxproj  ipynb  vms  info  swift  par  mdown  xqy  res  pas  test  babelrc  el  lisp  list  pptx  rproj  csproj  pbm  shp  graffle  shx  xsd  cin  gitattributes  locale  h5  fs  xsl  sig  fx  desktop  pch  provides  root  json  end  coveragerc  class  htm  doxy  dll  go  ent  prefs  pdb  geojson  iwa  cproject  pdf  gz  obj  coffee  xcworkspacedata  setup  bib  hh  styl  vert  bin  eot  hs  nojekyll  else  tmp  asn1  pem  lock  editorconfig  avro  cmakein  large  in  eps  sla  cls  script  sln  driver  doc  fsh  odp  cmd  odt  template  jj  pfx  dot  js  vsh  mac  rspec  file  erb  strings  e85ebb8ce5d939964fd87bd13b326c02  mak  pgp  angle  cnf  map  erl  macos  table  mar  ftl  mat  ncx  m4  gdbinit  rdata  gzip  url  dntrc  tpl  tps  cmake  ld  php  zentus  com  auto  bmp  rmd  base64  ogg  pig  pages  qdocconf  pip  md  mf  4f5da98a11db8e7192423c27db767ca6  net  mk  drl  filehasnoending  mm  settings  textmpl  cpp  rnc  rng  less  woff  nb  null  rnw  12bcf6e49e83abd2aa36ea612b418d43  30a4b1c8227906931cd0532367bebc43  unix  dsn  gyp  dsp  frag  mailmap  tiff  44bb88a1c9280952e8119a3ab1bb4205  dsw  pkg  glsl  sql  qml  tst  dtd  doap  tsv  qdocinc  rou  dump  crl  attr  dts  crt  src  manifest  ttf  readme  98b2e34c9134208e9fe7c62d33010005  97b3c408090f758257e4bd20597a525e  csh  xslt  pk  pl  pm  properties  po  css  tmpl  ps  csv  insensitive  py  cert  patch  aeb1f906bfe92f2d406f84109301afe0  java  exe  brd  lesser  makefile  jar  exp  apl  apk  ext2  ext1  app  cache  qv  e3c7f62795b0e7c14b41b0dc29c47619  old  expected  module  png  eslintrc  storyboard  rb  rc  node  groovy  sty  rsa  cur  sub  rs  bst  ru  pod  95a30c4b746f520f1251981a66cef5c8  suo  fasta  pom  sb  rst  sf  rss  dxf  sh  markdown  disabled  gypi  1l  so  87321b2e30ee2986b00b631d0e4f4d8d  key  1s  art  qrc  star  svg  rtf  rhistory  xcsettings  1y  launch  store  svm  ppm  arsc  hlsl  42104e7e35985f4504c6d9a79b1bb4b8  docx  gradle  txt  orig  7f5ce763801781cf568c6a31dd80b623  ppt  lhs  asm  v1  ts  prototxt  npmignore  swf  lib  31fbe14d01fb532176c1689680398368  mkd  project  latexmk  rules  swo  swp  ps1  8dfa46ec33c1be5ffba2e40cbfe5349e  p12  loaded  ui  ico  lis  aidl  yaml  cxx  sqlite  opf  pod6  pri  prj  pro  idl  opt  vm  prx  name  vs  fc8183d758151be72b3d75d9df124504  psd  aux  cartesian  os2  rels  mms  common  bz2  perl  orc  types  classpath  org  topojson  filters  wav  xhtml  mp4  mp3  awk  npy  hdr  bash  xs  pub  gcc  conf  qdoc  mov  case  otf  zip  rprofile  7z  nrm  fodt  props  doxyfile  6cbb13c3a48f53fa6550dbba4d2c28fd  hgd  nsi  log  thumb  kml  apxl  out  plist  jks  woff2  pxd  lgplv3  pxi  include  pxm  fdb  fdl  7bdb861d11e895aaea545810cdac316d  pyc  gplv3  beam  data  htaccess  5db3b55120a19863d96460d399c2d0e  hin  pyx  spec  xib  tab  dat  html  tag  jshintrc  ver  tar  mtl  tree  dbf  webp  rdoc  udf  proto  keep  gitmodules  tbl  gpl3  gif  scala  dcf  a6ec78b3b93d52034aab829d43210e73  jade  iml  factories  lst  cloc  supp  yml  rpres  win  inc  jpg  inf  tcp  jnilib  c657beb729b6a7882309a203fc6f298e  debug  original  sas  ini  inl  pbxproj  resx  m4v  build  lua  xls  sbn  pubkey  
+1000
+0.08
+0.08
+hh  css  tmpl  ps  def  bin  csv  py  conf  eot  bak  patch  nojekyll  java  exe  bat  xml  tmp  pem  lock  editorconfig  jar  apl  otf  zip  bowerrc  ac  cache  in  tex  old  png  eps  am  rb  rc  gitkeep  sln  sty  cmd  template  rs  log  js  example  out  rst  plist  erb  sh  markdown  jpeg  woff2  map  pxd  key  cc  a  mat  xlsx  c  qrc  d  pxm  svg  cfg  rtf  gitignore  f  m4  rhistory  h  hpp  rdata  store  k  l  m  icns  rda  o  docx  cs  txt  tpl  rdb  r  s  orig  cmake  php  y  asm  pyc  config  db  rds  data  bmp  lib  scss  mkd  rdx  rmd  project  rules  swp  pyx  spec  ds  p12  ui  ico  dat  vcxproj  md  mf  html  ipynb  vms  mk  yaml  info  filehasnoending  mm  cpp  cxx  test  lisp  less  pro  woff  pptx  nb  proto  gitmodules  graffle  psd  mailmap  gif  xsd  gitattributes  h5  glsl  sql  rels  xsl  qml  desktop  pch  dtd  tsv  json  yml  rpres  class  inc  jpg  htm  crt  ini  classpath  dll  inl  ttf  pbxproj  go  readme  prefs  geojson  iwa  pdf  gz  awk  coffee  xcworkspacedata  lua  bash  pl  pm  properties  
+1000
+0.06
+0.06
+css  tmpl  ps  def  fig  csv  py  cert  bak  patch  java  exe  bat  xml  makefile  jar  exp  apl  bowerrc  cache  ac  scr  tex  old  xcscheme  png  diff  am  rb  rc  node  groovy  gitkeep  guess  sty  sub  rs  ru  pod  suo  jsx  example  rst  sed  sh  markdown  jpeg  gypi  key  cc  a  xlsx  c  qrc  d  svg  cfg  rtf  f  gitignore  tgz  rhistory  h  hpp  store  k  l  m  hlsl  icns  rda  o  docx  cs  gradle  txt  rdb  r  s  rdf  orig  y  asm  config  db  lgpl3  ts  rds  npmignore  lib  cgi  scss  mkd  rdx  project  rules  swp  ds  ps1  p12  ui  ico  vcxproj  ipynb  aidl  vms  yaml  info  swift  cxx  test  sqlite  pri  el  lisp  pro  list  pptx  csproj  graffle  psd  xsd  gitattributes  h5  rels  xsl  desktop  pch  json  coveragerc  class  htm  dll  classpath  go  filters  wav  prefs  pdb  geojson  mp3  iwa  pdf  gz  awk  npy  obj  coffee  xcworkspacedata  bash  hh  styl  bin  conf  eot  nojekyll  tmp  pem  lock  editorconfig  otf  zip  in  eps  script  sln  doc  cmd  odt  template  log  js  out  plist  strings  erb  mak  cnf  woff2  map  pxd  lgplv3  mat  pxm  m4  rdata  dntrc  tpl  cmake  php  pyc  com  gplv3  beam  data  bmp  htaccess  rmd  pyx  spec  xib  pages  dat  md  mf  html  tag  jshintrc  mk  filehasnoending  mm  cpp  tar  less  woff  rdoc  nb  proto  keep  gitmodules  gyp  tbl  dsp  gpl3  frag  mailmap  gif  dsw  lst  glsl  sql  qml  tst  dtd  tsv  yml  rpres  dump  inc  jpg  crt  sas  ini  src  inl  ttf  pbxproj  readme  lua  pl  pm  properties  xls  po  
+100
+0.06
+0.06
+hh  css  ps  def  fig  bin  csv  py  conf  eot  bak  patch  nojekyll  java  exe  bat  xml  tmp  pem  lock  editorconfig  jar  apl  otf  zip  bowerrc  cache  in  tex  old  png  eps  diff  am  rb  node  groovy  gitkeep  doc  sty  odt  rs  ru  pod  log  js  suo  jsx  out  rst  plist  erb  strings  sh  markdown  jpeg  woff2  map  key  cc  mat  a  xlsx  c  qrc  d  pxm  svg  cfg  rtf  f  gitignore  m4  rhistory  h  hpp  rdata  store  k  m  rda  o  docx  cs  gradle  txt  rdb  r  s  rdf  orig  cmake  php  asm  pyc  config  db  ts  rds  npmignore  data  bmp  scss  mkd  rdx  rmd  project  swp  pyx  ds  ui  ico  dat  vcxproj  md  mf  html  ipynb  mk  yaml  swift  filehasnoending  mm  cpp  test  sqlite  tar  pri  lisp  less  pro  list  woff  pptx  rdoc  keep  gitmodules  graffle  gyp  psd  frag  gif  xsd  gitattributes  h5  glsl  sql  rels  xsl  qml  dtd  tsv  json  yml  rpres  class  inc  jpg  htm  crt  ini  dll  ttf  go  filters  wav  pdb  geojson  iwa  pdf  gz  npy  obj  coffee  bash  pl  properties  po  

@@ -54,54 +54,81 @@ public class Main {
 			} else {
 				neuralNetwork = createNeuralNetwork(config);
 			}
-		} catch (Exception e2){
+		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
-		
 
 		try {
 			String outputFileName = testRepositoryLocation.getParentFile().getAbsolutePath() + "/"
-					+ testRepositoryLocation.getName().substring(0, testRepositoryLocation.getName().indexOf(".")) + "output.txt";
+					+ testRepositoryLocation.getName().substring(0, testRepositoryLocation.getName().indexOf("."))
+					+ "output.txt";
 			System.out.println(outputFileName);
-			HashMap<RepositoryTyp, Double> evaluationData = new HashMap<>();
-			List<RepositoryDescriptor> goldenData = new InputFileReader(new File("./assets/TestRepositorysEvaluated.txt")).getRepositorysAndTypes();
+			
+			HashMap<RepositoryTyp, Integer> evaluationData = new HashMap<>();
+			HashMap<RepositoryTyp, Integer> correctData = new HashMap<>();
+			List<RepositoryDescriptor> goldenData = new InputFileReader(
+					new File("./assets/TestRepositorysEvaluated.txt")).getRepositorysAndTypes();
 			int[] goldenValuesForType = new int[7];
 			OutputFileWriter writer = new OutputFileWriter(new File(outputFileName));
 			for (RepositoryDescriptor rp : repositorys) {
-				try{
+				try {
 
-				RepositoryTyp type = neuralNetwork.classify(RepoCacher.get(rp.getName()).getCollectedDataSet());
-				rp.setType(type);
-				if( evaluationData.containsKey(type)){
-				evaluationData.put(type, evaluationData.get(type) +  1);
-				}else{
-					evaluationData.put(type, 1.);
-				}
-				writer.write(rp);
-				System.out.println(rp.getName() + " " + type.toString());
-				}catch(Exception e){
+					RepositoryTyp type = neuralNetwork.classify(RepoCacher.get(rp.getName()).getCollectedDataSet());
+					rp.setType(type);
+					if (evaluationData.containsKey(type)) {
+						evaluationData.put(type, evaluationData.get(type) + 1);
+					} else {
+						evaluationData.put(type, 1);
+					}
+					if (correctClassified(rp, goldenData)) {
+						System.out.println("correct"  + rp.getName());
+						if (correctData.get(rp.getTyp()) != null) {
+							correctData.put(rp.getTyp(), correctData.get(rp.getTyp()) + 1);
+						} else {
+							correctData.put(rp.getTyp(), 1);
+						}
+					}
+					writer.write(rp);
+					System.out.println(rp.getName() + " " + type.toString());
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			
-			for(RepositoryDescriptor rd : goldenData){
+
+			for (RepositoryDescriptor rd : goldenData) {
 				goldenValuesForType[rd.getTypeIndex()]++;
 			}
 			double[] ausbeute = new double[7];
-			for(Entry<RepositoryTyp, Double> entry : evaluationData.entrySet()){
+			int count = 0;
+			System.out.println("Ausbeute");
+			for (Entry<RepositoryTyp, Integer> entry : correctData.entrySet()) {
+				int index = entry.getKey().getValue();
+				count += entry.getValue();
+				ausbeute[index] = entry.getValue() / goldenValuesForType[index];
+				System.out.println(entry.getKey().toString() + " " + (double)(entry.getValue()) / goldenValuesForType[index]);
+			}
+			System.out.println("Präzision");
+			for (Entry<RepositoryTyp, Integer> entry : correctData.entrySet()) {
 				int index = entry.getKey().getValue();
 				ausbeute[index] = entry.getValue() / goldenValuesForType[index];
-				System.out.println(entry.getKey().toString() + " " + entry.getValue() / goldenValuesForType[index]);
+				System.out.println(entry.getKey().toString() + " " + (double)(entry.getValue()) / evaluationData.get(entry.getKey()));
 			}
-//			for(RepositoryDescriptor rp : goldenData){
-//				evaluationData.put(rp.getTyp(), )
-//			}
+			
+			System.out.println("Overall " + count + " classifications correct" +" so ," + ((double) (count)/ 31));
 			writer.close();
 		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
-		
 
+	}
+
+	private static boolean correctClassified(RepositoryDescriptor classified, List<RepositoryDescriptor> golden) {
+		for (RepositoryDescriptor rep : golden) {
+			if (classified.getTyp().equals(rep.getTyp()) & classified.getName().equals(rep.getName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static ClassifierNetwork createNeuralNetwork(ClassifierConfiguration config) throws Exception {
@@ -113,11 +140,12 @@ public class Main {
 				CollectedDataSet dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
 				dataSet.repositoryType = rp.getTyp();
 				dataSetAll.add(dataSet);
-			} catch (Exception e2) {}
+			} catch (Exception e2) {
+			}
 		}
 		ClassifierConfiguration conf = ClassifierConfiguration.getDefault();
 		ArrayList<DictionaryEntry> list = SerializeHelper.deserialize(conf.fileNameDictionaryLocation);
-		for(DictionaryEntry entry : list){
+		for (DictionaryEntry entry : list) {
 			System.out.println(entry.getWord());
 		}
 		return new ClassifierNetwork(dataSetAll, ClassifierConfiguration.getDefault());
