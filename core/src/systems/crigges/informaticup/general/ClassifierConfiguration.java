@@ -62,8 +62,8 @@ public class ClassifierConfiguration {
 		configuration.wordDictionarylogisticValue = 0.3;	
 		configuration.fileNameDictionaryIntersectionStrength = 0.25;
 		
-		configuration.fileNameDictionaryWordCountPerType = 10;
-		configuration.fileNameDictionarylogisticValue = 0.3;
+		configuration.fileNameDictionaryWordCountPerType = 150;
+		configuration.fileNameDictionarylogisticValue = 0.2;
 		
 		configuration.fileEndingDictionaryIntersectionStrength = 0.08;
 		configuration.fileEndingDictionaryWordCountPerType = 10;
@@ -99,7 +99,7 @@ public class ClassifierConfiguration {
 		configuration.neuralNetworkLocation = new File("./assets/classifierNN.nnet");
 		
 		configuration.wordDictionaryIntersectionStrength = 0.25;
-		configuration.wordDictionaryWordCountPerType = 10;
+		configuration.wordDictionaryWordCountPerType = 100;
 		
 		configuration.wordDictionarylogisticValue = 0.3;	
 		configuration.fileNameDictionaryIntersectionStrength = 0.25;

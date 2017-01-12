@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
@@ -22,7 +23,8 @@ import systems.crigges.informaticup.io.SerializeHelper;
 
 /**
  * This class generates the dictionarys which are used as input for the neural
- * Network. The generation parameters of the {@link ClassifierConfiguration} class are used.
+ * Network. The generation parameters of the {@link ClassifierConfiguration}
+ * class are used.
  * 
  * @author Rami Aly & Andre Schurat
  * @see WordStatistic
@@ -38,34 +40,38 @@ public class Dictionary {
 	/**
 	 * Creates a new dictionary out of the given repositories.
 	 * 
-	 * @param repositories
+	 * @param crawlers2
 	 *            Repositories used to create the dictionary
 	 * @throws IOException
 	 *             if Dictionary could not be written to disc
 	 * @see ClassifierConfiguration
 	 */
-	public Dictionary(List<RepositoryDescriptor> repositories, ClassifierConfiguration config) throws IOException {
-		List<LoadedRepository> crawlers = new ArrayList<>();
-		for (RepositoryDescriptor r : repositories) {
-			try {
-				crawlers.add(new LoadedRepository(RepoCacher.get(r.getName()), r.getTyp()));
-			} catch (IOException | InterruptedException | ExecutionException e) {
-				/** ignore empty or protected repositories for now */
-			}
-		}
-		clear();
-		for (LoadedRepository crawler : crawlers) {
-			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
-		}
-		generate(config.wordDictionaryIntersectionStrength, config.wordDictionaryWordCountPerType);
-		SerializeHelper.serialize(config.wordDictionaryLocation, dictionaryWords);
-
-		clear();
-		for (LoadedRepository crawler : crawlers) {
-			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());
-		}
-		generate(config.fileEndingDictionaryIntersectionStrength, config.fileEndingDictionaryWordCountPerType);
-		SerializeHelper.serialize(config.fileEndingDictionaryLocation, dictionaryWords);
+	public Dictionary(List<LoadedRepository> crawlers, ClassifierConfiguration config) throws IOException {
+//		List<LoadedRepository> crawlers = new ArrayList<>();
+//		for (RepositoryDescriptor r : crawlers2) {
+//			try {
+//				crawlers.add(new LoadedRepository(RepoCacher.get(r.getName()), r.getTyp()));
+//			} catch (IOException | InterruptedException | ExecutionException e) {
+//				/** ignore empty or protected repositories for now */
+//			}
+//		}
+		// clear();
+		// for (LoadedRepository crawler : crawlers) {
+		// unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
+		// }
+		// generate(config.wordDictionaryIntersectionStrength,
+		// config.wordDictionaryWordCountPerType);
+		// SerializeHelper.serialize(config.wordDictionaryLocation,
+		// dictionaryWords);
+		//
+		// clear();
+		// for (LoadedRepository crawler : crawlers) {
+		// unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());
+		// }
+		// generate(config.fileEndingDictionaryIntersectionStrength,
+		// config.fileEndingDictionaryWordCountPerType);
+		// SerializeHelper.serialize(config.fileEndingDictionaryLocation,
+		// dictionaryWords);
 
 		clear();
 		for (LoadedRepository crawler : crawlers) {
@@ -75,6 +81,41 @@ public class Dictionary {
 		SerializeHelper.serialize(config.fileNameDictionaryLocation, dictionaryWords);
 	}
 
+	
+	public Dictionary(List<RepositoryDescriptor> list, ClassifierConfiguration config, int useless) throws IOException {
+		List<LoadedRepository> crawlers = new ArrayList<>();
+		for (RepositoryDescriptor r :list) {
+			try {
+				crawlers.add(new LoadedRepository(RepoCacher.get(r.getName()), r.getTyp()));
+			} catch (IOException | InterruptedException | ExecutionException e) {
+				/** ignore empty or protected repositories for now */
+			}
+		}
+		 clear();
+		 for (LoadedRepository crawler : crawlers) {
+		 unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
+		 }
+		 generate(config.wordDictionaryIntersectionStrength,
+		 config.wordDictionaryWordCountPerType);
+		 SerializeHelper.serialize(config.wordDictionaryLocation,
+		 dictionaryWords);
+		
+		 clear();
+		 for (LoadedRepository crawler : crawlers) {
+		 unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());
+		 }
+		 generate(config.fileEndingDictionaryIntersectionStrength,
+		 config.fileEndingDictionaryWordCountPerType);
+		 SerializeHelper.serialize(config.fileEndingDictionaryLocation,
+		 dictionaryWords);
+
+		clear();
+		for (LoadedRepository crawler : crawlers) {
+			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileNameCount());
+		}
+		generate(config.fileNameDictionaryIntersectionStrength, config.fileNameDictionaryWordCountPerType);
+		SerializeHelper.serialize(config.fileNameDictionaryLocation, dictionaryWords);
+	}
 	/**
 	 * Simple wrapper class to bind the {@link RepositoryTyp} to the
 	 * {@link RepositoryCrawler}
@@ -160,6 +201,7 @@ public class Dictionary {
 		Set<DictionaryEntry> tempWordSet = new TreeSet<DictionaryEntry>();
 		for (String s : uniqueWords) {
 			tempWordSet.add(new DictionaryEntry(s, dictionaryWordStatistic.getStatistic(s)));
+			System.out.print(s + "  ");
 		}
 		dictionaryWords.addAll(tempWordSet);
 	}
@@ -175,12 +217,34 @@ public class Dictionary {
 	 */
 	public static void main(String[] args) throws Exception {
 		ClassifierConfiguration config = ClassifierConfiguration.getDefaultWithoutDictionaries();
-		List<RepositoryDescriptor> list = new InputFileReader(config.trainingRepositoryLocation).getRepositorysAndTypes();
-		RepoCacher.initThreadPool(6);
-		for(RepositoryDescriptor repo : list){
-			RepoCacher.getThreaded(repo.getName(), (RepositoryCrawler c) -> {});
+		List<RepositoryDescriptor> list = new InputFileReader(config.trainingRepositoryLocation)
+				.getRepositorysAndTypes();
+		List<LoadedRepository> crawlers = new ArrayList<>();
+		for (RepositoryDescriptor r : list) {
+			try {
+				crawlers.add(new LoadedRepository(RepoCacher.get(r.getName()), r.getTyp()));
+			} catch (IOException | InterruptedException | ExecutionException e) {
+				/** ignore empty or protected repositories for now */
+			}
 		}
-		RepoCacher.shutdownThreadPool();
-		new Dictionary(list, config);
+		Scanner sc = new Scanner(System.in);
+		while (sc.hasNext()) {
+//			String values = sc.next();
+//			System.out.println(values);
+//			int crop = values.indexOf(" ");
+//			int para1 = Integer.parseInt(values.substring(0, crop));
+//			double para2 = Integer.parseInt(values.substring(crop + 1));
+			int para1 = Integer.parseInt(sc.next());
+			double para2 = Double.parseDouble(sc.next());
+			System.out.println(para2);
+			config.fileEndingDictionaryWordCountPerType = para1;
+			config.fileNameDictionaryWordCountPerType = para1;
+			config.wordDictionaryWordCountPerType = para1;
+			config.fileEndingDictionaryIntersectionStrength = para2;
+			config.fileNameDictionaryIntersectionStrength = para2;
+			config.wordDictionaryIntersectionStrength = para2;
+			new Dictionary(crawlers, config);
+		}
+		sc.close();
 	}
 }

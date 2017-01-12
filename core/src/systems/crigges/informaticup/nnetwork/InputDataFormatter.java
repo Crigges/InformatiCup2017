@@ -19,6 +19,12 @@ public class InputDataFormatter {
 
 	private LogisticFunction logisticFunction;
 
+	/**
+	 * This class is responsible for calculating, normalizing and formatting the occurrences of Words in a DataSet in Relation to a Dictionary.
+	 * @param dataSet
+	 * @param dictionary
+	 * @param functionValue
+	 */
 	public InputDataFormatter(Set<Entry<String, Integer>> dataSet, ArrayList<DictionaryEntry> dictionary,
 			double functionValue) {
 		this.dictionary = dictionary;

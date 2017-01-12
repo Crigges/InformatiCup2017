@@ -105,7 +105,7 @@ System.out.println( normValues.get(0) + " " +  normValues.get(1) + " " +  normVa
 		dataSet.repoSize = 1;
 		dataSet.totalWordCount = 1;
 		RatioDataSet defaultSet = new RatioDataSet(dataSet);
-		System.out.println(defaultSet.getInputNeurons().size());
+//		System.out.println(defaultSet.getInputNeurons().size());
 		return defaultSet.getInputNeurons().size();
 	}
 
