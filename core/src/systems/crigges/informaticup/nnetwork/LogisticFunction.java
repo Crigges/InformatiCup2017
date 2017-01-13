@@ -1,5 +1,9 @@
 package systems.crigges.informaticup.nnetwork;
 
+/**
+ * Logistic Function with L = 1 and 
+ * @author Rami Aly & Andre Schurat
+ */
 public class LogisticFunction {
 	private double k;
 
