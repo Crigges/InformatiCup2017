@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  13 JAN 2017 13:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  13 JAN 2017 16:20
 entering extended mode
 **documentation.tex
 (documentation.tex
@@ -898,22 +898,7 @@ Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 )
-(documentation.aux
-
-! Package babel Error: Unknown language `ngerman'. Either you have
-(babel)                misspelled its name, it has not been installed,
-(babel)                or you requested it in a previous run. Fix its name,
-(babel)                install it or just rerun the file, respectively.
-
-See the babel package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.20 \select@language{ngerman}
-                              
-You may proceed, but expect unexpected results
-
-)
+(documentation.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
 LaTeX Font Info:    ... okay on input line 48.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
@@ -935,8 +920,7 @@ File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 48.
 LaTeX Font Info:    Try loading font information for T1+lmr on input line 48.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmr.fd"
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmr.fd"
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
@@ -1070,78 +1054,66 @@ LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <18.72003> not available
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
 (Font)              scaled to size 17.78397pt on input line 58.
  [2] (documentation.toc
-
-! Package babel Error: Unknown language `ngerman'. Either you have
-(babel)                misspelled its name, it has not been installed,
-(babel)                or you requested it in a previous run. Fix its name,
-(babel)                install it or just rerun the file, respectively.
-
-See the babel package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1 \select@language {ngerman}
-                              
-You may proceed, but expect unexpected results
-
+LaTeX Font Info:    Calculating math sizes for size <13> on input line 7.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <13> on input line 7.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9.09996> on input line 7.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6.5> on input line 7.
 )
 \tf@toc=\write4
- [3] [4]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 93.
+[3]
+LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <15.59996> not available
+(Font)              Font shape `T1/ua1/b/n' tried instead on input line 78.
+LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
+(Font)              scaled to size 14.8199pt on input line 78.
+ [4] [5]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 107.
+
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Calculating math sizes for size <13> on input line 93.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <13> on input line 93.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9.09996> on input line 93.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6.5> on input line 93.
-
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
-\T1/lmr/m/n/13 1998 []$\T1/lmtt/m/n/13 https : / / www . tu-[]chemnitz . de / i
-nformatik / KI / edu / robotik /$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 99--102
+Underfull \hbox (badness 10000) in paragraph at lines 113--114
 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 102.
-[5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 102.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 115.
+[6]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 115.
  (documentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 102.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 102.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 115.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 115.
 Package rerunfilecheck Info: File `documentation.out' has not changed.
-(rerunfilecheck)             Checksum: 5E9E553ADA7881F9D043B2733D1B4BCF;555.
+(rerunfilecheck)             Checksum: D827E607F0F9717BF59EB3EBA0AACA23;710.
 
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 102.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 115.
  ) 
 Here is how much of TeX's memory you used:
- 12374 strings out of 493673
- 188065 string characters out of 3141529
- 342666 words of memory out of 3000000
- 15495 multiletter control sequences out of 15000+200000
- 60751 words of font info for 58 fonts, out of 3000000 for 9000
+ 12381 strings out of 493673
+ 188173 string characters out of 3141529
+ 344674 words of memory out of 3000000
+ 15498 multiletter control sequences out of 15000+200000
+ 66843 words of font info for 60 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 41i,8n,50p,355b,343s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,8n,50p,672b,336s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program F
 iles (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files (x86)/MiKT
-eX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)/MiKTeX 2.9/fonts
-/type1/public/lm/lmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publ
-ic/lm/lmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr17.
-pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmtt12.pfb><C:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/type1/urw/arial/ua1b8a.pfb>
-Output written on documentation.pdf (5 pages, 127029 bytes).
+eX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files (x86)/MiKTeX 2.9/font
+s/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publ
+ic/lm/lmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi1
+2.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Pr
+ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Program Files 
+(x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr9.pfb><C:/Program Files (x86)/MiKTeX 
+2.9/fonts/type1/public/lm/lmtt12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
+ype1/urw/arial/ua1b8a.pfb>
+Output written on documentation.pdf (6 pages, 154784 bytes).
 PDF statistics:
- 109 PDF objects out of 1000 (max. 8388607)
- 19 named destinations out of 1000 (max. 500000)
- 73 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 133 PDF objects out of 1000 (max. 8388607)
+ 22 named destinations out of 1000 (max. 500000)
+ 89 words of extra memory for PDF output out of 10000 (max. 10000000)
 

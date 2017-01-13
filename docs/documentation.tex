@@ -75,6 +75,20 @@ singlelinecheck=false]
 	
 	
 	\section{Building the Prediction Model}
+	\subsection{Choosing a prediction Model}
+	Of course there are many different approaches to the problem. A static algorithm to classify repositories is rather impractical because the parameters of our classify function would be strongly influenced by our interpretation of weights of the features for each class. However we quickly noticed that the complexity is very high, so that a normal algorithm must limit the aspects which can be considered. Above all the problem is non-linear and through the static analysis we would loose the possibility to freely improve or change the classifier. As the software and use-case market of Github rises the possible need of further classes could arise.
+	
+	Hence to  ensure a classifier who is as dynamic and as extensible as possible we choose to use some form of machine learning.
+	The problem which needs to be solved by the Prediction Model is a classification problem: We have a fixed number of values for selected features as input and as an output the class to which the values fit the most. As a result of this fact it was pretty clear to us that a supervised learning method would be optimal.
+	
+	In the next step we thought about the pro- and contra arguments of non-parametic and parametic learning.
+	For example Gaussian-Process-Models could be used in principle, as one does not need to specify a fixed number of parameters and therefore be non-parametic. 
+	The main problem with Gaussian-Process-Models is that they scale rather poorly with a complexity of $O(n^{3})$ \cite{DukeUniversity}. Moreover if we keep the huge dimension of repository datasets in mind and as such the possible complexity of the classifier function, our choice will lead us to a parametic neural Network.
+	
+	
+	
+%	For this type of classification problem we whereregre
+	
 	
 	\section{Training Set}
 	
@@ -90,15 +104,14 @@ singlelinecheck=false]
 	\newpage
 	
 	\begin{thebibliography}{xxxxxx}
-		\bibitem [1] {Weigel} Roboter-Fußball: Selbstlokalisierung, Weltmodellierung, Pfadplanung und verhaltensbasierte Kontrolle“, Universität Freiburg, Thilo Weigel, 1998 \url{https://www.tu-chemnitz.de/informatik/KI/edu/robotik/ws2011/robotik_10.pdf}
+		\bibitem [1] {DukeUniversity} Gaussian Processes 2006, David P. Williams \url{http://people.ee.duke.edu/~lcarin/David1.27.06.pdf}
 	\end{thebibliography}
 	
 	
-	
-	\paragraph{Quellcode}
-	Online auf: \url{https://github.com/Raldir/Pathfinding}\\
-	Benutzte externe Librarys:\\
-	libGDX Version 1.6.1 von badlogicgames\\
+	\section{Source Code and used external Libraries}
+	\paragraph{Source Code}
+	Github: \url{https://github.com/Crigges/InformatiCup2017}\\
+
 \end{document}
 
 
