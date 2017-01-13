@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
@@ -28,12 +27,31 @@ import systems.crigges.informaticup.general.RepositoryTyp;
 import systems.crigges.informaticup.io.InputFileReader;
 import systems.crigges.informaticup.io.RepoCacher;
 
+/**
+ * This class generates a multilayerperceptron network, using
+ * momentumbackpropagation as learning rule, Sigmoid function as activiation
+ * function and with one hidden Layer. The parameters of the
+ * {@link ClassifierConfiguration} are used.
+ * 
+ * @author Rami Aly & Andre Schurat
+ * @see ClassifierConfiguration
+ */
 public class ClassifierNetwork {
 
 	private ClassifierConfiguration configuration;
 	private DataSet trainingSet;
 	private MultiLayerPerceptron neuralNetwork;
-	
+
+	/**
+	 * Creates a new Neural Network with parameters of
+	 * {@link ClassifierConfiguration}. It trains the network with the given Set
+	 * of CollectedDataSets.
+	 * 
+	 * @param trainDataSet
+	 * @param configuration
+	 * @see CollectedDataSet
+	 * @see ClassifierConfiguration
+	 */
 	public ClassifierNetwork(Set<CollectedDataSet> trainDataSet, ClassifierConfiguration configuration) {
 		this.configuration = configuration;
 		createNeuronStructure();
@@ -42,6 +60,7 @@ public class ClassifierNetwork {
 		for (CollectedDataSet dataSet : trainDataSet) {
 			trainNetwork(dataSet);
 		}
+
 		System.out.println("Creating Training-Data Finished");
 		BackPropagation learningRule = neuralNetwork.getLearningRule();
 		neuralNetwork.learnInNewThread(trainingSet);
@@ -56,16 +75,26 @@ public class ClassifierNetwork {
 
 		neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
 	}
-	
 
-	public ClassifierNetwork(MultiLayerPerceptron neuralNetwork, ClassifierConfiguration configuration){
+	/**
+	 * Creates ClassifierNetwork with given MultiLayerPerceptron and
+	 * {@link ClassifierConfiguration}
+	 * 
+	 * @param neuralNetwork
+	 * @param configuration
+	 */
+	public ClassifierNetwork(MultiLayerPerceptron neuralNetwork, ClassifierConfiguration configuration) {
 		this.neuralNetwork = neuralNetwork;
 		this.configuration = configuration;
 	}
 
+	/**
+	 * Setup of neural network and its parameters, learning rule and randomizing
+	 * of weights
+	 */
 	private void createNeuronStructure() {
-		neuralNetwork = new MultiLayerPerceptron(
-				Arrays.asList(configuration.inputNeuronCount, configuration.hiddenLayerNeuronCount, configuration.numberOfNeuronOutput),
+		neuralNetwork = new MultiLayerPerceptron(Arrays.asList(configuration.inputNeuronCount,
+				configuration.hiddenLayerNeuronCount, configuration.numberOfNeuronOutput),
 				TransferFunctionType.SIGMOID);
 		MomentumBackpropagation bp = new MomentumBackpropagation();
 		bp.setLearningRate(configuration.learningRate);
@@ -77,6 +106,11 @@ public class ClassifierNetwork {
 		neuralNetwork.setLearningRule(bp);
 	}
 
+	/**
+	 * Trains the network with given dataSet and expected output
+	 * 
+	 * @param dataSet
+	 */
 	private void trainNetwork(CollectedDataSet dataSet) {
 		double[] input = getFormattedInput(dataSet);
 		double[] output = new double[7];
@@ -91,8 +125,17 @@ public class ClassifierNetwork {
 		return input;
 	}
 
+	/**
+	 * retrieve normalized value of {@link InputDataFormatter} values for every
+	 * dictionary and {@link RatioDataSet} values, size always matches with
+	 * number of neurons.
+	 * 
+	 * @param dataSet
+	 * @return
+	 */
 	private double[] getFormattedInput(CollectedDataSet dataSet) {
-		RatioDataSet ratioDataSet = new RatioDataSet(dataSet, configuration.ratioLogisticValue, configuration.normRatioValues);
+		RatioDataSet ratioDataSet = new RatioDataSet(dataSet, configuration.ratioLogisticValue,
+				configuration.normRatioValues);
 		InputDataFormatter formattedInputWords = new InputDataFormatter(dataSet.wordCount, configuration.wordDictionary,
 				configuration.wordDictionarylogisticValue);
 		InputDataFormatter formattedInputEnding = new InputDataFormatter(dataSet.endingCount,
@@ -104,9 +147,9 @@ public class ClassifierNetwork {
 
 		int count = 0;
 
-		double[] list = new double[ratioDataSet.getInputNeurons().size()];
-		for (int i = 0; i < ratioDataSet.getInputNeurons().size(); i++) {
-			Double d = ratioDataSet.getInputNeurons().get(i);
+		double[] list = new double[ratioDataSet.getNormalizedRatios().size()];
+		for (int i = 0; i < ratioDataSet.getNormalizedRatios().size(); i++) {
+			Double d = ratioDataSet.getNormalizedRatios().get(i);
 			list[i] = d.doubleValue();
 			System.out.println(d.doubleValue());
 		}
@@ -119,16 +162,21 @@ public class ClassifierNetwork {
 		return input;
 	}
 
+	/**
+	 * classify normalized input generated of collectedDataSet and returns best
+	 * matching {@link RepositoryTyp}
+	 * 
+	 * @param collectedDataSet
+	 * @return {@link RepositoryTyp}
+	 */
 	public RepositoryTyp classify(CollectedDataSet collectedDataSet) {
-		// set network input
 		neuralNetwork.setInput(getFormattedInput(collectedDataSet));
-		// calculate network
 		neuralNetwork.calculate();
-		// get network output
 		return doubleToRepositoryTyp(neuralNetwork.getOutput());
 	}
 
-	public RepositoryTyp doubleToRepositoryTyp(double[] output) {
+	// Searches for the biggest outputneuron value
+	private RepositoryTyp doubleToRepositoryTyp(double[] output) {
 		ArrayList<Double> list = new ArrayList<>();
 		for (int i = 0; i < output.length; i++) {
 			list.add(output[i]);
@@ -137,6 +185,14 @@ public class ClassifierNetwork {
 		return RepositoryTyp.values()[list.indexOf(Collections.max(list))];
 	}
 
+	/**
+	 * Used to create new Neural Network with default parameters set in
+	 * {@link ClassifierConfiguration} and save it into File.
+	 * 
+	 * @param args
+	 * @throws Exception
+	 * @see {@link ClassifierConfiguration}
+	 */
 	public static void main(String[] args) throws Exception {
 		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
 		List<RepositoryDescriptor> repositorys = null;
@@ -149,18 +205,30 @@ public class ClassifierNetwork {
 		Set<CollectedDataSet> dataSetAll = new HashSet<>();
 		for (RepositoryDescriptor rp : repositorys) {
 			CollectedDataSet dataSet = null;
-	
+
 			dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
 			dataSet.repositoryType = rp.getTyp();
 			dataSetAll.add(dataSet);
-		
+
 		}
 
 		new ClassifierNetwork(dataSetAll, config);
 	}
 
-	public static ClassifierNetwork loadFromFile(File neuralnetworklocation) throws ClassNotFoundException, IOException {
-		return new ClassifierNetwork((MultiLayerPerceptron) NeuralNetwork.createFromFile(neuralnetworklocation), ClassifierConfiguration.getDefault());
+	/**
+	 * Loads the saved Network with default parameters in
+	 * {@link ClassifierConfiguration}
+	 * 
+	 * @param neuralnetworklocation
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 * @see ClassifierConfiguration
+	 */
+	public static ClassifierNetwork loadFromFile(File neuralnetworklocation)
+			throws ClassNotFoundException, IOException {
+		return new ClassifierNetwork((MultiLayerPerceptron) NeuralNetwork.createFromFile(neuralnetworklocation),
+				ClassifierConfiguration.getDefault());
 	}
 
 }
