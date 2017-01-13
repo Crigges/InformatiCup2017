@@ -27,6 +27,7 @@ public class ClassifierConfiguration {
 	 */
 	public double wordDictionaryIntersectionStrength;
 
+	
 	/**
 	 * Words per {@link RepositoryTyp} included into the dictionary for the word
 	 * count. Duplicates does count.
@@ -83,6 +84,10 @@ public class ClassifierConfiguration {
 	public boolean recreateDictionary;
 
 	/**
+	 * recreate NeuralNetwork for next program start
+	 */
+	public boolean recreateNeuralNetwork;
+	/**
 	 * the weight of every word in the readme file for the dictionaries.
 	 */
 	public int readmeInfluenceFactor;
@@ -119,10 +124,21 @@ public class ClassifierConfiguration {
 	 */
 	public double ratioLogisticValue;
 
+	/**
+	 * Dictionary for words, file- and folderendings and file- and foldernames
+	 */
 	public ArrayList<DictionaryEntry> wordDictionary;
 	public ArrayList<DictionaryEntry> fileEndingDictionary;
 	public ArrayList<DictionaryEntry> fileNameDictionary;
+	
+	/**
+	 * count of input neurons
+	 */
 	public int inputNeuronCount;
+	
+	/**
+	 * Average values of every Training-Repository in {@link CollectedDataSet}
+	 */
 	public ArrayList<Double> normRatioValues;
 
 	/**
@@ -158,6 +174,7 @@ public class ClassifierConfiguration {
 		configuration.learningRate = 0.1;
 		configuration.momentum = 0.2;
 		configuration.recreateDictionary = false;
+		configuration.recreateNeuralNetwork = false;
 
 		configuration.fileEndingDictionaryLogisticValue = 0.3;
 
@@ -208,7 +225,8 @@ public class ClassifierConfiguration {
 		configuration.fileEndingDictionaryWordCountPerType = 10;
 
 		configuration.recreateDictionary = false;
-
+		configuration.recreateNeuralNetwork = false;
+		
 		configuration.hiddenLayerNeuronCount = 15;
 		configuration.maxError = 0.001;
 		configuration.learningRate = 0.1;

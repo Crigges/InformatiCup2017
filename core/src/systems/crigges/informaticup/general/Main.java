@@ -18,6 +18,12 @@ import systems.crigges.informaticup.wordanalytics.DictionaryEntry;
 
 public class Main {
 
+	/**
+	 * Loads repository from argument path and classifies each repository and creates an output file for results.
+	 * Eventually prints out precision and recall for results
+	 * @see InputFileReader
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		ClassifierConfiguration config;
 		File testRepositoryLocation = null;
@@ -45,7 +51,7 @@ public class Main {
 				testRepositoryLocation = config.testRepositoryLocation;
 				repositorys = new InputFileReader(testRepositoryLocation).getRepositorysAndTypes();
 			}
-			if (config.neuralNetworkLocation.exists()) {
+			if (config.neuralNetworkLocation.exists() && !config.recreateNeuralNetwork) {
 				try {
 					neuralNetwork = ClassifierNetwork.loadFromFile(config.neuralNetworkLocation);
 				} catch (Exception e2) {
@@ -131,6 +137,13 @@ public class Main {
 		return false;
 	}
 
+	/**
+	 * creates new NeuralNetwork with values set in {@link ClassifierConfiguration}
+	 * Uses default Configuration of {@link ClassifierConfiguration}
+	 * @param config
+	 * @return
+	 * @throws Exception
+	 */
 	private static ClassifierNetwork createNeuralNetwork(ClassifierConfiguration config) throws Exception {
 		List<RepositoryDescriptor> repositorys = new InputFileReader(config.trainingRepositoryLocation)
 				.getRepositorysAndTypes();

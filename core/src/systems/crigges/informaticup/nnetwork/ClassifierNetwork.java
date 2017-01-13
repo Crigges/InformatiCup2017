@@ -29,8 +29,9 @@ import systems.crigges.informaticup.io.RepoCacher;
 
 /**
  * This class generates a multilayerperceptron network, using
- * momentumbackpropagation as learning rule and with one hidden Layer. The
- * parameters of the {@link ClassifierConfiguration} are used.
+ * momentumbackpropagation as learning rule, Sigmoid function as activiation
+ * function and with one hidden Layer. The parameters of the
+ * {@link ClassifierConfiguration} are used.
  * 
  * @author Rami Aly & Andre Schurat
  * @see ClassifierConfiguration
@@ -76,7 +77,9 @@ public class ClassifierNetwork {
 	}
 
 	/**
-	 * Creates ClassifierNetwork with given MultiLayerPerceptron and {@link ClassifierConfiguration}
+	 * Creates ClassifierNetwork with given MultiLayerPerceptron and
+	 * {@link ClassifierConfiguration}
+	 * 
 	 * @param neuralNetwork
 	 * @param configuration
 	 */
@@ -213,7 +216,9 @@ public class ClassifierNetwork {
 	}
 
 	/**
-	 * Loads the saved Network with default parameters in {@link ClassifierConfiguration}
+	 * Loads the saved Network with default parameters in
+	 * {@link ClassifierConfiguration}
+	 * 
 	 * @param neuralnetworklocation
 	 * @return
 	 * @throws ClassNotFoundException
