@@ -109,7 +109,7 @@ public class ClassifierNetwork {
 	/**
 	 * Trains the network with given dataSet and expected output
 	 * 
-	 * @param dataSet
+	 * @param dataSet of training repository
 	 */
 	private void trainNetwork(CollectedDataSet dataSet) {
 		double[] input = getFormattedInput(dataSet);
@@ -131,7 +131,7 @@ public class ClassifierNetwork {
 	 * number of neurons.
 	 * 
 	 * @param dataSet
-	 * @return
+	 * @return array of normalized input
 	 */
 	private double[] getFormattedInput(CollectedDataSet dataSet) {
 		RatioDataSet ratioDataSet = new RatioDataSet(dataSet, configuration.ratioLogisticValue,
@@ -166,7 +166,7 @@ public class ClassifierNetwork {
 	 * classify normalized input generated of collectedDataSet and returns best
 	 * matching {@link RepositoryTyp}
 	 * 
-	 * @param collectedDataSet
+	 * @param CollectedDataSet of repository to be classified
 	 * @return {@link RepositoryTyp}
 	 */
 	public RepositoryTyp classify(CollectedDataSet collectedDataSet) {
@@ -189,7 +189,7 @@ public class ClassifierNetwork {
 	 * Used to create new Neural Network with default parameters set in
 	 * {@link ClassifierConfiguration} and save it into File.
 	 * 
-	 * @param args
+	 * @param args are not used
 	 * @throws Exception
 	 * @see {@link ClassifierConfiguration}
 	 */
@@ -219,7 +219,7 @@ public class ClassifierNetwork {
 	 * Loads the saved Network with default parameters in
 	 * {@link ClassifierConfiguration}
 	 * 
-	 * @param neuralnetworklocation
+	 * @param File of a neural network
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws IOException
