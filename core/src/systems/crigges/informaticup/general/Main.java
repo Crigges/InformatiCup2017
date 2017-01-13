@@ -31,6 +31,9 @@ public class Main {
 		List<RepositoryDescriptor> repositorys = null;
 		try {
 			config = ClassifierConfiguration.getDefault();
+			for(DictionaryEntry ds : config.wordDictionary){
+				System.out.println(ds.getWord() + " ");
+			}
 			testRepositoryLocation = null;
 			if (args.length > 1) {
 				System.out.println("Invalid Input");

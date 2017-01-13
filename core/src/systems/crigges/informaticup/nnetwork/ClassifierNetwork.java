@@ -95,7 +95,7 @@ public class ClassifierNetwork {
 	private void createNeuronStructure() {
 		neuralNetwork = new MultiLayerPerceptron(Arrays.asList(configuration.inputNeuronCount,
 				configuration.hiddenLayerNeuronCount, configuration.numberOfNeuronOutput),
-				TransferFunctionType.SIGMOID);
+				TransferFunctionType.TANH);
 		MomentumBackpropagation bp = new MomentumBackpropagation();
 		bp.setLearningRate(configuration.learningRate);
 		bp.setMaxError(configuration.maxError);
@@ -190,10 +190,12 @@ public class ClassifierNetwork {
 	 * {@link ClassifierConfiguration} and save it into File.
 	 * 
 	 * @param args are not used
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 * @see {@link ClassifierConfiguration}
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
 		List<RepositoryDescriptor> repositorys = null;
 		try {
@@ -206,9 +208,14 @@ public class ClassifierNetwork {
 		for (RepositoryDescriptor rp : repositorys) {
 			CollectedDataSet dataSet = null;
 
-			dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
-			dataSet.repositoryType = rp.getTyp();
-			dataSetAll.add(dataSet);
+			try {
+				dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
+				dataSet.repositoryType = rp.getTyp();
+				dataSetAll.add(dataSet);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 
