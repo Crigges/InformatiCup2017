@@ -76,7 +76,7 @@ public class ClassifierConfiguration {
 		configuration.fileEndingDictionaryIntersectionStrength = 0.01;
 		configuration.fileEndingDictionaryWordCountPerType = 50;
 		
-		configuration.hiddenLayerNeuronCount = 20;
+		configuration.hiddenLayerNeuronCount =20;
 		configuration.maxError = 0.01;
 		configuration.learningRate = 0.1;
 		configuration.momentum = 0.2;

@@ -104,9 +104,9 @@ public class ClassifierNetwork {
 
 		int count = 0;
 
-		double[] list = new double[ratioDataSet.getInputNeurons().size()];
-		for (int i = 0; i < ratioDataSet.getInputNeurons().size(); i++) {
-			Double d = ratioDataSet.getInputNeurons().get(i);
+		double[] list = new double[ratioDataSet.getNormalizedRatios().size()];
+		for (int i = 0; i < ratioDataSet.getNormalizedRatios().size(); i++) {
+			Double d = ratioDataSet.getNormalizedRatios().get(i);
 			list[i] = d.doubleValue();
 			System.out.println(d.doubleValue());
 		}

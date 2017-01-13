@@ -1,25 +1,36 @@
 package systems.crigges.informaticup.nnetwork;
 
 /**
- * Logistic Function with L = 1 and 
+ * Logistic function with L = 1, x_{0} = k and shifted on the y-axis by one to
+ * the bottom
+ * 
+ * @see <a href="https://en.wikipedia.org/wiki/Logistic_function"> Logistic
+ *      function definition </a>
+ * 
  * @author Rami Aly & Andre Schurat
  */
 public class LogisticFunction {
 	private double k;
 
+	/**
+	 * Creates an Instance of a logistic function with given constant of
+	 * proportionality k
+	 * 
+	 * @param k
+	 */
 	public LogisticFunction(double k) {
 		this.k = k;
 	}
-	
-	public double calc(double t){
+
+	/**
+	 * Calculates the Function Value of given double t
+	 * 
+	 * @param t
+	 * @return
+	 */
+	public double calc(double t) {
 		double exp = -(k * t - k);
-		return 2 * (1/(1 + Math.pow(Math.E, exp))) - 1;
-	}
-	
-	public static void main(String[] args) {
-		LogisticFunction in = new LogisticFunction(130);
-		System.out.println(in.calc(1.00));
-		System.out.println(in.calc(0.99));
+		return 2 * (1 / (1 + Math.pow(Math.E, exp))) - 1;
 	}
 
 }

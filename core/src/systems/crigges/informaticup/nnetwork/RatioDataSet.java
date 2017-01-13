@@ -14,12 +14,29 @@ import systems.crigges.informaticup.io.RepoCacher;
 import systems.crigges.informaticup.io.SerializeHelper;
 import systems.crigges.informaticup.wordanalytics.WordStatistic;
 
+/**
+ * This class generates a dataset of selected Ratios between two Values of a
+ * {@link CollectedDataSet}
+ * 
+ * @author Rami Aly & Andre Schurat
+ * @see CollectedDataSet
+ */
 public class RatioDataSet {
 
-	private ArrayList<Double> inputNeurons = new ArrayList<Double>();
+	private ArrayList<Double> ratiosAll = new ArrayList<Double>();
 	private CollectedDataSet dataSet;
 	private LogisticFunction logistic;
 
+	/**
+	 * Creates a new RatioDataSet out of the given {@link CollectedDataSet}, and
+	 * List of average Values used by the {@link CollectedDataSet}
+	 * 
+	 * @param dataSet
+	 *            {@link CollectedDataSet}
+	 * @param parameter
+	 *            for logistic function to normalize ratios
+	 * @param normValues
+	 */
 	public RatioDataSet(CollectedDataSet dataSet, double value, ArrayList<Double> normValues) {
 		this.dataSet = dataSet;
 		this.logistic = new LogisticFunction(value);
@@ -31,71 +48,66 @@ public class RatioDataSet {
 		calculate();
 	}
 
-	public ArrayList<Double> getInputNeurons() {
-		return inputNeurons;
+	/**
+	 * @return ArrayList<Double> of normalized ratios previously calculated
+	 */
+	public ArrayList<Double> getNormalizedRatios() {
+		return ratiosAll;
 	}
 
+	/**
+	 * Calculates three different normalized ratios and stores them
+	 * 
+	 * @param normValues
+	 */
 	private void calculateInput(ArrayList<Double> normValues) {
-		// double averageFileSize = 0;
-		// double mediaDensity = 0;
-		// // double subscribeToStaredRatio = 0;
-		// double numberToWordRatio = 0;
 
 		if (dataSet.fileCount > 0) {
 			double d = logistic.calc(((double) (dataSet.repoSize) / dataSet.fileCount) / normValues.get(0));
 			if (d > 0) {
-				inputNeurons.add(0.);
-				inputNeurons.add(d);
+				ratiosAll.add(0.);
+				ratiosAll.add(d);
 			} else {
-				inputNeurons.add(Math.abs(d));
-				inputNeurons.add(0.);
+				ratiosAll.add(Math.abs(d));
+				ratiosAll.add(0.);
 			}
 		}
-System.out.println( normValues.get(0) + " " +  normValues.get(1) + " " +  normValues.get(2));
 		if (dataSet.fileCount > 0) {
 			double d = logistic.calc(((double) dataSet.mediaCount) / dataSet.fileCount / normValues.get(1));
 			if (d > 0) {
-				inputNeurons.add(0.);
-				inputNeurons.add(d);
+				ratiosAll.add(0.);
+				ratiosAll.add(d);
 			} else {
-				inputNeurons.add(Math.abs(d));
-				inputNeurons.add(0.);
+				ratiosAll.add(Math.abs(d));
+				ratiosAll.add(0.);
 			}
 		}
-		// if (dataSet.staredCount > 0) {
-		// subscribeToStaredRatio = ((double) dataSet.subscribedCount) /
-		// dataSet.staredCount;
-		// System.out.println(subscribeToStaredRatio);
-		// }
 		if (dataSet.totalWordCount > 0) {
 			double d = logistic.calc(((double) dataSet.numberCount) / dataSet.totalWordCount / normValues.get(2));
 			if (d > 0) {
-				inputNeurons.add(0.);
-				inputNeurons.add(
-						logistic.calc(d));
+				ratiosAll.add(0.);
+				ratiosAll.add(logistic.calc(d));
 			} else {
-				inputNeurons.add(Math
-						.abs(d));
-				inputNeurons.add(0.);
+				ratiosAll.add(Math.abs(d));
+				ratiosAll.add(0.);
 			}
 		}
-
-		// inputNeurons.add(averageFileSize);
-		// inputNeurons.add(mediaDensity);
-		// inputNeurons.add(subscribeToStaredRatio);
-		// inputNeurons.add(numberToWordRatio);
-
 	}
 
 	private void calculate() {
 		Double averageFileSize = 0.;
-		inputNeurons.add(averageFileSize);
+		ratiosAll.add(averageFileSize);
 		Double mediaDensity = 0.;
-		inputNeurons.add(mediaDensity);
+		ratiosAll.add(mediaDensity);
 		Double numberToWordRatio = 0.;
-		inputNeurons.add(numberToWordRatio);
+		ratiosAll.add(numberToWordRatio);
 	}
 
+	/**
+	 * returns the number of selected ratios which will be calculated
+	 * 
+	 * @return
+	 */
 	public static int getDefaultRatioCount() {
 		CollectedDataSet dataSet = new CollectedDataSet();
 		dataSet.fileCount = 1;
@@ -105,10 +117,18 @@ System.out.println( normValues.get(0) + " " +  normValues.get(1) + " " +  normVa
 		dataSet.repoSize = 1;
 		dataSet.totalWordCount = 1;
 		RatioDataSet defaultSet = new RatioDataSet(dataSet);
-//		System.out.println(defaultSet.getInputNeurons().size());
-		return defaultSet.getInputNeurons().size();
+		return defaultSet.getNormalizedRatios().size();
 	}
 
+	/**
+	 * Stores average values of used dataSets of Type {@link CollectedDataSet}
+	 * from the default trainingset into a File
+	 * 
+	 * @param args
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 * @see SerializeHelper
+	 */
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
 		List<RepositoryDescriptor> repositorys = null;
@@ -116,7 +136,6 @@ System.out.println( normValues.get(0) + " " +  normValues.get(1) + " " +  normVa
 		try {
 			repositorys = new InputFileReader(config.trainingRepositoryLocation).getRepositorysAndTypes();
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -125,32 +144,22 @@ System.out.println( normValues.get(0) + " " +  normValues.get(1) + " " +  normVa
 				CollectedDataSet dataSet = RepoCacher.get(r.getName()).getCollectedDataSet();
 				if (dataSet.fileCount > 0) {
 					ratios.add("learningReposAverageSize", (double) (dataSet.repoSize) / dataSet.fileCount);
-				}
-				if (dataSet.fileCount > 0) {
 					ratios.add("learningReposMediaDensity", ((double) dataSet.mediaCount) / dataSet.fileCount);
 				}
-				// if (dataSet.staredCount > 0) {
-				// System.out.println(dataSet.subscribedCount);
-				// ratios.add("learningReposSubscribeToStaredRatio",
-				// ((double) dataSet.subscribedCount) / dataSet.staredCount);
-				// }
 				if (dataSet.totalWordCount > 0) {
 					ratios.add("learningReposNumberToWordRatio",
 							((double) dataSet.numberCount) / dataSet.totalWordCount);
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		List<Double> list = Arrays.asList(ratios.getStatistic("learningReposAverageSize"),
 				ratios.getStatistic("learningReposMediaDensity"),
-				// ratios.getStatistic("learningReposSubscribeToStaredRatio"),
 				ratios.getStatistic("learningReposNumberToWordRatio"));
 		try {
 			SerializeHelper.serialize(config.averageRatioValuesLocation, new ArrayList<>(list));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
