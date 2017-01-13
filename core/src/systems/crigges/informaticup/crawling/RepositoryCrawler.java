@@ -358,8 +358,7 @@ public class RepositoryCrawler implements Serializable {
 	
 	
 	public static void main(String[] args)
-			throws MalformedURLException, IOException, MagicParseException, NoSuchFieldException, SecurityException,
-			IllegalArgumentException, IllegalAccessException, InterruptedException, ExecutionException {
+			throws Exception {
 		Field f = MagicParser.class.getDeclaredField("log");
 		f.setAccessible(true);
 		RepositoryCrawler crawler = RepoCacher.get("https://github.com/Crigges/Clickwars");

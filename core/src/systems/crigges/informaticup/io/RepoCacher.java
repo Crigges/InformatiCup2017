@@ -17,15 +17,37 @@ import org.nustaq.serialization.FSTObjectOutput;
 import systems.crigges.informaticup.crawling.RepositoryCrawler;
 import systems.crigges.informaticup.general.RepositoryDescriptor;
 
+/**
+ * This class provides functions to cache repositories. If once a repository was
+ * analyzed it is automatically written into a Hard drive cache, from this point
+ * on the repository dosen't needs to be analyzed again. But that also means any
+ * changes to repository aren't recognized.
+ * 
+ * @author Rami Aly & Andre Schurat
+ * @see RepositoryCrawler
+ */
 public class RepoCacher {
 	private static final String cacheLocation = "./repocache/";
 	private static final FSTConfiguration fstConfig = FSTConfiguration.createDefaultConfiguration();
 	private static ExecutorService executor;
 
+	/**
+	 * Splits the repository name apart from the given url.
+	 * 
+	 * @param url
+	 *            the repository's url
+	 * @return the url's repository name
+	 */
 	private static String getRepoNameFromURL(String url) {
 		return url.replace("https://github.com/", "");
 	}
 
+	/**
+	 * Writes the given analyzed repository into the specified cache location
+	 * 
+	 * @param crawler
+	 *            the repo which should be cached
+	 */
 	private static void put(RepositoryCrawler crawler) {
 		try {
 			String name = crawler.getRepoName();
@@ -42,7 +64,18 @@ public class RepoCacher {
 		}
 	}
 
-	public static RepositoryCrawler get(String url) throws MalformedURLException, IOException, InterruptedException, ExecutionException {
+	/**
+	 * Returns the url's RepositoryCrawler. If the crawler is not found inside
+	 * the cache a new one will be created and automatically cached afterwards.
+	 * 
+	 * @param url
+	 *            the repository's url
+	 * @return the repository's crawler
+	 * @throws Exception
+	 *             if the url is invaild or the repository could not be read
+	 * @see RepositoryCrawler
+	 */
+	public static RepositoryCrawler get(String url) throws Exception {
 		String name = getRepoNameFromURL(url);
 		File f = new File(cacheLocation + name + ".repo");
 		if (f.exists()) {
@@ -67,12 +100,33 @@ public class RepoCacher {
 			return new RepositoryCrawler(url);
 		}
 	}
-	
-	public static void initThreadPool(int threads){
+
+	/**
+	 * Starts a threadpool with the given threadcount which is used to for
+	 * multithreaded repository loading in.
+	 * {@link RepoCacher#getThreaded(String, RepoLoadAction)}
+	 * 
+	 * @param threads
+	 *            the threadpool's thread count
+	 */
+	public static void initThreadPool(int threads) {
 		executor = Executors.newFixedThreadPool(threads);
 	}
 
-	public static void getThreaded(String url, RepoLoadAction whenLoaded) throws MalformedURLException, IOException, InterruptedException, ExecutionException {
+	/**
+	 * Same behavior as described in {@link RepoCacher#get(String)} just
+	 * multithreaded. The loaded crawler is passed in the
+	 * {@link RepoLoadAction#loaded(RepositoryCrawler)} method. Note:
+	 * {@link RepoCacher#initThreadPool(int)} needs to be called first!
+	 * 
+	 * @param url
+	 *            the repository's url
+	 * @param whenLoaded
+	 *            the load action where the loaded repository is being passed
+	 * @throws Exception
+	 *             if the url is invaild or the repository could not be read
+	 */
+	public static void getThreaded(String url, RepoLoadAction whenLoaded) throws Exception {
 		String name = getRepoNameFromURL(url);
 		File f = new File(cacheLocation + name + ".repo");
 		if (f.exists()) {
@@ -92,21 +146,36 @@ public class RepoCacher {
 			analyzeNew(url, whenLoaded);
 		}
 	}
-	
-	public static void shutdownThreadPool(){
+
+	/**
+	 * Shutdowns the loading Threadpool, blocks until all requested repositorys
+	 * have been loaded.
+	 */
+	public static void shutdownThreadPool() {
 		executor.shutdown();
 	}
-	
-	public interface RepoLoadAction{
-		
+
+	/**
+	 * Simple interface to define custom load action for multithreaded
+	 * Repository loading
+	 */
+	public interface RepoLoadAction {
+
 		void loaded(RepositoryCrawler crawler);
-		
+
 	}
-	
-	private static void analyzeNew(String url, RepoLoadAction whenLoaded) throws InterruptedException, ExecutionException{
+
+	/**
+	 * Wrapper function to submit a new {@link AnalyzeNewTask} to the executor
+	 */
+	private static void analyzeNew(String url, RepoLoadAction whenLoaded)
+			throws InterruptedException, ExecutionException {
 		executor.submit(new AnalyzeNewTask(url, whenLoaded));
 	}
 
+	/**
+	 * Simple helper class to support Multithreaded repository analyzing
+	 */
 	private static class AnalyzeNewTask implements Callable<RepositoryCrawler> {
 		private String url;
 		private RepoLoadAction whenLoaded;
@@ -121,17 +190,9 @@ public class RepoCacher {
 			RepositoryCrawler repo = new RepositoryCrawler(url);
 			whenLoaded.loaded(repo);
 			put(repo);
-			return  repo;
+			return repo;
 		}
 
-	}
-
-	public static void main(String[] args) throws Exception {
-		List<RepositoryDescriptor> list = new InputFileReader(new File("assets\\Repositorys.txt")).getRepositorysAndTypes();
-		for (RepositoryDescriptor r : list) {
-			RepositoryCrawler crawler = get(r.getName());
-			put(crawler);
-		}
 	}
 
 }

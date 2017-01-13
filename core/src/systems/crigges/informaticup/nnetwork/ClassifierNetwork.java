@@ -137,7 +137,7 @@ public class ClassifierNetwork {
 		return RepositoryTyp.values()[list.indexOf(Collections.max(list))];
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
+	public static void main(String[] args) throws Exception {
 		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
 		List<RepositoryDescriptor> repositorys = null;
 		try {
@@ -149,23 +149,11 @@ public class ClassifierNetwork {
 		Set<CollectedDataSet> dataSetAll = new HashSet<>();
 		for (RepositoryDescriptor rp : repositorys) {
 			CollectedDataSet dataSet = null;
-			try {
-				dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
-				dataSet.repositoryType = rp.getTyp();
-				dataSetAll.add(dataSet);
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	
+			dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
+			dataSet.repositoryType = rp.getTyp();
+			dataSetAll.add(dataSet);
+		
 		}
 
 		new ClassifierNetwork(dataSetAll, config);
