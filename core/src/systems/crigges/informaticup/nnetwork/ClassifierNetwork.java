@@ -95,7 +95,7 @@ public class ClassifierNetwork {
 	private void createNeuronStructure() {
 		neuralNetwork = new MultiLayerPerceptron(Arrays.asList(configuration.inputNeuronCount,
 				configuration.hiddenLayerNeuronCount, configuration.numberOfNeuronOutput),
-				TransferFunctionType.TANH);
+				TransferFunctionType.SIGMOID);
 		MomentumBackpropagation bp = new MomentumBackpropagation();
 		bp.setLearningRate(configuration.learningRate);
 		bp.setMaxError(configuration.maxError);

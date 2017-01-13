@@ -38,7 +38,7 @@ public class InputDataFormatter {
 		this.dictionary = dictionary;
 		this.dataSet = dataSet;
 		this.logisticFunction = new LogisticFunction(functionValue);
-		this.inputNeurons = new double[dictionary.size()];
+		this.inputNeurons = new double[2 * dictionary.size()];
 		calculateInput();
 	}
 
@@ -58,7 +58,7 @@ public class InputDataFormatter {
 	private void calculateInput() {
 		for (int i = 0; i < inputNeurons.length; i++) {
 			if (i % 2 == 0) {
-				inputNeurons[i] = 0;
+				inputNeurons[i] = 1;
 			}
 		}
 
@@ -75,7 +75,12 @@ public class InputDataFormatter {
 			double normalizedValue = wordsInDictionary.getStatistic(entry.getKey())
 					/ dictionary.get(indexInDictionaryEntry(entry.getKey())).getOccurrence();
 			double funcnorm = logisticFunction.calc(normalizedValue);
-				inputNeurons[indexInDictionaryEntry(entry.getKey())] = funcnorm;
+			if (funcnorm < 0) {
+				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2] = Math.abs(funcnorm);
+			} else {
+				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2 + 1] = funcnorm;
+				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2] = 0;
+			}
 		}
 
 	}

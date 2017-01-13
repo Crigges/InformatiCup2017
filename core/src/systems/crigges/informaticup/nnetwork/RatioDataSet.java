@@ -64,15 +64,33 @@ public class RatioDataSet {
 
 		if (dataSet.fileCount > 0) {
 			double d = logistic.calc(((double) (dataSet.repoSize) / dataSet.fileCount) / normValues.get(0));
+			if (d > 0) {
+				ratiosAll.add(0.);
 				ratiosAll.add(d);
+			} else {
+				ratiosAll.add(Math.abs(d));
+				ratiosAll.add(0.);
+			}
 		}
 		if (dataSet.fileCount > 0) {
 			double d = logistic.calc(((double) dataSet.mediaCount) / dataSet.fileCount / normValues.get(1));
+			if (d > 0) {
+				ratiosAll.add(0.);
 				ratiosAll.add(d);
+			} else {
+				ratiosAll.add(Math.abs(d));
+				ratiosAll.add(0.);
+			}
 		}
 		if (dataSet.totalWordCount > 0) {
 			double d = logistic.calc(((double) dataSet.numberCount) / dataSet.totalWordCount / normValues.get(2));
+			if (d > 0) {
+				ratiosAll.add(0.);
 				ratiosAll.add(logistic.calc(d));
+			} else {
+				ratiosAll.add(Math.abs(d));
+				ratiosAll.add(0.);
+			}
 		}
 	}
 
