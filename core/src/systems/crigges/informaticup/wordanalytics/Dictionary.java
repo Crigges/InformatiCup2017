@@ -82,7 +82,7 @@ public class Dictionary {
 	}
 
 	
-	public Dictionary(List<RepositoryDescriptor> list, ClassifierConfiguration config, int useless) throws IOException {
+	public Dictionary(List<RepositoryDescriptor> list, ClassifierConfiguration config, int useless) throws Exception {
 		List<LoadedRepository> crawlers = new ArrayList<>();
 		for (RepositoryDescriptor r :list) {
 			try {
