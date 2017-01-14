@@ -157,19 +157,19 @@ public class ClassifierConfiguration {
 		configuration.testRepositoryLocation = new File("./assets/TestRepositorys.txt");
 		configuration.neuralNetworkLocation = new File("./assets/classifierNN.nnet");
 
-		configuration.wordDictionaryIntersectionStrength = 0.25;
-		configuration.wordDictionaryWordCountPerType = 10;
-		configuration.wordDictionarylogisticValue = 0.3;
+		configuration.wordDictionaryIntersectionStrength = 0.2;
+		configuration.wordDictionaryWordCountPerType = 20;
+		configuration.wordDictionarylogisticValue = 0.03;
 
 		configuration.fileNameDictionaryIntersectionStrength = 0.25;
 		configuration.fileNameDictionaryWordCountPerType = 150;
-		configuration.fileNameDictionarylogisticValue = 0.2;
+		configuration.fileNameDictionarylogisticValue = 0.03;
 
 		configuration.fileEndingDictionaryIntersectionStrength = 0.01;
 		configuration.fileEndingDictionaryWordCountPerType = 50;
-		configuration.fileEndingDictionaryLogisticValue = 0.3;
+		configuration.fileEndingDictionaryLogisticValue = 0.03;
 		
-		configuration.hiddenLayerNeuronCount = 10;
+		configuration.hiddenLayerNeuronCount = 20;
 		configuration.maxError = 0.01;
 		configuration.learningRate = 0.03;
 		configuration.momentum = 0.2;
@@ -182,7 +182,7 @@ public class ClassifierConfiguration {
 
 		configuration.readmeInfluenceFactor = 10;
 
-		configuration.ratioLogisticValue = 0.0005;
+		configuration.ratioLogisticValue = 0.001;
 
 		configuration.fileNameDictionary = SerializeHelper.deserialize(configuration.fileNameDictionaryLocation);
 		configuration.fileEndingDictionary = SerializeHelper.deserialize(configuration.fileEndingDictionaryLocation);
@@ -192,6 +192,7 @@ public class ClassifierConfiguration {
 		configuration.inputNeuronCount = (configuration.fileEndingDictionary.size()
 				+ configuration.fileNameDictionary.size()  + configuration.wordDictionary.size()
 				+ RatioDataSet.getDefaultRatioCount()) * 2;
+		System.out.println(configuration.inputNeuronCount);
 		return configuration;
 	}
 

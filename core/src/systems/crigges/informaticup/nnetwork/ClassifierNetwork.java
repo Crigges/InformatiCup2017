@@ -151,7 +151,7 @@ public class ClassifierNetwork {
 		for (int i = 0; i < ratioDataSet.getNormalizedRatios().size(); i++) {
 			Double d = ratioDataSet.getNormalizedRatios().get(i);
 			list[i] = d.doubleValue();
-			System.out.println(d.doubleValue());
+//			System.out.println(d.doubleValue());
 		}
 		addDoublesToArray(input, list, count);
 		addDoublesToArray(input, formattedInputWords.getInputNeurons(), count += list.length);

@@ -86,7 +86,7 @@ public class RatioDataSet {
 			double d = logistic.calc(((double) dataSet.numberCount) / dataSet.totalWordCount / normValues.get(2));
 			if (d > 0) {
 				ratiosAll.add(0.);
-				ratiosAll.add(logistic.calc(d));
+				ratiosAll.add(d);
 			} else {
 				ratiosAll.add(Math.abs(d));
 				ratiosAll.add(0.);

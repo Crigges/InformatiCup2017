@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  13 JAN 2017 20:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  14 JAN 2017 01:47
 entering extended mode
 **documentation.tex
 (documentation.tex
@@ -37,20 +37,19 @@ Package tocbasic Info: omitting babel extension for `lof'
 Package tocbasic Info: omitting babel extension for `lot'
 (tocbasic)             because of feature `nobabel' available
 (tocbasic)             for `lot' on input line 125.
+Package scrartcl Info: You've used standard option `12pt'.
+(scrartcl)             This is correct!
+(scrartcl)             Internally I'm using `fontsize=12pt'.
+(scrartcl)             If you'd like to set the option with \KOMAoptions,
+(scrartcl)             you'd have to use `fontsize=12pt' there
+(scrartcl)             instead of `12pt', too.
+Class scrartcl Info: File `scrsize12pt.clo' used to setup font sizes on input l
+ine 2033.
 
-
-Package scrartcl Warning: You've used obsolete option `13pt'.
-(scrartcl)                Usage of this option indicates an old document
-(scrartcl)                and changes compatibility level using
-(scrartcl)                `fontsize=13pt,version=first'.
-(scrartcl)                If you don't want this, you should simply
-(scrartcl)                replace option `13pt' by `fontsize=13pt'.
-
-Class scrartcl Info: Switching compatibility level to `first'.
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <13> not available
-(Font)              size <12> substituted on input line 2033.
-
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\koma-script\scrsize12pt.clo"
+File: scrsize12pt.clo 2015/10/03 v3.19a KOMA-Script font size class option (12p
+t)
+)
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\koma-script\typearea.sty"
 Package: typearea 2015/10/03 v3.19a KOMA-Script package (type area)
 
@@ -74,13 +73,13 @@ Package typearea Info: These are the values describing the layout:
 (typearea)              \evensidemargin = 27.31467pt
 (typearea)              \oddsidemargin  = 27.31467pt
 (typearea)             \paperheight     = 845.04694pt
-(typearea)              \textheight     = 480.99881pt
+(typearea)              \textheight     = 476.0pt
 (typearea)              \topmargin      = 21.62411pt
-(typearea)              \headheight     = 19.49994pt
-(typearea)              \headsep        = 23.39993pt
-(typearea)              \topskip        = 13.0pt
-(typearea)              \footskip       = 54.59984pt
-(typearea)              \baselineskip   = 15.59996pt
+(typearea)              \headheight     = 18.125pt
+(typearea)              \headsep        = 21.75pt
+(typearea)              \topskip        = 12.0pt
+(typearea)              \footskip       = 50.75pt
+(typearea)              \baselineskip   = 14.5pt
 (typearea)              on input line 1509.
 )
 \c@part=\count80
@@ -396,12 +395,8 @@ Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\t1enc.def"
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
-)
-
-LaTeX Font Warning: Font shape `T1/cmr/m/n' in size <13> not available
-(Font)              size <12> substituted on input line 105.
-
-) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\lmodern.sty"
+))
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\lmodern.sty"
 Package: lmodern 2009/10/30 v1.6 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -953,15 +948,15 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 * \textheight=717.00955pt
 * \oddsidemargin=-1.1381pt
 * \evensidemargin=-1.1381pt
-* \topmargin=-44.03798pt
-* \headheight=19.49994pt
-* \headsep=23.39993pt
-* \topskip=13.0pt
-* \footskip=54.59984pt
+* \topmargin=-41.0131pt
+* \headheight=18.125pt
+* \headsep=21.75pt
+* \topskip=12.0pt
+* \footskip=50.75pt
 * \marginparwidth=66.38977pt
 * \marginparsep=12.8401pt
 * \columnsep=10.0pt
-* \skip\footins=11.69992pt plus 4.33287pt minus 7.80008pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -990,23 +985,47 @@ LaTeX Info: Redefining \nameref on input line 48.
 \c@lstlisting=\count155
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
+Package caption Info: We need package `ragged2e' on input line 48.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ms\ragged2e.sty"
+Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ms\everysel.sty"
+Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
+
+ABD: EverySelectfont initializing macros
+LaTeX Info: Redefining \selectfont on input line 126.
+)
+\CenteringLeftskip=\skip58
+\RaggedLeftLeftskip=\skip59
+\RaggedRightLeftskip=\skip60
+\CenteringRightskip=\skip61
+\RaggedLeftRightskip=\skip62
+\RaggedRightRightskip=\skip63
+\CenteringParfillskip=\skip64
+\RaggedLeftParfillskip=\skip65
+\RaggedRightParfillskip=\skip66
+\JustifyingParfillskip=\skip67
+\CenteringParindent=\skip68
+\RaggedLeftParindent=\skip69
+\RaggedRightParindent=\skip70
+\JustifyingParindent=\skip71
+)
 LaTeX Font Info:    Try loading font information for T1+ua1 on input line 55.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\arial\t1ua1.fd"
 File: t1ua1.fd 2006/03/21 Fontinst v1.928 font definitions for T1/ua1.
 )
 LaTeX Font Info:    Font shape `T1/ua1/m/n' will be
-(Font)              scaled to size 12.34996pt on input line 55.
-LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <13> not available
+(Font)              scaled to size 11.39996pt on input line 55.
+LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <12> not available
 (Font)              Font shape `T1/ua1/b/n' tried instead on input line 55.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 12.34996pt on input line 55.
-LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <26.96207> not available
+(Font)              scaled to size 11.39996pt on input line 55.
+LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/ua1/b/n' tried instead on input line 55.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 25.61388pt on input line 55.
-LaTeX Font Info:    Calculating math sizes for size <18.72003> on input line 55
-.
+(Font)              scaled to size 23.63593pt on input line 55.
 LaTeX Font Info:    Try loading font information for OT1+lmr on input line 55.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
@@ -1030,11 +1049,11 @@ LaTeX Font Info:    Try loading font information for OMX+lmex on input line 55.
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <18.72003> on input line 55.
+(Font)              <17.28> on input line 55.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <13.10396> on input line 55.
+(Font)              <12> on input line 55.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9.36002> on input line 55.
+(Font)              <10> on input line 55.
 LaTeX Font Info:    Try loading font information for U+msa on input line 55.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
@@ -1047,73 +1066,82 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 
-
 {C:/Users/Ramor/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <18.72003> not available
+LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ua1/b/n' tried instead on input line 58.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 17.78397pt on input line 58.
+(Font)              scaled to size 16.41594pt on input line 58.
  [2] (documentation.toc
-LaTeX Font Info:    Calculating math sizes for size <13> on input line 7.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <13> on input line 7.
+(Font)              <8> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9.09996> on input line 7.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6.5> on input line 7.
+(Font)              <6> on input line 4.
 )
 \tf@toc=\write4
 [3]
-LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <15.59996> not available
-(Font)              Font shape `T1/ua1/b/n' tried instead on input line 79.
+LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ua1/b/n' tried instead on input line 67.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 14.8199pt on input line 79.
- [4] [5]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 114.
+(Font)              scaled to size 13.67995pt on input line 67.
+ [4] [5] [6] <images/logistic.png, id=140, 2212.265pt x 1264.725pt>
+File: images/logistic.png Graphic file (type png)
 
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
-File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-Underfull \hbox (badness 10000) in paragraph at lines 121--122
+<use images/logistic.png>
+Package pdftex.def Info: images/logistic.png used on input line 148.
+(pdftex.def)             Requested size: 442.44516pt x 252.94052pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--150
 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 123.
-[6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 123.
+[7] [8 <./images/logistic.png>]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 173.
+
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+Underfull \hbox (badness 10000) in paragraph at lines 180--181
+
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 182.
+[9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 182.
  (documentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 123.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 123.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 182.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 182.
 Package rerunfilecheck Info: File `documentation.out' has not changed.
-(rerunfilecheck)             Checksum: 64B33AE8339439BA2273228CB0D7C976;899.
-
-
-LaTeX Font Warning: Size substitutions with differences
-(Font)              up to 1.0pt have occurred.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 123.
+(rerunfilecheck)             Checksum: 974CAE99C8B842F12E747D69ECFE0D62;1414.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 182.
  ) 
 Here is how much of TeX's memory you used:
- 12387 strings out of 493673
- 188284 string characters out of 3141529
- 345718 words of memory out of 3000000
- 15501 multiletter control sequences out of 15000+200000
- 66843 words of font info for 60 fonts, out of 3000000 for 9000
+ 12505 strings out of 493673
+ 190584 string characters out of 3141529
+ 344258 words of memory out of 3000000
+ 15593 multiletter control sequences out of 15000+200000
+ 65801 words of font info for 56 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 41i,8n,50p,672b,336s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,9n,50p,790b,336s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program F
 iles (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files (x86)/MiKT
 eX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files (x86)/MiKTeX 2.9/font
-s/enc/dvips/fontname/8r.enc}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publ
-ic/lm/lmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi1
-2.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Pr
-ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Program Files 
-(x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr9.pfb><C:/Program Files (x86)/MiKTeX 
-2.9/fonts/type1/public/lm/lmtt12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
-ype1/urw/arial/ua1b8a.pfb>
-Output written on documentation.pdf (6 pages, 160669 bytes).
+s/enc/dvips/lm/lm-mathsy.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips
+/fontname/8r.enc}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmbx1
+2.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi12.pfb><C:/P
+rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi6.pfb><C:/Program Files
+ (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi8.pfb><C:/Program Files (x86)/MiKTe
+X 2.9/fonts/type1/public/lm/lmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/
+type1/public/lm/lmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public
+/lm/lmr17.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr6.pfb
+><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Program Files (x86)
+/MiKTeX 2.9/fonts/type1/public/lm/lmsy6.pfb><C:/Program Files (x86)/MiKTeX 2.9/
+fonts/type1/public/lm/lmtt12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1
+/urw/arial/ua1b8a.pfb>
+Output written on documentation.pdf (9 pages, 301540 bytes).
 PDF statistics:
- 148 PDF objects out of 1000 (max. 8388607)
- 25 named destinations out of 1000 (max. 500000)
- 105 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 231 PDF objects out of 1000 (max. 8388607)
+ 37 named destinations out of 1000 (max. 500000)
+ 166 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -55,30 +55,30 @@ public class Dictionary {
 //				/** ignore empty or protected repositories for now */
 //			}
 //		}
-		// clear();
-		// for (LoadedRepository crawler : crawlers) {
-		// unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
-		// }
-		// generate(config.wordDictionaryIntersectionStrength,
-		// config.wordDictionaryWordCountPerType);
-		// SerializeHelper.serialize(config.wordDictionaryLocation,
-		// dictionaryWords);
-		//
-		 clear();
-		 for (LoadedRepository crawler : crawlers) {
-		 unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());
-		 }
-		 generate(config.fileEndingDictionaryIntersectionStrength,
-		 config.fileEndingDictionaryWordCountPerType);
-		 SerializeHelper.serialize(config.fileEndingDictionaryLocation,
-		 dictionaryWords);
+//		 clear();
+//		 for (LoadedRepository crawler : crawlers) {
+//		 unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
+//		 }
+//		 generate(config.wordDictionaryIntersectionStrength,
+//		 config.wordDictionaryWordCountPerType);
+//		 SerializeHelper.serialize(config.wordDictionaryLocation,
+//		 dictionaryWords);
+		
+//		 clear();
+//		 for (LoadedRepository crawler : crawlers) {
+//		 unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());
+//		 }
+//		 generate(config.fileEndingDictionaryIntersectionStrength,
+//		 config.fileEndingDictionaryWordCountPerType);
+//		 SerializeHelper.serialize(config.fileEndingDictionaryLocation,
+//		 dictionaryWords);
 
-//		clear();
-//		for (LoadedRepository crawler : crawlers) {
-//			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileNameCount());
-//		}
-//		generate(config.fileNameDictionaryIntersectionStrength, config.fileNameDictionaryWordCountPerType);
-//		SerializeHelper.serialize(config.fileNameDictionaryLocation, dictionaryWords);
+		clear();
+		for (LoadedRepository crawler : crawlers) {
+			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileNameCount());
+		}
+		generate(config.fileNameDictionaryIntersectionStrength, config.fileNameDictionaryWordCountPerType);
+		SerializeHelper.serialize(config.fileNameDictionaryLocation, dictionaryWords);
 	}
 
 	
@@ -189,7 +189,8 @@ public class Dictionary {
 		for (RepositoryTyp type : RepositoryTyp.values()) {
 			int count = 0;
 			for (Entry<String, Double> word : groupWordStatistic.get(type).getSortedWordCount()) {
-				if (count < wordsPerType) {
+				if (count < wordsPerType && word.getValue() > 0.008 && naturalWordStatistic.getAbsoluteCount(word.getKey())> 10) {
+					System.out.println(word.getValue() + " " + naturalWordStatistic.getAbsoluteCount(word.getKey()));
 					uniqueWords.add(word.getKey());
 					dictionaryWordStatistic.add(word.getKey(), naturalWordStatistic.getAbsoluteCount(word.getKey()));
 					count++;
@@ -243,7 +244,9 @@ public class Dictionary {
 			config.fileEndingDictionaryIntersectionStrength = para2;
 			config.fileNameDictionaryIntersectionStrength = para2;
 			config.wordDictionaryIntersectionStrength = para2;
-			new Dictionary(crawlers, config);
+			Dictionary d = new Dictionary(crawlers, config);
+			int[] count = new int[7];
+			System.out.println(d.dictionaryWords.size());
 		}
 		sc.close();
 	}
