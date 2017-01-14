@@ -81,7 +81,6 @@ singlelinecheck=false]
 	We choose this feature because the Word Count represents the repository’s content in really wide way. At this point we keep in mind that at the backside the information noise especially for the word count is immense. 
 	An example of a Word Count Table can be found inside the attachments. TODO
 	
-	
 	\subsubsection{File Ending Count}
 	
 	The File Ending Count is defined as the occurrence of different file endings in the whole repository. We choose this feature because file endings reflect the use of different programming languages and other file formats in the best possible way.
@@ -120,14 +119,28 @@ singlelinecheck=false]
 	
 	\section{Removing irrelevant information from selected features}
 	\label{sec: dictionary}
-	Especially the features \textit{File Ending Count}, \textit{Word Count} and\textit{ Filename Count} still consists of information noise as every repository could contain words that are unique to every other repository and as such not relevant for the classification. Then again some words could be in almost every repository but their occurrence does not differentiate between the classes in a considerable margin. Due to the rising complexity of a neural network for every input added to it one should desire to find a balance between the number of words and the relevance of a word for classification. We decided to create a dictionary for each of the mentioned three features that contains every relevant word for classification. 
-	
+	\subsection{Algorithm to create Dictionaries}
+	Especially the features \textit{File Ending Count}, \textit{Word Count} and\textit{ Filename Count} still consists of information noise as every repository could contain words that are unique to every other repository and as such not relevant for the classification. Then again some words could be in almost every repository but their occurrence does not differentiate between the classes in a considerable margin. Due to the rising complexity of a neural network for every input added to it one should desire to find a balance between the number of words and the relevance of a word for classification. We decided to create a dictionary for each of the mentioned three features that contains every relevant word for classification.
 	Of course the question arises on how to chose the words for the dictionaries. For this we created an algorithm.
-	
+		
 	The algorithm takes classified repositories, we choose to use our \hyperref[sec:Training Set]{Training Datasets}.
 	In the first step the intersection with a threshold $p$ of words between repositories of the same class is calculated for each repository class. The threshhold $p$ is used to define the minimum ratio between repositories that contain the word and the total number of repositories in the class. 
 	This step is used to filter words that are too unique.
 	
+	In the next step the ratio between the occurence probability of a remaining word in a class and the average occurence of a word over \textit{all} repositories is calculated for every word and class. We will thus sort the seven (in case we have seven classes) Lists from large to small  This step is used to find the words with the highest deviation from the average occurrence and therefore helps to classify a repository. Combined with the first step we thus selected words that exist in many repositories and their occurrence probability is highly dependent on the class of the repository.
+	Our dictionary is than created by adding he first $q$ words of a list of each class to a set (because words can exists in multiple lists).
+	\begin{figure}[H]
+		\subfigure{\label{konfiguration}\includegraphics[scale = 0.35]{images/Woerterbuchbildung.png}}
+		\caption{Dictionary calculation visualized}
+	\end{figure}
+		
+	\subsection{Created Dictionaries} 
+	So the next important step is to chose $p$ and $q$. At this point we have to note that we did not try to chose the dicitonaries as we \textit{think} they are good by just watching over the selected words.
+	 But rather tried to use the information we know about the words and their deviation to generate it. We tried to calculate the optimum between number of words and deviation as well as occurrence probability.
+	 These are the resulting three dicitonaries and as such the dicitonaries with less information noise:
+	 \\
+	 INSERT DICTIONARY
+	 \\
 	
 	\section{Building the Prediction Model}
 	

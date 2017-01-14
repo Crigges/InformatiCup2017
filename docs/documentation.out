@@ -12,12 +12,14 @@
 \BOOKMARK [3][-]{subsubsection.2.2.8}{E-Mail of repository owner}{subsection.2.2}% 12
 \BOOKMARK [1][-]{section.3}{Gathering selected features from Github}{}% 13
 \BOOKMARK [1][-]{section.4}{Removing irrelevant information from selected features}{}% 14
-\BOOKMARK [1][-]{section.5}{Building the Prediction Model}{}% 15
-\BOOKMARK [2][-]{subsection.5.1}{Choosing a prediction Model}{section.5}% 16
-\BOOKMARK [2][-]{subsection.5.2}{Our Neural Network Model}{section.5}% 17
-\BOOKMARK [2][-]{subsection.5.3}{Formating and further preprocessing of Features to fit into the Neural Network}{section.5}% 18
-\BOOKMARK [2][-]{subsection.5.4}{Data Sets and Training}{section.5}% 19
-\BOOKMARK [1][-]{section.6}{Optimizing our Neural Network}{}% 20
-\BOOKMARK [1][-]{section.7}{Validation of created Classifier}{}% 21
-\BOOKMARK [1][-]{section.8}{Extensions}{}% 22
-\BOOKMARK [1][-]{section.9}{Source Code, used external Libraries and Repositories}{}% 23
+\BOOKMARK [2][-]{subsection.4.1}{Algorithm to create Dictionaries}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.2}{Created Dictionaries}{section.4}% 16
+\BOOKMARK [1][-]{section.5}{Building the Prediction Model}{}% 17
+\BOOKMARK [2][-]{subsection.5.1}{Choosing a prediction Model}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.2}{Our Neural Network Model}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.3}{Formating and further preprocessing of Features to fit into the Neural Network}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.4}{Data Sets and Training}{section.5}% 21
+\BOOKMARK [1][-]{section.6}{Optimizing our Neural Network}{}% 22
+\BOOKMARK [1][-]{section.7}{Validation of created Classifier}{}% 23
+\BOOKMARK [1][-]{section.8}{Extensions}{}% 24
+\BOOKMARK [1][-]{section.9}{Source Code, used external Libraries and Repositories}{}% 25

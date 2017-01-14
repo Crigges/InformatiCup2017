@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  14 JAN 2017 21:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  14 JAN 2017 22:08
 entering extended mode
 **documentation.tex
 (documentation.tex
@@ -893,7 +893,14 @@ Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 )
-(documentation.aux)
+(documentation.aux
+
+LaTeX Warning: Label `konfiguration' multiply defined.
+
+
+LaTeX Warning: Label `sub@konfiguration' multiply defined.
+
+)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
 LaTeX Font Info:    ... okay on input line 48.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
@@ -915,7 +922,8 @@ File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 48.
 LaTeX Font Info:    Try loading font information for T1+lmr on input line 48.
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmr.fd"
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmr.fd"
 File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
@@ -1086,58 +1094,73 @@ LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
  [4] [5]
 
 LaTeX Warning: Hyper reference `sec:Training Set' on page 6 undefined on input 
-line 127.
+line 126.
 
-[6] [7] [8] <images/logistic.png, id=167, 2212.265pt x 1264.725pt>
-File: images/logistic.png Graphic file (type png)
+<images/Woerterbuchbildung.png, id=157, 1272.755pt x 610.28pt>
+File: images/Woerterbuchbildung.png Graphic file (type png)
 
-<use images/logistic.png>
-Package pdftex.def Info: images/logistic.png used on input line 169.
-(pdftex.def)             Requested size: 442.44516pt x 252.94052pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 167--171
+<use images/Woerterbuchbildung.png>
+Package pdftex.def Info: images/Woerterbuchbildung.png used on input line 133.
+(pdftex.def)             Requested size: 445.47093pt x 213.6012pt.
+ [6]
+Underfull \hbox (badness 10000) in paragraph at lines 138--144
 
  []
 
-[9 <./images/logistic.png>] [10]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 194.
+[7 <./images/Woerterbuchbildung.png>] [8] [9]
+<images/logistic.png, id=185, 2212.265pt x 1264.725pt>
+File: images/logistic.png Graphic file (type png)
+
+<use images/logistic.png>
+Package pdftex.def Info: images/logistic.png used on input line 182.
+(pdftex.def)             Requested size: 442.44516pt x 252.94052pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 180--184
+
+ []
+
+[10 <./images/logistic.png>] [11]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 207.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-Underfull \hbox (badness 10000) in paragraph at lines 201--202
+Underfull \hbox (badness 10000) in paragraph at lines 214--215
 
  []
 
 
-Overfull \hbox (2.0365pt too wide) in paragraph at lines 204--205
+Overfull \hbox (2.0365pt too wide) in paragraph at lines 217--218
 [] []\T1/ua1/b/n/12 Repositories[][] []$\T1/lmtt/m/n/12 https : / / github . co
 m / InformatiCup / InformatiCup2017 / tree / master /$
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 207.
-[11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 207.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 220.
+[12]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 220.
  (documentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 207.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 207.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 220.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 220.
 Package rerunfilecheck Info: File `documentation.out' has not changed.
-(rerunfilecheck)             Checksum: 5160618CE4D013058472ABE4EBA0D6BC;1700.
+(rerunfilecheck)             Checksum: 202C4A94C09B551903B0F3A9BEABBC6E;1854.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 207.
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 220.
  ) 
 Here is how much of TeX's memory you used:
- 12519 strings out of 493673
- 190812 string characters out of 3141529
- 345372 words of memory out of 3000000
- 15600 multiletter control sequences out of 15000+200000
+ 12531 strings out of 493673
+ 191065 string characters out of 3141529
+ 346413 words of memory out of 3000000
+ 15606 multiletter control sequences out of 15000+200000
  70063 words of font info for 57 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 41i,9n,50p,832b,336s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,9n,50p,832b,361s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program F
 iles (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files (x86)/MiKT
 eX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files (x86)/MiKTeX 2.9/font
@@ -1155,9 +1178,9 @@ Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmri12.pfb><C:/Program Files (x86)
 /fonts/type1/public/lm/lmsy6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1
 /public/lm/lmtt12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/arial/
 ua1b8a.pfb>
-Output written on documentation.pdf (11 pages, 325229 bytes).
+Output written on documentation.pdf (12 pages, 414660 bytes).
 PDF statistics:
- 266 PDF objects out of 1000 (max. 8388607)
- 43 named destinations out of 1000 (max. 500000)
- 190 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 283 PDF objects out of 1000 (max. 8388607)
+ 48 named destinations out of 1000 (max. 500000)
+ 211 words of extra memory for PDF output out of 10000 (max. 10000000)
 
