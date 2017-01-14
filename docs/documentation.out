@@ -12,9 +12,9 @@
 \BOOKMARK [1][-]{section.5}{Building the Prediction Model}{}% 12
 \BOOKMARK [2][-]{subsection.5.1}{Choosing a prediction Model}{section.5}% 13
 \BOOKMARK [2][-]{subsection.5.2}{Our Neural Network Model}{section.5}% 14
-\BOOKMARK [2][-]{subsection.5.3}{Format the preprocessed Features to fit into the Neural Network}{section.5}% 15
-\BOOKMARK [1][-]{section.6}{Training Set}{}% 16
-\BOOKMARK [1][-]{section.7}{Optimizing our Neural Network}{}% 17
-\BOOKMARK [1][-]{section.8}{Validation of created Classifier}{}% 18
-\BOOKMARK [1][-]{section.9}{Extensions}{}% 19
-\BOOKMARK [1][-]{section.10}{Source Code and used external Libraries}{}% 20
+\BOOKMARK [2][-]{subsection.5.3}{Formating and further preprocessing of Features to fit into the Neural Network}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.4}{Data Sets and Training}{section.5}% 16
+\BOOKMARK [1][-]{section.6}{Optimizing our Neural Network}{}% 17
+\BOOKMARK [1][-]{section.7}{Validation of created Classifier}{}% 18
+\BOOKMARK [1][-]{section.8}{Extensions}{}% 19
+\BOOKMARK [1][-]{section.9}{Source Code, used external Libraries and Repositories}{}% 20

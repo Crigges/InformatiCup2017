@@ -105,20 +105,26 @@ singlelinecheck=false]
 	
 	
 	\section{Removing irrelevant information from selected features}
-
+	Especially the features \textit{File Ending Count}, \textit{Word Count} and\textit{ Filename Count} still consists of information noise as every repository could contain words that are unique to every other repository and as such not relevant for the classification. Then again some words could be in almost every repository but their occurrence does not differentiate between the classes in a considerable margin. Due to the rising complexity of a neural network for every input added to it one should desire to find a balance between the number of words and the relevance of a word for classification. We decided to create a dictionary for each of the mentioned three features that contains every relevant word for classification. 
+	
+	Of course the question arises on how to chose the words for the dictionaries. For this we created an algorithm.
+	
+	The algorithm takes classified repositories, we choose to use our \hyperref[sec:Training Set]{Training Datasets}.
+	In the first step the intersection with a threshold $p$ of words between repositories of the same class is calculated for each repository class. The threshhold $p$ is used to define the minimum ratio between repositories that contain the word and the total number of repositories in the class. 
+	This step is used to filter words that are too unique.
 	
 	
 	\section{Building the Prediction Model}
 	
 	\subsection{Choosing a prediction Model}
-	Of course there are many different approaches to the problem. A static algorithm to classify repositories is rather impractical because the parameters of our classify function would be strongly influenced by our interpretation of weights of the features for each class. However we quickly noticed that the complexity is very high, so that a normal algorithm must limit the aspects which can be considered. Above all the problem is non-linear and through the static analysis we would loose the possibility to freely improve or change the classifier. As the software and use-case market of Github rises the possible need of further classes could arise.
+	Of course there are many different approaches to the problem. A static algorithm to classify repositories is rather impractical because the parameters of our classify function would be strongly influenced by our interpretation of weights of the features for each class. However we quickly noticed that the complexity is very high, so that a normal algorithm would limit the aspects which possibly needed be considered. The problem is non-linear and through the static analysis we would loose the possibility to freely improve or change the classifier. As the software and use-case market of Github rises the possible need of further classes could arise.
 	
 	Hence to ensure a classifier who is as dynamic and as extensible as possible we choose to use some form of machine learning.
 	The problem which needs to be solved by the Prediction Model is a classification problem: We have a fixed number of values for selected features as input and as an output the class to which the values fit the most. As a result of this fact it was pretty clear to us that a supervised learning method would be optimal.
 	
 	In the next step we thought about the pro- and contra arguments of non-parametic and parametic learning.
 	For example Gaussian-Process-Models could be used in principle, as one does not need to specify a fixed number of parameters and therefore be non-parametic. 
-	The main problem with Gaussian-Process-Models is that they scale rather poorly with a complexity of $O(n^{3})$ \cite{DukeUniversity}. Moreover if we keep the huge dimension of repository datasets in mind and as such the possible complexity of the classifier function, our choice will lead us to a parametric neural Network.
+	The main problem with Gaussian-Process-Models is that they scale rather poorly with a complexity of $O(n^{3})$ \cite{DukeUniversity}. Moreover if we keep the huge dimension of repository datasets in mind and as such the possible complexity of the classifier function, our choice will lead us to a parametric neural Network. A neural network combines every important aspect from above and is furthermore capable of performing good in presence of imprecise and especially of noisy data.
 	
 	\subsection{Our Neural Network Model}
 First of all for our selected features it is not needed to consider temporal behavior. We do need need to save an internal state (If we had used a sequence of commits this could have been otherwise). It should be fully sufficient to use a Feed-forward neural network.
@@ -132,7 +138,7 @@ The neuron count for the output-layer is set to the number of different classes 
 
 Our input neurons count equals to sum of the length of every dictionary plus all relevant ratios of our selected features.
 
-\subsection{Format the preprocessed Features to fit into the Neural Network}
+\subsection{Formating and further preprocessing of Features to fit into the Neural Network}
 We tried to find the perfect balance in preprocessing so that on the one hand the network does not need to learn obvious relations between features and on the other hand not to loose possible relations by too much preprocessing.
 
 To format the input for the neuron we will iterate through every word in a dictionary of a type. The ratio between the relative occurence of the word for this type and the occurence value stored in the dictionary is calculated. Effectively this ratio is equal to the deviation of the relative word occurrence for the considered type. In case the relative occurrence of a word ending is higher then the occurrence in the dictionary it will result into a value $> 1$. So there is still the necessity of a normalization process - for the dictionary deviation as well as for the ratios.
@@ -156,7 +162,8 @@ Every value is stored as a double and the index position of the features a stati
 
 
 	
-	\section{Training Set}
+	\subsection{Data Sets and Training}
+	Beside the labeled repositories in the challenge description we used the additional \hyperref[src:Repositories]{Repositories} provided by a participating team in the official github repository of the InformaticCup 2017 (although you cannot read it: a big thank you at this point!).
 	
 	\section{Optimizing our Neural Network }
 
@@ -175,9 +182,13 @@ Every value is stored as a double and the index position of the features a stati
 	\end{thebibliography}
 	
 	
-	\section{Source Code and used external Libraries}
+	\section{Source Code, used external Libraries and Repositories}
 	\paragraph{Source Code}
 	Github: \url{https://github.com/Crigges/InformatiCup2017}\\
+	\paragraph{Repositories}
+	\label{src:Repositories}
+	\url{https://github.com/InformatiCup/InformatiCup2017/tree/master/additional_data_sets}
+	
 
 \end{document}
 
