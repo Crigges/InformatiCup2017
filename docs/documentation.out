@@ -6,15 +6,18 @@
 \BOOKMARK [3][-]{subsubsection.2.2.2}{File Ending Count}{subsection.2.2}% 6
 \BOOKMARK [3][-]{subsubsection.2.2.3}{Filename Count}{subsection.2.2}% 7
 \BOOKMARK [3][-]{subsubsection.2.2.4}{Media Density}{subsection.2.2}% 8
-\BOOKMARK [3][-]{subsubsection.2.2.5}{The Github Rate Limit}{subsection.2.2}% 9
-\BOOKMARK [1][-]{section.3}{Gathering selected features from Github}{}% 10
-\BOOKMARK [1][-]{section.4}{Removing irrelevant information from selected features}{}% 11
-\BOOKMARK [1][-]{section.5}{Building the Prediction Model}{}% 12
-\BOOKMARK [2][-]{subsection.5.1}{Choosing a prediction Model}{section.5}% 13
-\BOOKMARK [2][-]{subsection.5.2}{Our Neural Network Model}{section.5}% 14
-\BOOKMARK [2][-]{subsection.5.3}{Formating and further preprocessing of Features to fit into the Neural Network}{section.5}% 15
-\BOOKMARK [2][-]{subsection.5.4}{Data Sets and Training}{section.5}% 16
-\BOOKMARK [1][-]{section.6}{Optimizing our Neural Network}{}% 17
-\BOOKMARK [1][-]{section.7}{Validation of created Classifier}{}% 18
-\BOOKMARK [1][-]{section.8}{Extensions}{}% 19
-\BOOKMARK [1][-]{section.9}{Source Code, used external Libraries and Repositories}{}% 20
+\BOOKMARK [3][-]{subsubsection.2.2.5}{Average File Size}{subsection.2.2}% 9
+\BOOKMARK [3][-]{subsubsection.2.2.6}{Number Density}{subsection.2.2}% 10
+\BOOKMARK [3][-]{subsubsection.2.2.7}{Commit messages}{subsection.2.2}% 11
+\BOOKMARK [3][-]{subsubsection.2.2.8}{E-Mail of repository owner}{subsection.2.2}% 12
+\BOOKMARK [1][-]{section.3}{Gathering selected features from Github}{}% 13
+\BOOKMARK [1][-]{section.4}{Removing irrelevant information from selected features}{}% 14
+\BOOKMARK [1][-]{section.5}{Building the Prediction Model}{}% 15
+\BOOKMARK [2][-]{subsection.5.1}{Choosing a prediction Model}{section.5}% 16
+\BOOKMARK [2][-]{subsection.5.2}{Our Neural Network Model}{section.5}% 17
+\BOOKMARK [2][-]{subsection.5.3}{Formating and further preprocessing of Features to fit into the Neural Network}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.4}{Data Sets and Training}{section.5}% 19
+\BOOKMARK [1][-]{section.6}{Optimizing our Neural Network}{}% 20
+\BOOKMARK [1][-]{section.7}{Validation of created Classifier}{}% 21
+\BOOKMARK [1][-]{section.8}{Extensions}{}% 22
+\BOOKMARK [1][-]{section.9}{Source Code, used external Libraries and Repositories}{}% 23
