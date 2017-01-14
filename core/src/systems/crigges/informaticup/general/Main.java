@@ -22,7 +22,7 @@ public class Main {
 	 * Loads repository from argument path and classifies each repository and creates an output file for results.
 	 * Eventually prints out precision and recall for results
 	 * @see InputFileReader
-	 * @param args
+	 * @param path to test repository
 	 */
 	public static void main(String[] args) {
 		ClassifierConfiguration config;
@@ -31,6 +31,9 @@ public class Main {
 		List<RepositoryDescriptor> repositorys = null;
 		try {
 			config = ClassifierConfiguration.getDefault();
+			for(DictionaryEntry ds : config.wordDictionary){
+				System.out.println(ds.getWord() + " ");
+			}
 			testRepositoryLocation = null;
 			if (args.length > 1) {
 				System.out.println("Invalid Input");

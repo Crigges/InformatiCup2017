@@ -1,0 +1,13 @@
+\BOOKMARK [1][-]{section.1}{Abstract}{}% 1
+\BOOKMARK [1][-]{section.2}{Selecting features}{}% 2
+\BOOKMARK [1][-]{section.3}{Gathering selected features from Github}{}% 3
+\BOOKMARK [1][-]{section.4}{Removing irrelevant information from selected features}{}% 4
+\BOOKMARK [1][-]{section.5}{Building the Prediction Model}{}% 5
+\BOOKMARK [2][-]{subsection.5.1}{Choosing a prediction Model}{section.5}% 6
+\BOOKMARK [2][-]{subsection.5.2}{Our Neural Network Model}{section.5}% 7
+\BOOKMARK [2][-]{subsection.5.3}{Format the preprocessed Features to fit into the Neural Network}{section.5}% 8
+\BOOKMARK [1][-]{section.6}{Training Set}{}% 9
+\BOOKMARK [1][-]{section.7}{Optimizing our Neural Network}{}% 10
+\BOOKMARK [1][-]{section.8}{Validation of created Classifier}{}% 11
+\BOOKMARK [1][-]{section.9}{Extensions}{}% 12
+\BOOKMARK [1][-]{section.10}{Source Code and used external Libraries}{}% 13
