@@ -304,12 +304,12 @@ https://github.com/tskharva/thomasdavis.github.io WEB
 https://github.com/menardmb/kleptocreations.com WEB
 https://github.com/Jarreddebeer/breaktherules WEB
 https://github.com/stuntguy3000/stuntguy3000.github.io WEB
-https://github.com/asoborov/www.instead
-https://github.com/sigifredo/CaguappPagina
-https://github.com/kamilrextin/KamilWebSite
-https://github.com/ikew0ng/Blog
-https://github.com/rockheart/rockheart.github.io
-https://github.com/ryan-c-lewis/under_codestruction
-https://github.com/tcsthyc/hexoPB
-https://github.com/CamZHU/camzhu.github.io
-https://github.com/samuderapase/ILC2
+https://github.com/asoborov/www.instead WEB
+https://github.com/sigifredo/CaguappPagina WEB
+https://github.com/kamilrextin/KamilWebSite WEB
+https://github.com/ikew0ng/Blog WEB
+https://github.com/rockheart/rockheart.github.io WEB
+https://github.com/ryan-c-lewis/under_codestruction WEB
+https://github.com/tcsthyc/hexoPB WEB
+https://github.com/CamZHU/camzhu.github.io WEB
+https://github.com/samuderapase/ILC2 WEB

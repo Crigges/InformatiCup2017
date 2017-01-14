@@ -76,7 +76,7 @@ public class Main {
 			HashMap<RepositoryTyp, Integer> evaluationData = new HashMap<>();
 			HashMap<RepositoryTyp, Integer> correctData = new HashMap<>();
 			List<RepositoryDescriptor> goldenData = new InputFileReader(
-					new File("./assets/TestRepositorysEvaluated.txt")).getRepositorysAndTypes();
+					new File("./assets/TestRepositorys.txt")).getRepositorysAndTypes();
 			int[] goldenValuesForType = new int[7];
 			OutputFileWriter writer = new OutputFileWriter(new File(outputFileName));
 			for (RepositoryDescriptor rp : repositorys) {

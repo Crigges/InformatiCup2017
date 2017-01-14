@@ -2,6 +2,7 @@ package systems.crigges.informaticup.general;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,15 +27,18 @@ public class NetworkTester {
 				e.printStackTrace();
 			}
 		}
-		config.hiddenLayerNeuronCount = 29;
-		config.maxError = 0.0085;
+		config.hiddenLayerNeuronCount = 39;
+		config.maxError = 0.00022;
+		config.learningRate = 0.3;
 		
-		config.wordDictionaryLogisticValue = 3.0;
+		config.wordDictionaryLogisticValue = 0.52;
 		config.fileNameDictionaryLogisticValue = 0.004;
-		config.fileEndingDictionaryLogisticValue = 0.0085;
+		config.fileEndingDictionaryLogisticValue = 2.5;
+		
+		//config.wordDictionary = new ArrayList<>();
 		
 		List<RepositoryDescriptor> goldenData = new InputFileReader(
-				new File("./assets/RightTestRepositorys.txt")).getRepositorysAndTypes();
+				new File("./assets/CombinedTestRepositories.txt")).getRepositorysAndTypes();
 		Set<CollectedDataSet> evalSet = new HashSet<>();
 		for (RepositoryDescriptor rp : goldenData) {
 			CollectedDataSet dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
@@ -49,8 +53,8 @@ public class NetworkTester {
 					rights++;
 				}
 			}
-			System.out.println("Word Dictionary Logistic Value:" + config.wordDictionaryLogisticValue + " " + rights + " / " + evalSet.size());
-			config.wordDictionaryLogisticValue *= 0.85;
+			System.out.println("File Ending Dictionary Logistic Value:" + config.fileEndingDictionaryLogisticValue + " " + rights + " / " + evalSet.size());
+			config.fileEndingDictionaryLogisticValue *= 0.8;
 		}
 	}
 

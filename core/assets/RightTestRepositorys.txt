@@ -18,6 +18,11 @@ https://github.com/GnomeAsiaSummit2015/Documents DOCS
 https://github.com/MikeL83/CV DOCS
 https://github.com/Regloom/the-art-of-command-line DOCS
 https://github.com/WebAssembly/design DOCS
+https://github.com/nasa/code-nasa-gov WEB
+https://github.com/mpv-player/mpv-player.github.io WEB
+https://github.com/iawe/iawe.github.io WEB
+https://github.com/Lucifier129/Lucifier129.github.io WEB
+https://github.com/DataScienceSpecialization/DataScienceSpecialization.github.io WEB
 https://github.com/Chicago/osd-building-footprints DATA
 https://github.com/Chicago/osd-pedway-routes DATA
 https://github.com/MyanmarAPI/dataset DATA
