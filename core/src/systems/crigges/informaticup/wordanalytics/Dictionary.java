@@ -56,13 +56,13 @@ public class Dictionary {
 		// /** ignore empty or protected repositories for now */
 		// }
 		// }
-		clear();
-		for (LoadedRepository crawler : crawlers) {
-			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
-		}
-		generate(config.wordDictionaryIntersectionStrength, config.wordDictionaryWordCountPerType,
-				config.wordDictionaryLogisticValue);
-		SerializeHelper.serialize(config.wordDictionaryLocation, dictionaryWords);
+//		clear();
+//		for (LoadedRepository crawler : crawlers) {
+//			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
+//		}
+//		generate(config.wordDictionaryIntersectionStrength, config.wordDictionaryWordCountPerType,
+//				config.wordDictionaryLogisticValue);
+//		SerializeHelper.serialize(config.wordDictionaryLocation, dictionaryWords);
 
 //		clear();
 //		for (LoadedRepository crawler : crawlers) {
@@ -133,15 +133,15 @@ public class Dictionary {
 		}
 
 		private Set<Entry<String, Integer>> getWordCount() {
-			return crawler.getWordCount();
+			return crawler.getWordCount().entrySet();
 		}
 
 		private Set<Entry<String, Integer>> getFileEndingCount() {
-			return crawler.getFileEndingCount();
+			return crawler.getFileEndingCount().entrySet();
 		}
 
 		private Set<Entry<String, Integer>> getFileNameCount() {
-			return crawler.getFileNameCount();
+			return crawler.getFileNameCount().entrySet();
 		}
 
 	}

@@ -1,5 +1,6 @@
 package systems.crigges.informaticup.general;
 
+import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -19,9 +20,9 @@ public class CollectedDataSet {
 	public long numberCount;
 	public RepositoryTyp repositoryType;
 
-	public Set<Entry<String, Integer>> wordCount;
-	public Set<Entry<String, Integer>> endingCount;
-	public Set<Entry<String, Integer>> fileNameCount;
+	public HashMap<String, Integer> wordCount;
+	public HashMap<String, Integer> endingCount;
+	public HashMap<String, Integer> fileNameCount;
 
 	@Override
 	public String toString() {

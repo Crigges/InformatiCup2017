@@ -251,10 +251,8 @@ public class RepositoryCrawler implements Serializable {
 	 * 
 	 * @return the repository's word count
 	 */
-	public Set<Entry<String, Integer>> getWordCount() {
-		return wordCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
-				.entrySet();
+	public HashMap<String, Integer> getWordCount() {
+		return wordCount;
 	}
 
 	/**
@@ -263,10 +261,8 @@ public class RepositoryCrawler implements Serializable {
 	 * 
 	 * @return the repository's file ending count
 	 */
-	public Set<Entry<String, Integer>> getFileEndingCount() {
-		return fileEndingCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
-				.entrySet();
+	public HashMap<String, Integer> getFileEndingCount() {
+		return fileEndingCount;
 	}
 
 	/**
@@ -275,10 +271,8 @@ public class RepositoryCrawler implements Serializable {
 	 * 
 	 * @return the repository's file name count
 	 */
-	public Set<Entry<String, Integer>> getFileNameCount() {
-		return fileNameCount.entrySet().stream().sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new))
-				.entrySet();
+	public HashMap<String, Integer> getFileNameCount() {
+		return fileNameCount;
 	}
 
 	/**

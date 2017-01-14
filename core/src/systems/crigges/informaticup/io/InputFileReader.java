@@ -84,7 +84,7 @@ public class InputFileReader {
 			RepositoryCrawler crawler;
 			try {
 				crawler = new RepositoryCrawler(t.getName());
-				for (Entry<String, Integer> entry : crawler.getWordCount()) {
+				for (Entry<String, Integer> entry : crawler.getWordCount().entrySet()) {
 					System.out.println(entry);
 				}
 			} catch (MalformedURLException e) {

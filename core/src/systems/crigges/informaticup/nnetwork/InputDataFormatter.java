@@ -1,6 +1,7 @@
 package systems.crigges.informaticup.nnetwork;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -20,10 +21,10 @@ import systems.crigges.informaticup.wordanalytics.WordStatistic;
  */
 public class InputDataFormatter {
 	private double[] inputNeurons;
-	private Set<Entry<String, Integer>> dataSet;
+	private HashMap<String, Integer> dataMap;
 	private ArrayList<DictionaryEntry> dictionary;
-
 	private LogisticFunction logisticFunction;
+	private HashMap<String, Integer> indexMap;
 
 	/**
 	 * Creates new InputDataFormatter
@@ -33,10 +34,10 @@ public class InputDataFormatter {
 	 * @param functionValue
 	 * @see Dictionary
 	 */
-	public InputDataFormatter(Set<Entry<String, Integer>> dataSet, ArrayList<DictionaryEntry> dictionary,
+	public InputDataFormatter(HashMap<String, Integer> dataMap, ArrayList<DictionaryEntry> dictionary,
 			double functionValue) {
 		this.dictionary = dictionary;
-		this.dataSet = dataSet;
+		this.dataMap = dataMap;
 		this.logisticFunction = new LogisticFunction(functionValue);
 		this.inputNeurons = new double[2 * dictionary.size()];
 		calculateInput();
@@ -61,39 +62,29 @@ public class InputDataFormatter {
 				inputNeurons[i] = 1;
 			}
 		}
-
+		indexMap = new HashMap<>();
 		WordStatistic wordsInDictionary = new WordStatistic();
+		int i = 0;
 		for (DictionaryEntry entryD : dictionary) {
-			for (Entry<String, Integer> entry : dataSet) {
-				if (entryD.getWord().equals(entry.getKey())) {
-					wordsInDictionary.add(entry.getKey(), entry.getValue());
-				}
+			Integer count = dataMap.get(entryD.getWord());
+			if(count != null && count != 0){
+				wordsInDictionary.add(entryD.getWord(), count);
 			}
+			indexMap.put(entryD.getWord(), i++);
 		}
-
 		for (Entry<String, Double> entry : wordsInDictionary.getSet()) {
+			int index = indexMap.get(entry.getKey());
 			double normalizedValue = wordsInDictionary.getStatistic(entry.getKey())
-					/ dictionary.get(indexInDictionaryEntry(entry.getKey())).getOccurrence();
+					/ dictionary.get(index).getOccurrence();
 			double funcnorm = logisticFunction.calc(normalizedValue);
 			//System.out.println(funcnorm);
 			if (funcnorm < 0) {
-				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2] = Math.abs(funcnorm);
+				inputNeurons[index * 2] = Math.abs(funcnorm);
 			} else {
-				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2 + 1] = funcnorm;
-				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2] = 0;
+				inputNeurons[index * 2 + 1] = funcnorm;
+				inputNeurons[index * 2] = 0;
 			}
 		}
 
-	}
-
-	// Searches for a String in Dictionary
-	private int indexInDictionaryEntry(String s) {
-		for (int i = 0; i < dictionary.size(); i++) {
-			DictionaryEntry d = dictionary.get(i);
-			if (d.getWord().equals(s)) {
-				return i;
-			}
-		}
-		return -1;
 	}
 }
