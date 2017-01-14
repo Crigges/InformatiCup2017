@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  14 JAN 2017 22:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  14 JAN 2017 22:17
 entering extended mode
 **documentation.tex
 (documentation.tex
@@ -1091,12 +1091,7 @@ LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ua1/b/n' tried instead on input line 67.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
 (Font)              scaled to size 13.67995pt on input line 67.
- [4] [5]
-
-LaTeX Warning: Hyper reference `sec:Training Set' on page 6 undefined on input 
-line 126.
-
-<images/Woerterbuchbildung.png, id=157, 1272.755pt x 610.28pt>
+ [4] [5] <images/Woerterbuchbildung.png, id=158, 1272.755pt x 610.28pt>
 File: images/Woerterbuchbildung.png Graphic file (type png)
 
 <use images/Woerterbuchbildung.png>
@@ -1108,7 +1103,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 138--144
  []
 
 [7 <./images/Woerterbuchbildung.png>] [8] [9]
-<images/logistic.png, id=185, 2212.265pt x 1264.725pt>
+<images/logistic.png, id=187, 2212.265pt x 1264.725pt>
 File: images/logistic.png Graphic file (type png)
 
 <use images/logistic.png>
@@ -1131,9 +1126,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 214--215
  []
 
 
-Overfull \hbox (2.0365pt too wide) in paragraph at lines 217--218
-[] []\T1/ua1/b/n/12 Repositories[][] []$\T1/lmtt/m/n/12 https : / / github . co
-m / InformatiCup / InformatiCup2017 / tree / master /$
+Overfull \hbox (36.44153pt too wide) in paragraph at lines 217--218
+[] []\T1/ua1/b/n/12 Repository Dataset[][] []$\T1/lmtt/m/n/12 https : / / githu
+b . com / InformatiCup / InformatiCup2017 / tree / master /$
  []
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 220.
@@ -1146,18 +1141,15 @@ Package rerunfilecheck Info: File `documentation.out' has not changed.
 (rerunfilecheck)             Checksum: 202C4A94C09B551903B0F3A9BEABBC6E;1854.
 
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 220.
  ) 
 Here is how much of TeX's memory you used:
- 12531 strings out of 493673
- 191065 string characters out of 3141529
- 346413 words of memory out of 3000000
- 15606 multiletter control sequences out of 15000+200000
+ 12530 strings out of 493673
+ 191047 string characters out of 3141529
+ 346419 words of memory out of 3000000
+ 15605 multiletter control sequences out of 15000+200000
  70063 words of font info for 57 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  41i,9n,50p,832b,361s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1178,9 +1170,9 @@ Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmri12.pfb><C:/Program Files (x86)
 /fonts/type1/public/lm/lmsy6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1
 /public/lm/lmtt12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/arial/
 ua1b8a.pfb>
-Output written on documentation.pdf (12 pages, 414660 bytes).
+Output written on documentation.pdf (12 pages, 414873 bytes).
 PDF statistics:
- 283 PDF objects out of 1000 (max. 8388607)
+ 284 PDF objects out of 1000 (max. 8388607)
  48 named destinations out of 1000 (max. 500000)
  211 words of extra memory for PDF output out of 10000 (max. 10000000)
 

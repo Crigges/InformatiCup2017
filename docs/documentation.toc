@@ -25,4 +25,4 @@
 \contentsline {section}{\numberline {8}Extensions}{11}{section.8}
 \contentsline {section}{\numberline {9}Source Code, used external Libraries and Repositories}{12}{section.9}
 \contentsline {paragraph}{\nonumberline Source Code}{12}{section*.5}
-\contentsline {paragraph}{\nonumberline Repositories}{12}{section*.6}
+\contentsline {paragraph}{\nonumberline Repository Dataset}{12}{section*.6}

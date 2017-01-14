@@ -104,10 +104,10 @@ singlelinecheck=false]
 	The use of commit messages and commits in general was a bit problematic. While we seriously thought about using this as a feature but commit messages are too variable to it. It would be like trying to interpret the interpretation of information so the possiblity to classify repository wrongly based on the messages is not as small as we wish it too be.
 	
 	
-	Furthermore available data by a simple web browser is huge but since not of all it may accessible via code we took a look into the Github API instead. This offered a major problem: The Github API only allows 60 unauthenticated requests per hour and 5000 for authenticated ones(1). Even if we take in count that only authenticated requests are used, which would require each user to own a github account, 5000 requests per hour are not enough to analyze hundreds of Repositories per hour. There are  Repositories with over 500.000 commits and a single github request returns only the first 500. So we would need 1000 request for a single repository just to get all of the commits.
+	Furthermore available data by a simple web browser is huge but since not of all it may accessible via code we took a look into the Github API instead. This offered a major problem: The Github API only allows 60 unauthenticated requests per hour and 5000 for authenticated ones(1). Even if we take into count that only authenticated requests are used, which would require each user to own a github account, 5000 requests per hour are not enough to analyze hundreds of Repositories per hour. There are  Repositories with over 500.000 commits and a single github request returns only the first 500. So we would need 1000 request for a single repository just to get all of the commits.
 	
 	\subsubsection{E-Mail of repository owner}
-	This feature is problematic. We thought about searching for an edu substring in the email but we could not find a correlation with the EDU class. Apart from this we could not think of any key which could be relevant.
+	This feature is problematic. We thought about searching for an edu substring in the email but we could not find a correlation with the EDU class. Apart from this we could not think of any part in an e-mail which could be relevant.
 
 	
 	
@@ -120,10 +120,10 @@ singlelinecheck=false]
 	\section{Removing irrelevant information from selected features}
 	\label{sec: dictionary}
 	\subsection{Algorithm to create Dictionaries}
-	Especially the features \textit{File Ending Count}, \textit{Word Count} and\textit{ Filename Count} still consists of information noise as every repository could contain words that are unique to every other repository and as such not relevant for the classification. Then again some words could be in almost every repository but their occurrence does not differentiate between the classes in a considerable margin. Due to the rising complexity of a neural network for every input added to it one should desire to find a balance between the number of words and the relevance of a word for classification. We decided to create a dictionary for each of the mentioned three features that contains every relevant word for classification.
+	Especially the features \textit{File Ending Count}, \textit{Word Count} and\textit{ Filename Count} still consists of information noise as every repository could contain words that are unique to every other repository and are as such not relevant for the classification. Then again some words could be in almost every repository but their occurrence does not differentiate between the classes in a considerable margin. Due to the rising complexity of a neural network for every input added to it one should desire to find a balance between the number of words and the relevance of a word for classification. We decided to create a dictionary for each of the mentioned three features that contains every relevant word for classification.
 	Of course the question arises on how to chose the words for the dictionaries. For this we created an algorithm.
 		
-	The algorithm takes classified repositories, we choose to use our \hyperref[sec:Training Set]{Training Datasets}.
+	The algorithm takes classified repositories, we choose to use our \hyperref[src:Repositories]{Training Datasets}.
 	In the first step the intersection with a threshold $p$ of words between repositories of the same class is calculated for each repository class. The threshhold $p$ is used to define the minimum ratio between repositories that contain the word and the total number of repositories in the class. 
 	This step is used to filter words that are too unique.
 	
@@ -158,16 +158,16 @@ singlelinecheck=false]
 First of all for our selected features it is not needed to consider temporal behavior. We do need need to save an internal state (If we had used a sequence of commits this could have been otherwise). It should be fully sufficient to use a Feed-forward neural network.
 
 As for a Neural Network with supervised learning we choose that a Multilayer perceptron(MLP) with one hidden Layer would be sufficient for our classification problem. We already mentioned that our classification problem is not linear. Hence at least one hidden Layer is required to solve the problem. Furthermore we know that this MLP can approximate any bounded continuous function with arbitrary precision \cite{ApproximateAnyFunction}, particularly our classification problem.
-The usage of a linear activation function would result in a MLP with a set of possible functions to be equivalent those of a normal input-output perceptron. Therefore we need to use a nonlinear activation function. We therefore decided to use a Sigmoid function. 
+The usage of a linear activation function would result in a MLP with a set of possible functions to be equivalent those of a normal input-output perceptron. Therefore we needed to use a nonlinear activation function. We thus decided to use a Sigmoid function. 
 
-For the training we used as expected for a MLP Backpropagation. To reduce the chance to be stuck in a local minimum we used intertia so that the previous change will influence the weight adjustment in the current round.
+For the training we used Backpropagation as expected for a MLP. To reduce the chance to be stuck in a local minimum we used inertia so that the previous change will influence the weight adjustment in the current round.
 
-The neuron count for the output-layer is set to the number of different classes into which we want to classify the input. So for our Neural Network we used 7 output neurons.
+The neuron count for the output-layer is set to the number of different classes into which we want to classify the input. So for our Neural Network we used seven output neurons.
 
 Our input neurons count equals to sum of the length of every dictionary plus all relevant ratios of our selected features.
 
 \subsection{Formating and further preprocessing of Features to fit into the Neural Network}
-We tried to find the perfect balance in preprocessing so that on the one hand the network does not need to learn obvious relations between features and on the other hand not to loose possible relations by too much preprocessing.
+We tried to find the perfect balance in preprocessing so that on the one hand the network does not need to learn obvious relations between features and on the other hand does not to loose possible relations by too much preprocessing.
 
 To format the input for the neuron we will iterate through every word in a dictionary of a type. The ratio between the relative occurence of the word for this type and the occurence value stored in the dictionary is calculated. Effectively this ratio is equal to the deviation of the relative word occurrence for the considered type. In case the relative occurrence of a word ending is higher then the occurrence in the dictionary it will result into a value $> 1$. So there is still the necessity of a normalization process - for the dictionary deviation as well as for the ratios.
 
@@ -212,7 +212,7 @@ Every value is stored as a double and the index position of the features a stati
 	\section{Source Code, used external Libraries and Repositories}
 	\paragraph{Source Code}
 	Github: \url{https://github.com/Crigges/InformatiCup2017}\\
-	\paragraph{Repositories}
+	\paragraph{Repository Dataset}
 	\label{src:Repositories}
 	\url{https://github.com/InformatiCup/InformatiCup2017/tree/master/additional_data_sets}
 	
