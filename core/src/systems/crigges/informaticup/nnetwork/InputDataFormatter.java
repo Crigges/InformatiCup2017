@@ -75,7 +75,7 @@ public class InputDataFormatter {
 			double normalizedValue = wordsInDictionary.getStatistic(entry.getKey())
 					/ dictionary.get(indexInDictionaryEntry(entry.getKey())).getOccurrence();
 			double funcnorm = logisticFunction.calc(normalizedValue);
-			System.out.println(funcnorm);
+			//System.out.println(funcnorm);
 			if (funcnorm < 0) {
 				inputNeurons[indexInDictionaryEntry(entry.getKey()) * 2] = Math.abs(funcnorm);
 			} else {

@@ -147,7 +147,7 @@ public class Main {
 	 * @return
 	 * @throws Exception
 	 */
-	private static ClassifierNetwork createNeuralNetwork(ClassifierConfiguration config) throws Exception {
+	public static ClassifierNetwork createNeuralNetwork(ClassifierConfiguration config) throws Exception {
 		List<RepositoryDescriptor> repositorys = new InputFileReader(config.trainingRepositoryLocation)
 				.getRepositorysAndTypes();
 		Set<CollectedDataSet> dataSetAll = new HashSet<>();
@@ -165,6 +165,6 @@ public class Main {
 			System.out.println(entry.getWord());
 		}
 		return new ClassifierNetwork(dataSetAll, ClassifierConfiguration.getDefault());
-
 	}
+	
 }

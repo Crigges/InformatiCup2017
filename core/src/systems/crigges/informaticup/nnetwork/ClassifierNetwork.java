@@ -14,6 +14,8 @@ import java.util.Set;
 import org.neuroph.core.NeuralNetwork;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.core.data.DataSetRow;
+import org.neuroph.core.events.LearningEvent;
+import org.neuroph.core.events.LearningEventListener;
 import org.neuroph.nnet.MultiLayerPerceptron;
 import org.neuroph.nnet.learning.BackPropagation;
 import org.neuroph.nnet.learning.MomentumBackpropagation;
@@ -49,31 +51,38 @@ public class ClassifierNetwork {
 	 * 
 	 * @param trainDataSet
 	 * @param configuration
+	 * @throws InterruptedException 
 	 * @see CollectedDataSet
 	 * @see ClassifierConfiguration
 	 */
-	public ClassifierNetwork(Set<CollectedDataSet> trainDataSet, ClassifierConfiguration configuration) {
+	public ClassifierNetwork(Set<CollectedDataSet> trainDataSet, ClassifierConfiguration configuration) throws InterruptedException {
 		this.configuration = configuration;
 		createNeuronStructure();
-
+		
+		long time = System.currentTimeMillis();
 		trainingSet = new DataSet(configuration.inputNeuronCount, configuration.numberOfNeuronOutput);
 		for (CollectedDataSet dataSet : trainDataSet) {
 			trainNetwork(dataSet);
 		}
-
-		System.out.println("Creating Training-Data Finished");
+		//System.out.println("Creating Training-Data Finished");
 		BackPropagation learningRule = neuralNetwork.getLearningRule();
 		neuralNetwork.learnInNewThread(trainingSet);
-		int i = learningRule.getCurrentIteration();
-		while (neuralNetwork.getLearningThread().isAlive()) {
-			if (learningRule.getCurrentIteration() != i) {
-				System.out.println(neuralNetwork.getLearningRule().getCurrentIteration() + " "
-						+ neuralNetwork.getLearningRule().getPreviousEpochError());
-				i = learningRule.getCurrentIteration();
+		learningRule.addListener(new LearningEventListener() {
+			int i = 0;
+			@Override
+			public void handleLearningEvent(LearningEvent event) {
+				if(event.getEventType() == LearningEvent.Type.EPOCH_ENDED){
+//					System.out.println(neuralNetwork.getLearningRule().getCurrentIteration() + " "
+//					+ neuralNetwork.getLearningRule().getPreviousEpochError());
+//					i = learningRule.getCurrentIteration();
+//					i++;
+				}
 			}
-		}
+		});
+		neuralNetwork.getLearningThread().join();
+		
 
-		neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
+		//neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
 	}
 
 	/**
@@ -137,11 +146,11 @@ public class ClassifierNetwork {
 		RatioDataSet ratioDataSet = new RatioDataSet(dataSet, configuration.ratioLogisticValue,
 				configuration.normRatioValues);
 		InputDataFormatter formattedInputWords = new InputDataFormatter(dataSet.wordCount, configuration.wordDictionary,
-				configuration.wordDictionarylogisticValue);
+				configuration.wordDictionaryLogisticValue);
 		InputDataFormatter formattedInputEnding = new InputDataFormatter(dataSet.endingCount,
 				configuration.fileEndingDictionary, configuration.fileEndingDictionaryLogisticValue);
 		InputDataFormatter formattedInputFolder = new InputDataFormatter(dataSet.fileNameCount,
-				configuration.fileNameDictionary, configuration.fileNameDictionarylogisticValue);
+				configuration.fileNameDictionary, configuration.fileNameDictionaryLogisticValue);
 
 		double[] input = new double[configuration.inputNeuronCount];
 
@@ -180,7 +189,7 @@ public class ClassifierNetwork {
 		ArrayList<Double> list = new ArrayList<>();
 		for (int i = 0; i < output.length; i++) {
 			list.add(output[i]);
-			System.out.println(i + " " + output[i]);
+			//System.out.println(i + " " + output[i]);
 		}
 		return RepositoryTyp.values()[list.indexOf(Collections.max(list))];
 	}
@@ -192,10 +201,11 @@ public class ClassifierNetwork {
 	 * @param args are not used
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
+	 * @throws InterruptedException 
 	 * @throws Exception
 	 * @see {@link ClassifierConfiguration}
 	 */
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
+	public static void main(String[] args) throws ClassNotFoundException, IOException, InterruptedException {
 		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
 		List<RepositoryDescriptor> repositorys = null;
 		try {

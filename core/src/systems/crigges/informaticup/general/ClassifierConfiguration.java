@@ -38,7 +38,7 @@ public class ClassifierConfiguration {
 	 * constant of proportionality k for {@link LogisticFunction} to normalize
 	 * values for dictionary of word count.
 	 */
-	public double wordDictionarylogisticValue;
+	public double wordDictionaryLogisticValue;
 
 	/**
 	 * Defines the intersection strength between all repositories of the same
@@ -57,7 +57,7 @@ public class ClassifierConfiguration {
 	 * constant of proportionality k for {@link LogisticFunction} to normalize
 	 * values for dictionary of file- and foldernames.
 	 */
-	public double fileNameDictionarylogisticValue;
+	public double fileNameDictionaryLogisticValue;
 
 	/**
 	 * Defines the intersection strength between all repositories of the same
@@ -159,15 +159,15 @@ public class ClassifierConfiguration {
 
 		configuration.wordDictionaryIntersectionStrength = 0.2;
 		configuration.wordDictionaryWordCountPerType = 20;
-		configuration.wordDictionarylogisticValue = 0.03;
+		configuration.wordDictionaryLogisticValue = 0.03;
 
 		configuration.fileNameDictionaryIntersectionStrength = 0.25;
 		configuration.fileNameDictionaryWordCountPerType = 150;
-		configuration.fileNameDictionarylogisticValue = 0.03;
+		configuration.fileNameDictionaryLogisticValue = 0.03;
 
 		configuration.fileEndingDictionaryIntersectionStrength = 0.01;
 		configuration.fileEndingDictionaryWordCountPerType = 50;
-		configuration.fileEndingDictionaryLogisticValue = 0.03;
+		configuration.fileEndingDictionaryLogisticValue = 0.01;
 		
 		configuration.hiddenLayerNeuronCount = 20;
 		configuration.maxError = 0.01;
@@ -215,15 +215,15 @@ public class ClassifierConfiguration {
 
 		configuration.wordDictionaryIntersectionStrength = 0.25;
 		configuration.wordDictionaryWordCountPerType = 100;
-
-		configuration.wordDictionarylogisticValue = 0.3;
+		configuration.wordDictionaryLogisticValue = 0.01;
+		
 		configuration.fileNameDictionaryIntersectionStrength = 0.25;
-
 		configuration.fileNameDictionaryWordCountPerType = 10;
-		configuration.fileNameDictionarylogisticValue = 0.3;
+		configuration.fileNameDictionaryLogisticValue = 0.01;
 
 		configuration.fileEndingDictionaryIntersectionStrength = 0.08;
 		configuration.fileEndingDictionaryWordCountPerType = 10;
+		configuration.fileEndingDictionaryLogisticValue = 0.01;
 
 		configuration.recreateDictionary = false;
 		configuration.recreateNeuralNetwork = false;
@@ -233,7 +233,6 @@ public class ClassifierConfiguration {
 		configuration.learningRate = 0.1;
 		configuration.momentum = 0.2;
 
-		configuration.fileEndingDictionaryLogisticValue = 0.3;
 
 		configuration.numberOfNeuronOutput = 7;
 
