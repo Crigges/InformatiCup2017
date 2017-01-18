@@ -78,7 +78,7 @@ public class RepositoryCrawler implements Serializable {
 	 */
 	public RepositoryCrawler(String url) throws IOException {
 		repoName = getRepoNameFromURL(url);
-		fileList = ZipballGrabber.grabVirtual("https://api.github.com/repos/" + repoName + "/zipball");
+		fileList = ZipballGrabber.grabVirtual(repoName, null);
 		analyzeRepo();
 	}
 
