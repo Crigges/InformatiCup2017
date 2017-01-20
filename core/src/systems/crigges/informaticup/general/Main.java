@@ -76,7 +76,7 @@ public class Main {
 			HashMap<RepositoryTyp, Integer> evaluationData = new HashMap<>();
 			HashMap<RepositoryTyp, Integer> correctData = new HashMap<>();
 			List<RepositoryDescriptor> goldenData = new InputFileReader(
-					new File("./assets/TestRepositorys.txt")).getRepositorysAndTypes();
+					new File("./assets/CombinedTestRepositories.txt")).getRepositorysAndTypes();
 			int[] goldenValuesForType = new int[7];
 			OutputFileWriter writer = new OutputFileWriter(new File(outputFileName));
 			for (RepositoryDescriptor rp : repositorys) {
@@ -123,7 +123,7 @@ public class Main {
 				System.out.println(entry.getKey().toString() + " " + (double)(entry.getValue()) / evaluationData.get(entry.getKey()));
 			}
 			
-			System.out.println("Overall " + count + " classifications correct" +" so ," + ((double) (count)/ 31));
+			System.out.println("Overall " + count + " classifications correct" +" so ," + ((double) (count)/ 66));
 			writer.close();
 		} catch (Exception e2) {
 			e2.printStackTrace();
