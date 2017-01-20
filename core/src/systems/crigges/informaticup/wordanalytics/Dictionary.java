@@ -56,14 +56,14 @@ public class Dictionary {
 		// /** ignore empty or protected repositories for now */
 		// }
 		// }
-//		clear();
-//		for (LoadedRepository crawler : crawlers) {
-//			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
-//		}
-//		generate(config.wordDictionaryIntersectionStrength, config.wordDictionaryWordCountPerType,
-//				config.wordDictionaryLogisticValue);
-//		SerializeHelper.serialize(config.wordDictionaryLocation, dictionaryWords);
-
+		clear();
+		for (LoadedRepository crawler : crawlers) {
+			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getWordCount());
+		}
+		generate(config.wordDictionaryIntersectionStrength, config.wordDictionaryWordCountPerType,
+				config.wordDictionaryLogisticValue);
+		SerializeHelper.serialize(config.wordDictionaryLocation, dictionaryWords);
+//
 //		clear();
 //		for (LoadedRepository crawler : crawlers) {
 //			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileEndingCount());

@@ -17,8 +17,10 @@ public class ClassifierConfiguration {
 	public File averageRatioValuesLocation;
 	public File trainingRepositoryLocation;
 	public File testRepositoryLocation;
-	public File neuralNetworkLocation;
-
+	public File neuralNetworkLocation;	
+	public File minMaxLocation;
+	
+	public double[][] minMaxValues;
 	/**
 	 * Defines the intersection strength between all repositories of the same
 	 * type that's needed for a word to be kept for further analysis for the
@@ -153,9 +155,12 @@ public class ClassifierConfiguration {
 		configuration.fileNameDictionaryLocation = new File("./assets/fileNameDictionary.ser");
 		configuration.fileEndingDictionaryLocation = new File("./assets/fileEndingDictionary.ser");
 		configuration.averageRatioValuesLocation = new File("./assets/averageRatioValues");
-		configuration.trainingRepositoryLocation = new File("./assets/Repositorys.txt");
-		configuration.testRepositoryLocation = new File("./assets/TestRepositorys.txt");
+		configuration.trainingRepositoryLocation = new File("./assets/TrainingRepositoriesSet2.txt");
+		configuration.testRepositoryLocation = new File("./assets/CombinedTestRepositories.txt");
 		configuration.neuralNetworkLocation = new File("./assets/classifierNN.nnet");
+		configuration.minMaxLocation = new File("./assets/MinMaxValues.ser");
+		
+		configuration.minMaxValues = SerializeHelper.deserialize(configuration.minMaxLocation);
 
 		configuration.wordDictionaryIntersectionStrength = 0.2;
 		configuration.wordDictionaryWordCountPerType = 20;
@@ -169,13 +174,12 @@ public class ClassifierConfiguration {
 		configuration.fileEndingDictionaryWordCountPerType = 50;
 		configuration.fileEndingDictionaryLogisticValue = 0.01;
 		
-		configuration.hiddenLayerNeuronCount = 20;
-		configuration.maxError = 0.01;
-		configuration.learningRate = 0.03;
-		configuration.momentum = 0.2;
+		configuration.hiddenLayerNeuronCount = 53;
+		configuration.maxError = 0.02;
+		configuration.learningRate = 0.05;
+		configuration.momentum = 0.4;
 		configuration.recreateDictionary = false;
 		configuration.recreateNeuralNetwork = false;
-
 
 
 		configuration.numberOfNeuronOutput = 7;
@@ -188,10 +192,8 @@ public class ClassifierConfiguration {
 		configuration.fileEndingDictionary = SerializeHelper.deserialize(configuration.fileEndingDictionaryLocation);
 		configuration.wordDictionary = SerializeHelper.deserialize(configuration.wordDictionaryLocation);
 		configuration.normRatioValues = SerializeHelper.deserialize(configuration.averageRatioValuesLocation);
-
 		configuration.inputNeuronCount = (configuration.fileEndingDictionary.size()
-				+ configuration.fileNameDictionary.size()  + configuration.wordDictionary.size()
-				+ RatioDataSet.getDefaultRatioCount()) * 2;
+				+ configuration.fileNameDictionary.size()  + configuration.wordDictionary.size()) * 2;
 		System.out.println(configuration.inputNeuronCount);
 		return configuration;
 	}

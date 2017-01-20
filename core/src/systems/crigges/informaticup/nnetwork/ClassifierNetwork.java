@@ -51,38 +51,41 @@ public class ClassifierNetwork {
 	 * 
 	 * @param trainDataSet
 	 * @param configuration
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * @see CollectedDataSet
 	 * @see ClassifierConfiguration
 	 */
-	public ClassifierNetwork(Set<CollectedDataSet> trainDataSet, ClassifierConfiguration configuration) throws InterruptedException {
+	public ClassifierNetwork(Set<CollectedDataSet> trainDataSet, ClassifierConfiguration configuration)
+			throws InterruptedException {
 		this.configuration = configuration;
 		createNeuronStructure();
-		
-		long time = System.currentTimeMillis();
+
 		trainingSet = new DataSet(configuration.inputNeuronCount, configuration.numberOfNeuronOutput);
 		for (CollectedDataSet dataSet : trainDataSet) {
 			trainNetwork(dataSet);
+
 		}
-		//System.out.println("Creating Training-Data Finished");
+		// System.out.println("Creating Training-Data Finished");
 		BackPropagation learningRule = neuralNetwork.getLearningRule();
 		neuralNetwork.learnInNewThread(trainingSet);
 		learningRule.addListener(new LearningEventListener() {
 			int i = 0;
+
 			@Override
 			public void handleLearningEvent(LearningEvent event) {
-				if(event.getEventType() == LearningEvent.Type.EPOCH_ENDED){
-//					System.out.println(neuralNetwork.getLearningRule().getCurrentIteration() + " "
-//					+ neuralNetwork.getLearningRule().getPreviousEpochError());
-//					i = learningRule.getCurrentIteration();
-//					i++;
+				if (event.getEventType() == LearningEvent.Type.EPOCH_ENDED) {
+					 System.out.println(neuralNetwork.getLearningRule().getCurrentIteration()
+					 + " "
+					 +
+					 neuralNetwork.getLearningRule().getPreviousEpochError());
+					 i = learningRule.getCurrentIteration();
+					 i++;
 				}
 			}
 		});
 		neuralNetwork.getLearningThread().join();
-		
 
-		//neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
+		 neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
 	}
 
 	/**
@@ -109,16 +112,17 @@ public class ClassifierNetwork {
 		bp.setLearningRate(configuration.learningRate);
 		bp.setMaxError(configuration.maxError);
 		bp.setMomentum(configuration.momentum);
-		RangeRandomizer random = new RangeRandomizer(-0.7, 0.7);
-		random.setRandomGenerator(new Random(1));
-		neuralNetwork.randomizeWeights(random);
+//		RangeRandomizer random = new RangeRandomizer(-0.7, 0.7);
+//		random.setRandomGenerator(new Random(1));
+//		neuralNetwork.randomizeWeights(random);
 		neuralNetwork.setLearningRule(bp);
 	}
 
 	/**
 	 * Trains the network with given dataSet and expected output
 	 * 
-	 * @param dataSet of training repository
+	 * @param data	Set
+	 *            of training repository
 	 */
 	private void trainNetwork(CollectedDataSet dataSet) {
 		double[] input = getFormattedInput(dataSet);
@@ -143,14 +147,18 @@ public class ClassifierNetwork {
 	 * @return array of normalized input
 	 */
 	private double[] getFormattedInput(CollectedDataSet dataSet) {
-		RatioDataSet ratioDataSet = new RatioDataSet(dataSet, configuration.ratioLogisticValue,
+		int[] startindices = new int[3];
+		startindices[0] = 0;
+		RatioDataSet ratioDataSet = new RatioDataSet(dataSet,
 				configuration.normRatioValues);
 		InputDataFormatter formattedInputWords = new InputDataFormatter(dataSet.wordCount, configuration.wordDictionary,
-				configuration.wordDictionaryLogisticValue);
+				configuration.minMaxValues, startindices[0]);
+		startindices[1] = configuration.wordDictionary.size();
 		InputDataFormatter formattedInputEnding = new InputDataFormatter(dataSet.endingCount,
-				configuration.fileEndingDictionary, configuration.fileEndingDictionaryLogisticValue);
+				configuration.fileEndingDictionary, configuration.minMaxValues, startindices[1]);
+		startindices[2] = configuration.wordDictionary.size() + configuration.fileEndingDictionary.size();
 		InputDataFormatter formattedInputFolder = new InputDataFormatter(dataSet.fileNameCount,
-				configuration.fileNameDictionary, configuration.fileNameDictionaryLogisticValue);
+				configuration.fileNameDictionary, configuration.minMaxValues, startindices[2]);
 
 		double[] input = new double[configuration.inputNeuronCount];
 
@@ -160,14 +168,19 @@ public class ClassifierNetwork {
 		for (int i = 0; i < ratioDataSet.getNormalizedRatios().size(); i++) {
 			Double d = ratioDataSet.getNormalizedRatios().get(i);
 			list[i] = d.doubleValue();
-//			System.out.println(d.doubleValue());
-		}
+			System.out.println(d.doubleValue());
+}
 		addDoublesToArray(input, list, count);
-		addDoublesToArray(input, formattedInputWords.getInputNeurons(), count += list.length);
+		addDoublesToArray(input, formattedInputWords.getInputNeurons(), count+=list.length);
 		addDoublesToArray(input, formattedInputEnding.getInputNeurons(),
 				count += formattedInputWords.getInputNeurons().length);
 		addDoublesToArray(input, formattedInputFolder.getInputNeurons(),
 				count += formattedInputEnding.getInputNeurons().length);
+		for(int i = 0; i < input.length; i++){
+			if(input[i] != 0){
+			System.out.println(input[i]);
+			}
+		}
 		return input;
 	}
 
@@ -175,7 +188,8 @@ public class ClassifierNetwork {
 	 * classify normalized input generated of collectedDataSet and returns best
 	 * matching {@link RepositoryTyp}
 	 * 
-	 * @param CollectedDataSet of repository to be classified
+	 * @param CollectedDataSet
+	 *            of repository to be classified
 	 * @return {@link RepositoryTyp}
 	 */
 	public RepositoryTyp classify(CollectedDataSet collectedDataSet) {
@@ -189,7 +203,7 @@ public class ClassifierNetwork {
 		ArrayList<Double> list = new ArrayList<>();
 		for (int i = 0; i < output.length; i++) {
 			list.add(output[i]);
-			//System.out.println(i + " " + output[i]);
+			// System.out.println(i + " " + output[i]);
 		}
 		return RepositoryTyp.values()[list.indexOf(Collections.max(list))];
 	}
@@ -198,10 +212,11 @@ public class ClassifierNetwork {
 	 * Used to create new Neural Network with default parameters set in
 	 * {@link ClassifierConfiguration} and save it into File.
 	 * 
-	 * @param args are not used
-	 * @throws IOException 
-	 * @throws ClassNotFoundException 
-	 * @throws InterruptedException 
+	 * @param args
+	 *            are not used
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 * @throws InterruptedException
 	 * @throws Exception
 	 * @see {@link ClassifierConfiguration}
 	 */
@@ -215,6 +230,7 @@ public class ClassifierNetwork {
 		}
 
 		Set<CollectedDataSet> dataSetAll = new HashSet<>();
+		double size = 0;
 		for (RepositoryDescriptor rp : repositorys) {
 			CollectedDataSet dataSet = null;
 
@@ -222,12 +238,16 @@ public class ClassifierNetwork {
 				dataSet = RepoCacher.get(rp.getName()).getCollectedDataSet();
 				dataSet.repositoryType = rp.getTyp();
 				dataSetAll.add(dataSet);
+				if (dataSet.fileCount > 0) {
+					size += (((double) dataSet.mediaCount) / dataSet.fileCount);
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
+//		System.out.println(size / (dataSetAll.size()));
 
 		new ClassifierNetwork(dataSetAll, config);
 	}
@@ -236,7 +256,8 @@ public class ClassifierNetwork {
 	 * Loads the saved Network with default parameters in
 	 * {@link ClassifierConfiguration}
 	 * 
-	 * @param File of a neural network
+	 * @param File
+	 *            of a neural network
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws IOException

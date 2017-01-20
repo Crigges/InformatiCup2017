@@ -3,6 +3,9 @@ package systems.crigges.informaticup.nnetwork;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import org.neuroph.util.data.norm.MaxMinNormalizer;
+
 import java.util.Set;
 
 import systems.crigges.informaticup.general.CollectedDataSet;
@@ -23,24 +26,41 @@ public class InputDataFormatter {
 	private double[] inputNeurons;
 	private HashMap<String, Integer> dataMap;
 	private ArrayList<DictionaryEntry> dictionary;
-	private LogisticFunction logisticFunction;
+	private double[][] minMaxValues;
+	private int startindex;
 	private HashMap<String, Integer> indexMap;
+	private int dataMapSize;
 
 	/**
 	 * Creates new InputDataFormatter
 	 * 
 	 * @param dataSet
 	 * @param dictionary
-	 * @param functionValue
+	 * @param minMaxValues
+	 * @param startindices
 	 * @see Dictionary
 	 */
 	public InputDataFormatter(HashMap<String, Integer> dataMap, ArrayList<DictionaryEntry> dictionary,
-			double functionValue) {
+			double[][] minMaxValues, int startindices) {
 		this.dictionary = dictionary;
 		this.dataMap = dataMap;
-		this.logisticFunction = new LogisticFunction(functionValue);
-		this.inputNeurons = new double[2 * dictionary.size()];
+		startindex = startindices;
+		this.minMaxValues = minMaxValues;
+		this.inputNeurons = new double[dictionary.size() * 2];
+		for (Entry<String, Integer> e : dataMap.entrySet()) {
+			dataMapSize += e.getValue();
+		}
 		calculateInput();
+	}
+
+	public InputDataFormatter(HashMap<String, Integer> dataMap, ArrayList<DictionaryEntry> dictionary) {
+		this.dictionary = dictionary;
+		this.dataMap = dataMap;
+		this.inputNeurons = new double[dictionary.size()];
+		for (Entry<String, Integer> e : dataMap.entrySet()) {
+			dataMapSize += e.getValue();
+		}
+		calculateInputNotNormalized();
 	}
 
 	/**
@@ -61,30 +81,54 @@ public class InputDataFormatter {
 			if (i % 2 == 0) {
 				inputNeurons[i] = 1;
 			}
-		}
+}
 		indexMap = new HashMap<>();
 		WordStatistic wordsInDictionary = new WordStatistic();
 		int i = 0;
 		for (DictionaryEntry entryD : dictionary) {
 			Integer count = dataMap.get(entryD.getWord());
-			if(count != null && count != 0){
+			if (count != null && count != 0) {
 				wordsInDictionary.add(entryD.getWord(), count);
 			}
 			indexMap.put(entryD.getWord(), i++);
 		}
 		for (Entry<String, Double> entry : wordsInDictionary.getSet()) {
 			int index = indexMap.get(entry.getKey());
-			double normalizedValue = wordsInDictionary.getStatistic(entry.getKey())
-					/ dictionary.get(index).getOccurrence();
-			double funcnorm = logisticFunction.calc(normalizedValue);
-			//System.out.println(funcnorm);
-			if (funcnorm < 0) {
-				inputNeurons[index * 2] = Math.abs(funcnorm);
+//			inputNeurons[index] = wordsInDictionary.getAbsoluteCount(entry.getKey()) / dataMapSize;
+			double value =  wordsInDictionary.getStatistic(entry.getKey()) - dictionary.get(index).getOccurrence();
+			// System.out.println(funcnorm);
+//			double value = (normalizedValue - minMaxValues[1][startindex + index])
+//					/ (minMaxValues[0][startindex + index]);
+			if (value < 0) {
+				inputNeurons[index * 2] = Math.abs(value);
 			} else {
-				inputNeurons[index * 2 + 1] = funcnorm;
+				inputNeurons[index * 2 + 1] = value;
 				inputNeurons[index * 2] = 0;
 			}
 		}
 
+	}
+
+	private void calculateInputNotNormalized() {
+		indexMap = new HashMap<>();
+		WordStatistic wordsInDictionary = new WordStatistic();
+		int i = 0;
+		for (DictionaryEntry entryD : dictionary) {
+			Integer count = dataMap.get(entryD.getWord());
+			if (count != null && count != 0) {
+				wordsInDictionary.add(entryD.getWord(), count);
+			}
+			indexMap.put(entryD.getWord(), i++);
+		}
+		for (Entry<String, Double> entry : wordsInDictionary.getSet()) {
+			int index = indexMap.get(entry.getKey());
+			double normalizedValue =
+					// wordsInDictionary.getStatistic(entry.getKey())
+					// / dictionary.get(index).getOccurrence();
+//					(wordsInDictionary.getAbsoluteCount(entry.getKey()) / dataMapSize) ;
+					wordsInDictionary.getStatistic(entry.getKey()) - dictionary.get(index).getOccurrence();
+			// System.out.println(funcnorm);
+			inputNeurons[index] = normalizedValue;
+		}
 	}
 }
