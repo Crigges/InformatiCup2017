@@ -25,7 +25,7 @@ public class RatioDataSet {
 
 	private ArrayList<Double> ratiosAll = new ArrayList<Double>();
 	private CollectedDataSet dataSet;
-	private LogisticFunction logistic;
+	private double[][] minMaxValues;
 
 	/**
 	 * Creates a new RatioDataSet out of the given {@link CollectedDataSet}, and
@@ -37,15 +37,18 @@ public class RatioDataSet {
 	 *            for logistic function to normalize ratios
 	 * @param normValues
 	 */
-	public RatioDataSet(CollectedDataSet dataSet, double value, ArrayList<Double> normValues) {
+	public RatioDataSet(CollectedDataSet dataSet, ArrayList<Double> normValues) {
 		this.dataSet = dataSet;
-		this.logistic = new LogisticFunction(value);
 		calculateInput(normValues);
+	}
+
+	public RatioDataSet() {
+		calculate();
 	}
 
 	public RatioDataSet(CollectedDataSet dataSet) {
 		this.dataSet = dataSet;
-		calculate();
+		calculateInputNotNormalized();
 	}
 
 	/**
@@ -62,36 +65,102 @@ public class RatioDataSet {
 	 */
 	private void calculateInput(ArrayList<Double> normValues) {
 
-		if (dataSet.fileCount > 0) {
-			double d = logistic.calc(((double) (dataSet.repoSize) / dataSet.fileCount) / normValues.get(0));
-			if (d > 0) {
-				ratiosAll.add(0.);
-				ratiosAll.add(d);
-			} else {
-				ratiosAll.add(Math.abs(d));
-				ratiosAll.add(0.);
-			}
-		}
-		if (dataSet.fileCount > 0) {
-			double d = logistic.calc(((double) dataSet.mediaCount) / dataSet.fileCount / normValues.get(1));
-			if (d > 0) {
-				ratiosAll.add(0.);
-				ratiosAll.add(d);
-			} else {
-				ratiosAll.add(Math.abs(d));
-				ratiosAll.add(0.);
-			}
-		}
-		if (dataSet.totalWordCount > 0) {
-			double d = logistic.calc(((double) dataSet.numberCount) / dataSet.totalWordCount / normValues.get(2));
-			if (d > 0) {
-				ratiosAll.add(0.);
-				ratiosAll.add(d);
-			} else {
-				ratiosAll.add(Math.abs(d));
-				ratiosAll.add(0.);
-			}
-		}
+//		if (dataSet.fileCount > 0) {
+//			System.out.println("norm" + normValues.get(0));
+//			double d = ((double) dataSet.repoSize) / dataSet.fileCount / normValues.get(0);
+//			if (d > 0) {
+//				ratiosAll.add(0.);
+//				ratiosAll.add(d);
+//			} else {
+//				ratiosAll.add(Math.abs(d));
+//				ratiosAll.add(0.);
+//			}
+//		}
+//		if (dataSet.fileCount > 0) {
+//			double d = (((double) dataSet.mediaCount) / dataSet.fileCount / normValues.get(1));
+//			if (d > 0) {
+//				ratiosAll.add(0.);
+//				ratiosAll.add(d);
+//			} else {
+//				ratiosAll.add(Math.abs(d));
+//				ratiosAll.add(0.);
+//			}
+//		}
+//		if (dataSet.totalWordCount > 0) {
+//			double d = logistic.calc(((double) dataSet.numberCount) / dataSet.totalWordCount / normValues.get(2));
+//			if (d > 0) {
+//				ratiosAll.add(0.);
+//				ratiosAll.add(d);
+//			} else {
+//				ratiosAll.add(Math.abs(d));
+//				ratiosAll.add(0.);
+//			}
+//}
+		
+//		if (dataSet.fileCount > 0) {
+//			double d = (((double) (dataSet.repoSize) / dataSet.fileCount));
+//			double value = (d - minMaxValues[1][0]) / (minMaxValues[0][0]);
+//			if (value > 0) {
+//				ratiosAll.add(0.);
+//				ratiosAll.add(value);
+//			} else {
+//				ratiosAll.add(Math.abs(value));
+//				ratiosAll.add(0.);
+//			}
+//		} else {
+//			ratiosAll.add(minMaxValues[1][0] / (minMaxValues[0][0]));
+//			ratiosAll.add(0.);
+//		}
+//		if (dataSet.fileCount > 0) {
+//			double d = (((double) dataSet.mediaCount) / dataSet.fileCount);
+//			double value = ((d - minMaxValues[1][1]) / (minMaxValues[0][1]));
+//			if (value > 0) {
+//				ratiosAll.add(0.);
+//				ratiosAll.add(value);
+//			} else {
+//				ratiosAll.add(Math.abs(value));
+//				ratiosAll.add(0.);
+//			}
+//		} else {
+//			ratiosAll.add(minMaxValues[1][1] / (minMaxValues[0][1]));
+//			ratiosAll.add(0.);
+//		}
+//		if (dataSet.totalWordCount > 0) {
+//			double d = (((double) dataSet.numberCount) / dataSet.totalWordCount);
+//			double value = ((d - minMaxValues[1][2]) / minMaxValues[0][2]);
+//			if (value > 0) {
+//				ratiosAll.add(0.);
+//				ratiosAll.add(value);
+//			} else {
+//				ratiosAll.add(Math.abs(value));
+//				ratiosAll.add(0.);
+//			}
+//		} else {
+//			ratiosAll.add(minMaxValues[1][2] / (minMaxValues[0][2]));
+//			ratiosAll.add(0.);
+//		}
+	}
+
+	private void calculateInputNotNormalized() {
+
+//		if (dataSet.fileCount > 0) {
+//			double d = (((double) (dataSet.repoSize) / dataSet.fileCount));
+//			ratiosAll.add(d);
+//		} else {
+//			ratiosAll.add(0.);
+//		}
+//		if (dataSet.fileCount > 0) {
+//			double d = (((double) dataSet.mediaCount) / dataSet.fileCount);
+//			ratiosAll.add(d);
+//		} else {
+//			ratiosAll.add(0.);
+//		}
+//		if (dataSet.totalWordCount > 0) {
+//			double d = (((double) dataSet.numberCount) / dataSet.totalWordCount);
+//			ratiosAll.add(d);
+//		} else {
+//			ratiosAll.add(0.);
+//		}
 	}
 
 	private void calculate() {
@@ -116,7 +185,7 @@ public class RatioDataSet {
 		dataSet.repositoryType = RepositoryTyp.OTHER;
 		dataSet.repoSize = 1;
 		dataSet.totalWordCount = 1;
-		RatioDataSet defaultSet = new RatioDataSet(dataSet);
+		RatioDataSet defaultSet = new RatioDataSet();
 		return defaultSet.getNormalizedRatios().size();
 	}
 
