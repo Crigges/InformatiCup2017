@@ -108,13 +108,47 @@ singlelinecheck=false]
 	
 	\subsubsection{E-Mail of repository owner}
 	This feature is problematic. We thought about searching for an edu substring in the email but we could not find a correlation with the EDU class. Apart from this we could not think of any part in an e-mail which could be relevant.
-
+	
 	
 	
 	
 	
 	\section{Gathering selected features from Github}
 	
+	\subsection{Gathering the Repository’s content from Github}
+	
+	\subsubsection{Choosing the content acquiring method}
+	
+	To gather the Repository’s contents you would normally request the File Tree which represents a lists off all available files including their size, their name and their download link. If a file should be further analyzed in detail, you can get it’s content via File Tree’s download link.\footnote{\url{	https://developer.github.com/v3/git/trees/get-a-tree-recursively}}
+	
+	The main issue using this method is the previously mentioned Rate Limit of Github’s API. Requesting each file that should be analyzed individually results in a hundreds of request per repository.
+	So instead of requesting each file on it’s own, there is the option to grab whole content as “zipball”. On the one hand this results in only one request per repository and the content is already compressed, on the other hand we may grab a files that we are not going to analyze at all. 
+	But we could  additionally observe that the zipball requests aren’t limited 60 unauthenticated ones per hour. Which makes grabbing the “zipball” superior to requesting the file tree. This way our classifier does not need any form of authentication and our classification performance if only limited to our network bandwidth and the hardware of the operating system.
+	
+	\subsubsection{ Grabbing the “zipball”}
+	
+	
+	The resulting downstream of the grabbed "zipball"\footnote{Request: \url{https://api.github.com/repos/username/repositoryname/zipball}} is inflated on the fly into multiple virtual files. A virtual file describes a file that is not written onto hard disk, instead is it kept inside the classifier’s heap. This results in a huge RAM usage but allows much faster processing of the gathered files.
+	
+	\subsection{Categorizing Files}
+	
+	In the next step all virtual files are categorized into the following eight different categories: Zip, PDF, Word, PowerPoint, Text, Binary, Image and Folder. The category where a file belongs is determined by a fixed procedure. 
+	At the beginning it is checked if the is a folder. If it is not we use arimus’s jmimemagic libary https://github.com/arimus/jmimemagic to get the file’s Internet Media Type (MIME-Type). If a the MIME-Type can’t be parsed from the file, there is still a chance that the investigated file could be a readable text file. To avoid missing such files we use an additional method to guess whether or not the file is a readable text file. The method basically calculates ratio between the amount of ascii bytes and other ones. If the ratio of non ascii bytes is greater than 5% we assume the file is not a readable text file. Nevertheless we don’t rely on this method neither on the MIME-Type. Instead we use both in combination with the file’s extension, to make the final decision in which category a file belongs. If a file falls into either the Binary or the Image category its content stored inside the heap gets released, since we can’t analyze these files further.
+	
+	\subsection{Inflating the Filelist}
+	
+	The Zip Category contains all type archives that are Inflatable. We think a lot of information can be hided inside those, we inflate them, and they undergo the same procedure like the “zipball”. The recursive depth of this method is one so archives inside archives files inside zip files are not analyzed. The reason behind this decision is on the one hand the performance impact and on the other hand we don’t think that files gathered by a deeper recursion would be relevant for the repository’s type.
+	
+	\subsection{Getting Word Count}
+	
+	\subsubsection{ Access non readable files that contain text}
+	To extract the Word Count out of the Inflated filelist, we need to access to the text contained in the non readable text files. To extract it out of PDF files we use Apache’s PDFBox library inside a simple wrapper class, which allows us to extract the raw unformatted text out of pdf files. For the Microsoft’s PowerPoint and Word files, we use Apache’s POI library, in a similar way.
+	To avoid opening any file twice we also extract the amount of Media Files inside the analyzed files. 
+	
+	
+	
+	\subsubsection{Formatting the raw text}
+	To get as many matches as possible, we  normalize the the raw text. To    accomplish this we remove first of all, all hyphens followed by a line break. This way we can restore any word that was splitted due to a line break. Afterwards all line breaks are replaced with a whitespace. This is needed because the Scanner we use to parse single words form the normalized text uses a whitespace as delimiter. In the next step we replace all non ascii letters with ascii ones. This would convert the following String “äèôãç” to “aeoac”. This step is needed because in the next step, all non ascii and other special characters are being removed.
 	
 	
 	\section{Removing irrelevant information from selected features}
@@ -122,7 +156,7 @@ singlelinecheck=false]
 	\subsection{Algorithm to create Dictionaries}
 	Especially the features \textit{File Ending Count}, \textit{Word Count} and\textit{ Filename Count} still consists of information noise as every repository could contain words that are unique to every other repository and are as such not relevant for the classification. Then again some words could be in almost every repository but their occurrence does not differentiate between the classes in a considerable margin. Due to the rising complexity of a neural network for every input added to it one should desire to find a balance between the number of words and the relevance of a word for classification. We decided to create a dictionary for each of the mentioned three features that contains every relevant word for classification.
 	Of course the question arises on how to chose the words for the dictionaries. For this we created an algorithm.
-		
+	
 	The algorithm takes classified repositories, we choose to use our \hyperref[src:Repositories]{Training Datasets}.
 	In the first step the intersection with a threshold $p$ of words between repositories of the same class is calculated for each repository class. The threshhold $p$ is used to define the minimum ratio between repositories that contain the word and the total number of repositories in the class. 
 	This step is used to filter words that are too unique.
@@ -133,14 +167,14 @@ singlelinecheck=false]
 		\subfigure{\label{konfiguration}\includegraphics[scale = 0.35]{images/Woerterbuchbildung.png}}
 		\caption{Dictionary calculation visualized}
 	\end{figure}
-		
+	
 	\subsection{Created Dictionaries} 
 	So the next important step is to chose $p$ and $q$. At this point we have to note that we did not try to chose the dicitonaries as we \textit{think} they are good by just watching over the selected words.
-	 But rather tried to use the information we know about the words and their deviation to generate it. We tried to calculate the optimum between number of words and deviation as well as occurrence probability.
-	 These are the resulting three dicitonaries and as such the dicitonaries with less information noise:
-	 \\
-	 INSERT DICTIONARY
-	 \\
+	But rather tried to use the information we know about the words and their deviation to generate it. We tried to calculate the optimum between number of words and deviation as well as occurrence probability.
+	These are the resulting three dicitonaries and as such the dicitonaries with less information noise:
+	\\
+	INSERT DICTIONARY
+	\\
 	
 	\section{Building the Prediction Model}
 	
@@ -155,45 +189,58 @@ singlelinecheck=false]
 	The main problem with Gaussian-Process-Models is that they scale rather poorly with a complexity of $O(n^{3})$ \cite{DukeUniversity}. Moreover if we keep the huge dimension of repository datasets in mind and as such the possible complexity of the classifier function, our choice will lead us to a parametric neural Network. A neural network combines every important aspect from above and is furthermore capable of performing good in presence of imprecise and especially of noisy data.
 	
 	\subsection{Our Neural Network Model}
-First of all for our selected features it is not needed to consider temporal behavior. We do need need to save an internal state (If we had used a sequence of commits this could have been otherwise). It should be fully sufficient to use a Feed-forward neural network.
-
-As for a Neural Network with supervised learning we choose that a Multilayer perceptron(MLP) with one hidden Layer would be sufficient for our classification problem. We already mentioned that our classification problem is not linear. Hence at least one hidden Layer is required to solve the problem. Furthermore we know that this MLP can approximate any bounded continuous function with arbitrary precision \cite{ApproximateAnyFunction}, particularly our classification problem.
-The usage of a linear activation function would result in a MLP with a set of possible functions to be equivalent those of a normal input-output perceptron. Therefore we needed to use a nonlinear activation function. We thus decided to use a Sigmoid function. 
-
-For the training we used Backpropagation as expected for a MLP. To reduce the chance to be stuck in a local minimum we used inertia so that the previous change will influence the weight adjustment in the current round.
-
-The neuron count for the output-layer is set to the number of different classes into which we want to classify the input. So for our Neural Network we used seven output neurons.
-
-Our input neurons count equals to sum of the length of every dictionary plus all relevant ratios of our selected features.
-
-\subsection{Formating and further preprocessing of Features to fit into the Neural Network}
-We tried to find the perfect balance in preprocessing so that on the one hand the network does not need to learn obvious relations between features and on the other hand does not to loose possible relations by too much preprocessing.
-
-To format the input for the neuron we will iterate through every word in a dictionary of a type. The ratio between the relative occurence of the word for this type and the occurence value stored in the dictionary is calculated. Effectively this ratio is equal to the deviation of the relative word occurrence for the considered type. In case the relative occurrence of a word ending is higher then the occurrence in the dictionary it will result into a value $> 1$. So there is still the necessity of a normalization process - for the dictionary deviation as well as for the ratios.
-
-There are several possibilities to normalize the input. In our case it is important that the input is distinct. Furthermore standard normalize procedures are using a maximum and minimum value. The problem is that it is not possible to define an upper bound for the inputs because a testinput could always exceed the previous bound and therefore the attribute of distinction is contradicted (New Max value could lead to values to have the exact same value as a value with an old bound).
-Therefore we decided to use a logistic function to normalize our data. A logistic function is monotonically increasing and thus is every value distinct. Depending wether we use a Sigmoid or tanh function we will construct the logistic function in a way that the upper bound is 1 and the lower bound respectively 0 or -1 in case of the tanh. 
-We can then use a constant of proportionality to optimize the distribution of the values:
-
-$f(x) = 2 * \frac{1}{1 + e^{-k(x-k)}} -1$
-
-To support the understanding of our normalization technique we will plot our function for $k \in \{0.03, 1, 5\}$.\\
-\begin{figure}[H]
-	\subfigure{\label{konfiguration}\includegraphics[scale = 0.2]{images/logistic.png}}
-	\caption{k = 0.03 in green, k = 1 in bright red, k = 5 in red}
-\end{figure}
-
-The normalization process will take place for every dictionary and ratio but they all have to define their own proportional constant.
-Every value is stored as a double and the index position of the features a static.
-
-
-
-
+	First of all for our selected features it is not needed to consider temporal behavior. We do need need to save an internal state (If we had used a sequence of commits this could have been otherwise). It should be fully sufficient to use a Feed-forward neural network.
+	
+	As for a Neural Network with supervised learning we choose that a Multilayer perceptron(MLP) with one hidden Layer would be sufficient for our classification problem. We already mentioned that our classification problem is not linear. Hence at least one hidden Layer is required to solve the problem. Furthermore we know that this MLP can approximate any bounded continuous function with arbitrary precision \cite{ApproximateAnyFunction}, particularly our classification problem.
+	The usage of a linear activation function would result in a MLP with a set of possible functions to be equivalent those of a normal input-output perceptron. Therefore we needed to use a nonlinear activation function. We thus decided to use a Sigmoid function. 
+	
+	For the training we used Backpropagation as expected for a MLP. To reduce the chance to be stuck in a local minimum we used inertia so that the previous change will influence the weight adjustment in the current round.
+	
+	The neuron count for the output-layer is set to the number of different classes into which we want to classify the input. So for our Neural Network we used seven output neurons.
+	
+	Our input neurons count equals to sum of the length of every dictionary plus all relevant ratios of our selected features.
+	
+	\subsection{Formating and further preprocessing of Features to fit into the Neural Network}
+	We tried to find the perfect balance in preprocessing so that on the one hand the network does not need to learn obvious relations between features and on the other hand does not to loose possible relations by too much preprocessing.
+	
+	To format the input for the neuron we will iterate through every word in a dictionary of a type. The ratio between the relative occurence of the word for this type and the occurence value stored in the dictionary is calculated. Effectively this ratio is equal to the deviation of the relative word occurrence for the considered type. In case the relative occurrence of a word ending is higher then the occurrence in the dictionary it will result into a value $> 1$. So there is still the necessity of a normalization process - for the dictionary deviation as well as for the ratios.
+	
+	There are several possibilities to normalize the input. In our case it is important that the input is distinct. Furthermore standard normalize procedures are using a maximum and minimum value. The problem is that it is not possible to define an upper bound for the inputs because a testinput could always exceed the previous bound and therefore the attribute of distinction is contradicted (New Max value could lead to values to have the exact same value as a value with an old bound).
+	Therefore we decided to use a logistic function to normalize our data. A logistic function is monotonically increasing and thus is every value distinct. Depending wether we use a Sigmoid or tanh function we will construct the logistic function in a way that the upper bound is 1 and the lower bound respectively 0 or -1 in case of the tanh. 
+	We can then use a constant of proportionality to optimize the distribution of the values:
+	
+	$f(x) = 2 * \frac{1}{1 + e^{-k(x-k)}} -1$
+	
+	To support the understanding of our normalization technique we will plot our function for $k \in \{0.03, 1, 5\}$.\\
+	\begin{figure}[H]
+		\subfigure{\label{konfiguration}\includegraphics[scale = 0.2]{images/logistic.png}}
+		\caption{k = 0.03 in green, k = 1 in bright red, k = 5 in red}
+	\end{figure}
+	
+	The normalization process will take place for every dictionary and ratio but they all have to define their own proportional constant.
+	Every value is stored as a double and the index position of the features a static.
+	
+	
+	
+	
 	
 	\subsection{Data Sets and Training}
 	Beside the labeled repositories in the challenge description we used the additional \hyperref[src:Repositories]{Repositories} provided by a participating team in the official github repository of the InformaticCup 2017 (although you cannot read it: a big thank you at this point!). We have to admit that even as a human being the classification is not as clear as we thought it would be. Sometime we were not sure if the labeling of the data Sets we used were correct and we realized that many repositories overlap with different categories and it is not always objectively clear to which repository it fits more. In this case the repositories were labeled by personal preference and estimation. Therefore the learning of our network is influenced by personal decisions as it uses the labels.
+	
+	
+	Since we are using backpropagation after each iteration the actual output of the network is compared to the desired output and using the euclidean distance leads us to an error value. Update the parameters of the classification function(in this case the weights of the neural network). The Training continues until this error value is below a manual set value.
+	
+	
+	
 	\section{Optimizing our Neural Network }
-
+	A potentially very time consuming task is to optimize the network. We divided the possible optimizing parameters into three categories. Firstly we need to optimize the training. Besides changing the inertia and learn rate it is far more important to take care of the error value of the neural network. A min error value far to low could result into over fitting the neural network to the repositories of the training phase. Then again a min error value too high would result into a very unstable Network and an under fit network. 
+	The second category would be optimizing the features selected in the beginning. We have to consider that our selected features are not as optimal as expected.
+	Lastly we need to optimize the neural network itself. This counts in the hidden Layer as well as the preprocessing step of normalizing the values.\\
+	The base values resulted to following results
+	GANZ VIELE MESSDATEN(VERTEILUNG DER OUTPUTS, ABSOLUTE TREFFER ETC......)
+	We started with modifying the number of hidden Layer, the neurons in each hidden Layer, the Values $p$ and $q$ for the dictionary, the weight of the Readme words and the proportional constant $k$ for our defined logistic function.
+	We firstly changed the $k$ values as they are not as depend of the other values. We just need to find a value so that the function distributes the deviations even. This could be done by calculating the average distance between to points.
+	Based on the first results of our network we decided to vary the count of Neurons in the hidden Layer.
 	
 	\section{Validation of created Classifier}
 	
@@ -216,7 +263,7 @@ Every value is stored as a double and the index position of the features a stati
 	\label{src:Repositories}
 	\url{https://github.com/InformatiCup/InformatiCup2017/tree/master/additional_data_sets}
 	
-
+	
 \end{document}
 
 
