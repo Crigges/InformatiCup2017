@@ -58,7 +58,7 @@ public class NetworkTester {
 		
 		
 		
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 1; i++) {
 			System.gc();
 //			new Dictionary(trainingSet, dicConfig, config);
 //			config.inputNeuronCount = (config.fileEndingDictionary.size()

@@ -8,28 +8,37 @@ import systems.crigges.informaticup.crawling.RepositoryCrawler;
 import systems.crigges.informaticup.io.InputFileReader;
 import systems.crigges.informaticup.io.OutputFileWriter;
 import systems.crigges.informaticup.io.RepoCacher;
+import systems.crigges.informaticup.io.SerializeHelper;
 import systems.crigges.informaticup.wordanalytics.DictionaryEntry;
 
 public class FileGenerator {
 
 	public static void main(String[] args) throws Exception {
 		ClassifierConfiguration config = ClassifierConfiguration.getDefault();
-		System.out.println("File Ending");
-		for(DictionaryEntry e : config.fileEndingDictionary){
-			System.out.print(e.getWord() + " ");
-		}
-		System.out.println();
-		System.out.println("_______________");
-		System.out.println("File Name");
-		for(DictionaryEntry e : config.fileNameDictionary){
-			System.out.print(e.getWord() + " ");
-		}
-		System.out.println();
-		System.out.println("_______________");
-		System.out.println("Words");
-		for(DictionaryEntry e : config.wordDictionary){
-			System.out.print(e.getWord() + " ");
-		}
+		ArrayList<DictionaryEntry> dic = config.wordDictionary;
+		dic.add(new DictionaryEntry("homework", 0));
+		dic.add(new DictionaryEntry("hw", 0));
+		dic.add(new DictionaryEntry("assignment", 0));
+		dic.add(new DictionaryEntry("exercise", 0));
+		dic.add(new DictionaryEntry("sheet", 0));
+		
+		SerializeHelper.serialize(config.wordDictionaryLocation, dic);
+//		System.out.println("File Ending");
+//		for(DictionaryEntry e : config.fileEndingDictionary){
+//			System.out.print(e.getWord() + " ");
+//		}
+//		System.out.println();
+//		System.out.println("_______________");
+//		System.out.println("File Name");
+//		for(DictionaryEntry e : config.fileNameDictionary){
+//			System.out.print(e.getWord() + " ");
+//		}
+//		System.out.println();
+//		System.out.println("_______________");
+//		System.out.println("Words");
+//		for(DictionaryEntry e : config.wordDictionary){
+//			System.out.print(e.getWord() + " ");
+//		}
 		
 		
 //		cacheRepositories();
