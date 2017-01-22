@@ -1,36 +1,35 @@
-\BOOKMARK [1][-]{section.1}{Abstract}{}% 1
-\BOOKMARK [1][-]{section.2}{Selecting features}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{General thoughts}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Selected features}{section.2}% 4
-\BOOKMARK [3][-]{subsubsection.2.2.1}{Word Count}{subsection.2.2}% 5
-\BOOKMARK [3][-]{subsubsection.2.2.2}{File Ending Count}{subsection.2.2}% 6
-\BOOKMARK [3][-]{subsubsection.2.2.3}{Filename Count}{subsection.2.2}% 7
-\BOOKMARK [3][-]{subsubsection.2.2.4}{Media Density}{subsection.2.2}% 8
-\BOOKMARK [3][-]{subsubsection.2.2.5}{Average File Size}{subsection.2.2}% 9
-\BOOKMARK [3][-]{subsubsection.2.2.6}{Number Density}{subsection.2.2}% 10
-\BOOKMARK [3][-]{subsubsection.2.2.7}{Stared to Subscribed Ratio}{subsection.2.2}% 11
-\BOOKMARK [3][-]{subsubsection.2.2.8}{Commit Messages}{subsection.2.2}% 12
-\BOOKMARK [3][-]{subsubsection.2.2.9}{E-Mail of repository owner}{subsection.2.2}% 13
-\BOOKMARK [1][-]{section.3}{Gathering selected features from Github}{}% 14
-\BOOKMARK [2][-]{subsection.3.1}{Gathering the Repository\220s content from Github}{section.3}% 15
-\BOOKMARK [3][-]{subsubsection.3.1.1}{Choosing the content acquiring method}{subsection.3.1}% 16
-\BOOKMARK [3][-]{subsubsection.3.1.2}{Grabbing the \215zipball\216}{subsection.3.1}% 17
-\BOOKMARK [2][-]{subsection.3.2}{Categorizing Files}{section.3}% 18
-\BOOKMARK [2][-]{subsection.3.3}{Inflating the Filelist}{section.3}% 19
-\BOOKMARK [2][-]{subsection.3.4}{Getting Word Count}{section.3}% 20
-\BOOKMARK [3][-]{subsubsection.3.4.1}{Access non readable files that contain text}{subsection.3.4}% 21
-\BOOKMARK [3][-]{subsubsection.3.4.2}{Formatting the raw text}{subsection.3.4}% 22
-\BOOKMARK [2][-]{subsection.3.5}{Counting Words}{section.3}% 23
-\BOOKMARK [2][-]{subsection.3.6}{Calculate the Fileextension and Name Count}{section.3}% 24
-\BOOKMARK [1][-]{section.4}{Removing irrelevant information from selected features}{}% 25
-\BOOKMARK [2][-]{subsection.4.1}{Algorithm to create Dictionaries}{section.4}% 26
-\BOOKMARK [2][-]{subsection.4.2}{Created Dictionaries}{section.4}% 27
-\BOOKMARK [1][-]{section.5}{Building the Prediction Model}{}% 28
-\BOOKMARK [2][-]{subsection.5.1}{Choosing a prediction Model}{section.5}% 29
-\BOOKMARK [2][-]{subsection.5.2}{Our Neural Network Model}{section.5}% 30
-\BOOKMARK [2][-]{subsection.5.3}{Formating and further preprocessing of Features to fit into the Neural Network}{section.5}% 31
-\BOOKMARK [2][-]{subsection.5.4}{Data Sets and Training}{section.5}% 32
-\BOOKMARK [1][-]{section.6}{Optimizing our Neural Network}{}% 33
-\BOOKMARK [1][-]{section.7}{Validation of created Classifier}{}% 34
-\BOOKMARK [1][-]{section.8}{Extensions}{}% 35
-\BOOKMARK [1][-]{section.9}{Source Code, used external Libraries and Repositories}{}% 36
+\BOOKMARK [1][-]{section.1}{Selecting features}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{General thoughts}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Selected features}{section.1}% 3
+\BOOKMARK [3][-]{subsubsection.1.2.1}{Word Count}{subsection.1.2}% 4
+\BOOKMARK [3][-]{subsubsection.1.2.2}{File Ending Count}{subsection.1.2}% 5
+\BOOKMARK [3][-]{subsubsection.1.2.3}{Filename Count}{subsection.1.2}% 6
+\BOOKMARK [3][-]{subsubsection.1.2.4}{Media Density}{subsection.1.2}% 7
+\BOOKMARK [3][-]{subsubsection.1.2.5}{Average File Size}{subsection.1.2}% 8
+\BOOKMARK [3][-]{subsubsection.1.2.6}{Number Density}{subsection.1.2}% 9
+\BOOKMARK [3][-]{subsubsection.1.2.7}{Stared to Subscribed Ratio}{subsection.1.2}% 10
+\BOOKMARK [3][-]{subsubsection.1.2.8}{Commit Messages}{subsection.1.2}% 11
+\BOOKMARK [3][-]{subsubsection.1.2.9}{E-Mail of repository owner}{subsection.1.2}% 12
+\BOOKMARK [1][-]{section.2}{Gathering selected features from Github}{}% 13
+\BOOKMARK [2][-]{subsection.2.1}{Gathering the Repository\220s content from Github}{section.2}% 14
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Choosing the content acquiring method}{subsection.2.1}% 15
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Grabbing the \215zipball\216}{subsection.2.1}% 16
+\BOOKMARK [2][-]{subsection.2.2}{Categorizing Files}{section.2}% 17
+\BOOKMARK [2][-]{subsection.2.3}{Inflating the Filelist}{section.2}% 18
+\BOOKMARK [2][-]{subsection.2.4}{Getting Word Count}{section.2}% 19
+\BOOKMARK [3][-]{subsubsection.2.4.1}{Access non readable files that contain text}{subsection.2.4}% 20
+\BOOKMARK [3][-]{subsubsection.2.4.2}{Formatting the raw text}{subsection.2.4}% 21
+\BOOKMARK [2][-]{subsection.2.5}{Counting Words}{section.2}% 22
+\BOOKMARK [2][-]{subsection.2.6}{Calculate the Fileextension and Name Count}{section.2}% 23
+\BOOKMARK [1][-]{section.3}{Removing irrelevant information from selected features}{}% 24
+\BOOKMARK [2][-]{subsection.3.1}{Algorithm to create Dictionaries}{section.3}% 25
+\BOOKMARK [2][-]{subsection.3.2}{Created Dictionaries}{section.3}% 26
+\BOOKMARK [1][-]{section.4}{Building the Prediction Model}{}% 27
+\BOOKMARK [2][-]{subsection.4.1}{Choosing a prediction Model}{section.4}% 28
+\BOOKMARK [2][-]{subsection.4.2}{Our Neural Network Model}{section.4}% 29
+\BOOKMARK [2][-]{subsection.4.3}{Formating and further preprocessing of Features to fit into the Neural Network}{section.4}% 30
+\BOOKMARK [2][-]{subsection.4.4}{Data Sets and Training}{section.4}% 31
+\BOOKMARK [1][-]{section.5}{Optimizing our Neural Network}{}% 32
+\BOOKMARK [1][-]{section.6}{Validation of created Classifier}{}% 33
+\BOOKMARK [1][-]{section.7}{Extensions}{}% 34
+\BOOKMARK [1][-]{section.8}{Source Code, used external Libraries and Repositories}{}% 35

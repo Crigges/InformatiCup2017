@@ -205,7 +205,7 @@ public class ClassifierConfiguration {
 	 */
 	public static ClassifierConfiguration getDefaultGdx() throws ClassNotFoundException, IOException {
 		ClassifierConfiguration configuration = new ClassifierConfiguration();
-		configuration.wordDictionaryLocation = new File("C:\\Users\\Crigges\\git\\InformatiCup2017\\core\\assets\\wordDictionary.ser");
+		configuration.wordDictionaryLocation = Gdx.files.internal("assets/wordDictionary.ser").file().getCanonicalFile();
 		configuration.fileNameDictionaryLocation = Gdx.files.internal("assets/fileNameDictionary.ser").file().getCanonicalFile();
 		configuration.fileEndingDictionaryLocation = new File("./assets/fileEndingDictionary.ser");
 		configuration.averageRatioValuesLocation = new File("./assets/averageRatioValues");

@@ -55,9 +55,6 @@ singlelinecheck=false]
 	
 	\newpage
 	
-	\section{Abstract}
-	
-	
 	\newpage
 	
 	\tableofcontents 
@@ -65,7 +62,7 @@ singlelinecheck=false]
 	\newpage
 	\section{Selecting features} 
 	\subsection{General thoughts}
-	In the early beginning of our process we discussed our selection of features. We analyzed many repositories and we realized that it is not possible for us to manually enclose the available data sets in a way where we would not miss important features. If we choose for example web sites produced by Jekyell as the indicator for the class WEB we will probably miss other web applications as the software and the use-case market is to wide to manually find all necessary features. So we decided to not \textit{cut down the data sets, instead we did not condoned gathering statistically irrelevant informations so far}. In further context we will call this phenomenon “information noise”.
+	In the early beginning of our process we discussed our selection of features. We analyzed many repositories and we realized that it is not possible for us to manually enclose the available data sets in a way where we would not miss important features. If we choose for example web sites produced by Jekyell as the indicator for the class WEB we will probably miss other web applications as the software and the use-case market is to wide to manually find all necessary features. So in the first step we decided to maximize the possible information which can be obtained while also gathering statistically irrelevant information. In further context we will call this phenomenon “information noise”.
 	\subsection{Selected features}
 	The following graphic visualizes the structure behind our selected features.
 	
@@ -98,7 +95,7 @@ singlelinecheck=false]
 	This feature is mostly used to detect the ratio between file number and its size. This feature correlates with the Media Density but it is mainly used to detect big crowed files. This would rather indicate a DOC or EDU class than the OTHER or DEV class.
 	
 	\subsubsection{Number Density}
-	At first we did not thought about this feature. But as we build our \hyperref[sec: dictionary]{dictionaries} we noticed that occurrences of numbers varies greatly between the classes. Thus we decided to use a feature to merge every number: the Number Density.
+	At first we did not thought about this feature. But as we build our dictionaries \hyperref[sec: dictionary]{(Chapter 4)} we noticed that occurrences of numbers varies greatly between the classes. Thus we decided to use a feature to merge every number: the Number Density.
 	
 	\subsubsection{Stared to Subscribed Ratio}
 	This value mainly addresses the development class as the probability of a DEV repository to be subscribed and not just liked is (in a selected sample) in general higher. We decided to not use this value because it is too vague and the absolute numbers of stars and subscribers is rather small so that tiny natural deviations could result into a completely other ratio and therefore to a false interpretation.
@@ -131,7 +128,7 @@ singlelinecheck=false]
 	\subsubsection{ Grabbing the “zipball”}
 	
 	
-	The resulting downstream of the grabbed "zipball"\footnote{Request: \url{https://api.github.com/repos/username/repositoryname/zipball}} is inflated \textit{on the fly }into multiple virtual files. A virtual file describes a file that is not written onto hard disk, instead it is kept inside the classifier’s heap. This results in a huge RAM usage but allows much faster processing of the gathered files.
+	The resulting downstream of the grabbed "zipball"\footnote{Request: \url{https://api.github.com/repos/username/repositoryname/zipball}} is inflated on the fly into multiple virtual files. A virtual file describes a file that is not written onto hard disk, instead it is kept inside the classifier’s heap. This results in a huge RAM usage but allows much faster processing of the gathered files.
 	
 	\subsection{Categorizing Files}
 	
@@ -175,13 +172,13 @@ singlelinecheck=false]
 	In the next step the ratio between the occurrence probability of a remaining word in a class and the average occurrence of a word over \textit{all} repositories is calculated for every word and class. We will thus sort the seven (in case we have seven classes) lists from large to small. This step is used to find the words with the highest deviation from the average occurrence and therefore helps to classify a repository. Combined with the first step we thus selected words that exist in many repositories. Moreover their occurrence probability is highly dependent on the class of the repository.
 	Our dictionary is then created by adding the first $q$ words of a list of each class to a set (because words can exists in multiple lists).
 	\begin{figure}[H]
-		\subfigure{\label{konfiguration}\includegraphics[scale = 0.40]{images/Woerterbuchbildung.png}}
-		\caption{Dictionary calculation visualized}
+		\subfigure{\label{konfiguration}\includegraphics[width = 1.1\textwidth, height = 200px]{images/dictionary.png}}
+		\caption{Dictionary calculation visualized with three classes}
 	\end{figure}
 	
 	\subsection{Created Dictionaries} 
 	So the next important step is to choose $p$ and $q$. At this point we should add that we did not try to choose the dictionaries by just watching over the selected words.
-	We rather tried to use the information we know about the words and their deviation to generate them. We tried to calculate the optimum between number of words and deviation as well as occurrence probability (the initial created dictionaries are still open to change in the optimization step \hyperref[src:optimizing]{Chapter 6}).
+	We rather tried to use the information we know about the words and their deviation to generate them. We tried to calculate the optimum between number of words and deviation as well as occurrence probability (the initial created dictionaries are still open to change in the optimization step (\hyperref[src:optimizing]{Chapter 6}).
 	These are the three dictionaries with less information noise we used after the optimiziation phase \hyperref{src:optimizing}{Chapter 6}:
 	\\
 	
@@ -283,34 +280,71 @@ singlelinecheck=false]
 	 hidden Layer = 39, max-error = 0.01 $p$ =  and $q$ = for the dictionary, the weight of the Readme words =  $k_{wordDictionary} = 0.45599, k_{fileName} = 3.206 , k_{fileEnding}= 6.14125, k_{ratios} = 0.001$.
 	
 	\section{Validation of created Classifier}
-	As requested by the challenge description we created a boolean matrix for comparing the results of our neural network to our own classification:\\
+	As requested by the challenge description we created a boolean matrix for comparing the results of our neural network to our own classification. The order is identical to these of the test-repositories \\
 	
 	$\begin{pmatrix}
-		EDU & repa & -2 & 0 & 0 & 0  & 0\\
-		DEV & true< & +2 & -1 & 0 & 0 & 0 \\
-		FALSE &  0 & 0  &-2 & 1 & 2 & -1\\
-		1 & 0 & 0 & 0 & 0 & -2 & 1\\
+		1 & Intuitive & network & \cap\\
+		2 &  HW & HW  & 1 \\
+		3 & DEV & DOCS & 0 \\
+		4 & EDU & EDU & 1 \\
+		5 & EDU & EDU & 1 \\
+		6 & DEV & DEV & 1 \\
+		7 & WEB & WEB & 1 \\
+		8 & DEV & DEV & 1 \\
+		9 & DOCS & OTHER & 0 \\
+		10 & EDU & DEV & 0 \\
+		11 & DOCS & DOCS & 1 \\
+		12 & DEV & OTHER & 0 \\
+		13 & HW & DOCS & 0 \\
+		14 & DEV & WEB & 0 \\
+		15 & DEV & DEV & 1 \\
+		16 & OTHER & OTHER & 1 \\
+		17 & DEV & WEB & 0 \\
+		18 & DOCS & DEV & 0 \\
+		19 & DEV & DEV & 1 \\
+		20 & DOCS & DEV & 0 \\
+		21 & WEB & WEB & 1 \\
+		22 & DEV & DEV & 1 \\
+		23 & EDU & EDU & 1 \\
+		24 & EDU & HW & 0\\
+		25 & DATA & DATA & 1 \\
+		26 & DATA & DATA & 1 \\
+		27 & DEV & DATA & 0 \\
+		28 & DATA & DEV & 0 \\
+		29 & DEV & DEV & 1 \\
+		30 & WEB & WEB & 1 \\
+		31 & EDU &  WEB& 0\\
+		32 & EDU & OTHER & 0 \\
 	\end{pmatrix}$
-	
+	\\
+	\newpage	
 	For the next step we calculated the precision and recall as defined.
 	\\
+	
 		$\begin{pmatrix}
-		    & recall & Precision \\
+		    & Recall & Precision \\
 		   \hline
-		DEV & true< &\\
-		 WEB&  0 & 0 \\
-		 OTHER& 0 & 0 \\
-		 EDU& 0 & 0 & \\
-		  DATA& 0 & 0 \\
-		  OTHER& 0 & 0 \\
+		DEV & 0.55 & 0.6\\
+		 WEB& 1.0 & 0.5 \\
+		 OTHER& 1.0 & 0.25 \\
+		 ED U& 0.43 & 1.0 \\
+		  DATA & 0.67 & 0.67 \\
+		  HW& 0.5 & 0.5 \\
 		\end{pmatrix}$
 	\\
 	\\
-	First of all the results are disappointing, nonetheless it is possible to see many things and problems in our network through this matrix. First of all every repository of the class OTHER was identified but many wrong repositories were also put in this class. Therefore it seems that our classifier trains a little bit to hard on OTHER repositories. We have several reasons why this could have been the case: As we early mentioned we tested and trained our network with a balanced repository set. Therefore OTHER has always the same weight as the other repositories. However our own classification of the test repository only classifies one out of 31 repositories as OTHER and therefore just 22\% of the expected occurrence. This result somehow reflects our decision to evaluate the results with the accuracy.\cite{EvaluateNetwork}
+	First of all the results are disappointing, nonetheless it is possible to see many things and problems in our network through this matrix. A highly noticeable issue is that every repository of the class OTHER was identified but many wrong repositories were also put in this class. Therefore it seems that our classifier trains a little bit too hard on OTHER repositories. We have several reasons why this could have been the case: As we mentioned earlier we tested and trained our network with a rather balanced repository set. Therefore OTHER has always more or less the same weight as the other repositories. However our own classification of the test repository only classifies one out of 31 repositories as OTHER and therefore just 22\% of the expected occurrence. Moreover this result somehow reflects our decision to evaluate the results with the accuracy.\cite{EvaluateNetwork}
 	
 	Furthermore we noticed that the influence of the WEB class is too high. 50\% are wrongly classified while the recall is at 100\%. The selected features are seemingly strong indicators for WEB repositories however they are not exclusively enough.
 	
-	We have to keep in mind that the test repositories are balanced. In a real case scenario this would not necessarily be the case. The importance of yield and precision depends on the use-case. A search function with a filter for each category for example might rather have a high recall in case the classes are evenly divided. The importance lies in finding as many repositories of the right type as possible, some outliers are not that big of a problem. However if the categories are not balanced and we are searching for a class which occurs rather rarely on Github then it is far more important to gain a high precision while holding the recall stable. If for instance a repository type occurred 0.1\% on Github and there were 100.000.000 repositories in total, the difficulty on obtaining a specific precision would be a lot higher than on a balanced classification problem. Therefore it is very important to optimize the precision in these cases.
+	
+	With this information in mind we think our repository would work very good on following three repositories:\\
+	\url{https://github.com/Raldir/HomeworkNr3}\\
+	\url{https://github.com/alanerzhao/doc}\\
+	\url{https://github.com/jailecoeu/wechat}\\
+	
+	
+	 The importance of yield and precision depends on the use-case. A search function with a filter for each category for example might rather have a high recall in case the classes are evenly divided. The importance lies in finding as many repositories of the right type as possible, some outliers are not that big of a problem. Equal to the Test-repositories the distribution of the classes would not necessarily be balanced in a real case scenario. Under this assumption it would be possible that we are searching for a class which occurs rather rarely on Github then it is far more important to gain a high precision while holding the recall stable. If for instance a repository type occurred 0.1\% on Github and there were 100.000.000 repositories in total, the difficulty on obtaining a specific precision would be a lot higher than on a balanced classification problem. Therefore it is very important to optimize the precision in these cases.
 	
 	In case the number of considered repositories is low then a higher recall would be preferable because it would be more important to find the desired repository in the selected number. Then again the use case here is a different one from the above. The focus would lie on looking through the own repositories and searching for a special repository taken for class. It would be far more important to find the desired repository even though classifying some wrongly. Having a high precision but missing repositories at the same time would not be satisfactory for this use-case.
 	
@@ -319,7 +353,9 @@ singlelinecheck=false]
 	
 	
 	\section{Extensions}
-	
+		We also created a visualization tool for visualizing the process of gathering the data, preprocessing them and till the final classification of a repository finished. We tried to do it in a very intuitive way while still fulfill a functionality.
+		
+		The dictionary creation process for example always shows the 65 words with the highest occurrence.
 	
 	\newpage
 	
@@ -340,18 +376,18 @@ singlelinecheck=false]
 	
 	\label{src:TrainingRepositories}
 	\paragraph{Training Repositories}
-	Exact repositories used fo training can be found in the document TrainingRepositories.txt.
+	Exact repositories used for training can can be found on the relative path to the root folder ./assets/TrainingRepositoriesSet2.txt.
 	
 	\label{src:TestRepositories}
 	\paragraph{Test Repositories}
-	Every testrepository can be found in the document TestRepositories.txt.
+	Every test-repository can can be found on the relative path to the root folder ./assets/TestRepositorys.txt.
 	\paragraph{Intuitive Classification}
 	\label{src:ClassifyTestRepositories}
-	intuitve classification of the repositories can be found in the document IntuitiveClassificationTestRepositories.txt.
+	intuitve classification of the repositories can can be found on the relative path to the root folder ./assets/TestRepositorys.txt.
 	
 	\label{src:recordingsOfResults}
 	\paragraph{Recording of Results}
-	Some recordings of our (non optimal) results are located in recordedResults.txt
+	Some recordings of our (non optimal) results are located in the doc folder: SampleResults.xlsx
 	
 	
 \end{document}
