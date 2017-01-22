@@ -1,8 +1,6 @@
 package systems.crigges.informaticup.general;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,9 +8,6 @@ import java.util.Set;
 import systems.crigges.informaticup.io.InputFileReader;
 import systems.crigges.informaticup.io.RepoCacher;
 import systems.crigges.informaticup.nnetwork.ClassifierNetwork;
-import systems.crigges.informaticup.nnetwork.RatioDataSet;
-import systems.crigges.informaticup.wordanalytics.Dictionary;
-import systems.crigges.informaticup.wordanalytics.Dictionary.LoadedRepository;
 
 public class NetworkTester {
 	
@@ -34,25 +29,25 @@ public class NetworkTester {
 		config.maxError = 0.01;
 		config.learningRate = 0.1;
 		
-		config.wordDictionaryLogisticValue = 0.52;
-		config.fileNameDictionaryLogisticValue = 1.3;
-		config.fileEndingDictionaryLogisticValue = 0.125;
+		config.wordDictionaryLogisticValue = 0.45599;
+		config.fileNameDictionaryLogisticValue = 3.206;
+		config.fileEndingDictionaryLogisticValue = 6.14125;
 		
-		ClassifierConfiguration dicConfig = ClassifierConfiguration.getOnlyDefaultLocations();
-		dicConfig.wordDictionaryIntersectionStrength = 0.02;
-		dicConfig.wordDictionaryWordCountPerType = 350;
-		dicConfig.wordDictionaryLogisticValue = 0.013;
-		
-		dicConfig.fileNameDictionaryIntersectionStrength = 0.042949;
-		dicConfig.fileNameDictionaryWordCountPerType = 350;
-		dicConfig.fileNameDictionaryLogisticValue = 0.0126;
-
-		dicConfig.fileEndingDictionaryIntersectionStrength = 0.08;
-		dicConfig.fileEndingDictionaryWordCountPerType = 10;
-		dicConfig.fileEndingDictionaryLogisticValue = 0.01;
+//		ClassifierConfiguration dicConfig = ClassifierConfiguration.getOnlyDefaultLocations();
+//		dicConfig.wordDictionaryIntersectionStrength = 0.02;
+//		dicConfig.wordDictionaryWordCountPerType = 350;
+//		dicConfig.wordDictionaryLogisticValue = 0.013;
+//		
+//		dicConfig.fileNameDictionaryIntersectionStrength = 0.042949;
+//		dicConfig.fileNameDictionaryWordCountPerType = 350;
+//		dicConfig.fileNameDictionaryLogisticValue = 0.0126;
+//
+//		dicConfig.fileEndingDictionaryIntersectionStrength = 0.08;
+//		dicConfig.fileEndingDictionaryWordCountPerType = 350;
+//		dicConfig.fileEndingDictionaryLogisticValue = 0.01;
 		
 		List<RepositoryDescriptor> goldenData = new InputFileReader(
-				new File("./assets/TestRepositorys.txt")).getRepositorysAndTypes();
+				new File("./assets/CombinedTestRepositories.txt")).getRepositorysAndTypes();
 		Set<CollectedDataSet> evalSet = new HashSet<>();
 		
 		for (RepositoryDescriptor rp : goldenData) {
@@ -63,12 +58,12 @@ public class NetworkTester {
 		
 		
 		
-		for(int i = 0; i < 30; i++) {
+		for(int i = 0; i < 10; i++) {
 			System.gc();
-			new Dictionary(trainingSet, dicConfig, config);
-			config.inputNeuronCount = (config.fileEndingDictionary.size()
-					+ config.fileNameDictionary.size()  + config.wordDictionary.size()
-					+ RatioDataSet.getDefaultRatioCount()) * 2;
+//			new Dictionary(trainingSet, dicConfig, config);
+//			config.inputNeuronCount = (config.fileEndingDictionary.size()
+//					+ config.fileNameDictionary.size()  + config.wordDictionary.size()
+//					+ RatioDataSet.getDefaultRatioCount()) * 2;
 			ClassifierNetwork network = new ClassifierNetwork(trainingSet, config);
 			int rights = 0;
 			for(CollectedDataSet des : evalSet){
@@ -76,8 +71,8 @@ public class NetworkTester {
 					rights++;
 				}
 			}
-			System.out.println("fileNameDictionaryIntersectionStrength:" + dicConfig.fileNameDictionaryLogisticValue + " " + rights + " / " + evalSet.size());
-			dicConfig.fileNameDictionaryLogisticValue *= 0.8;
+			System.out.println("config.fileEndingDictionaryLogisticValue: " + config.fileEndingDictionaryLogisticValue + " " + rights + " / " + evalSet.size());
+			config.fileEndingDictionaryLogisticValue *= 0.85;
 		}
 	}
 

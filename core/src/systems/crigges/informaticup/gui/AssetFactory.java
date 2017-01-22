@@ -67,6 +67,7 @@ public class AssetFactory {
 		addTexture("selector_down", "selector_down.png");
 		addTexture("selector_up", "selector_up.png");
 		addTexture("quarder", "quarder.png");
+		addTexture("circle", "circle.png");
 		
 		defaultTextButtonStyle = genDefaultButtonStyle();
 		defaultTextFieldStyle = genDefaultTextFieldStyle();

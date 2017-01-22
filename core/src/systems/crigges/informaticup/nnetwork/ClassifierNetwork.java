@@ -2,7 +2,6 @@ package systems.crigges.informaticup.nnetwork;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,6 +25,7 @@ import systems.crigges.informaticup.general.CollectedDataSet;
 import systems.crigges.informaticup.general.ClassifierConfiguration;
 import systems.crigges.informaticup.general.RepositoryDescriptor;
 import systems.crigges.informaticup.general.RepositoryTyp;
+import systems.crigges.informaticup.gui.CrawlerListener;
 import systems.crigges.informaticup.io.InputFileReader;
 import systems.crigges.informaticup.io.RepoCacher;
 
@@ -43,6 +43,7 @@ public class ClassifierNetwork {
 	private ClassifierConfiguration configuration;
 	private DataSet trainingSet;
 	private MultiLayerPerceptron neuralNetwork;
+	private CrawlerListener listener;
 
 	/**
 	 * Creates a new Neural Network with parameters of
@@ -82,7 +83,7 @@ public class ClassifierNetwork {
 		neuralNetwork.getLearningThread().join();
 		
 
-		//neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
+		neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
 	}
 
 	/**
@@ -95,6 +96,12 @@ public class ClassifierNetwork {
 	public ClassifierNetwork(MultiLayerPerceptron neuralNetwork, ClassifierConfiguration configuration) {
 		this.neuralNetwork = neuralNetwork;
 		this.configuration = configuration;
+	}
+	
+	public ClassifierNetwork(MultiLayerPerceptron neuralNetwork, ClassifierConfiguration configuration, CrawlerListener listener) {
+		this.neuralNetwork = neuralNetwork;
+		this.configuration = configuration;
+		this.listener = listener;
 	}
 
 	/**
@@ -181,6 +188,10 @@ public class ClassifierNetwork {
 	public RepositoryTyp classify(CollectedDataSet collectedDataSet) {
 		neuralNetwork.setInput(getFormattedInput(collectedDataSet));
 		neuralNetwork.calculate();
+		double[] types = neuralNetwork.getOutput();
+		if(listener != null){
+			listener.classificationDone(types);
+		}
 		return doubleToRepositoryTyp(neuralNetwork.getOutput());
 	}
 
@@ -246,6 +257,12 @@ public class ClassifierNetwork {
 			throws ClassNotFoundException, IOException {
 		return new ClassifierNetwork((MultiLayerPerceptron) NeuralNetwork.createFromFile(neuralnetworklocation),
 				ClassifierConfiguration.getDefault());
+	}
+	
+	public static ClassifierNetwork loadFromFile(ClassifierConfiguration config, CrawlerListener listener)
+			throws ClassNotFoundException, IOException {
+		return new ClassifierNetwork((MultiLayerPerceptron) NeuralNetwork.createFromFile(config.neuralNetworkLocation),
+				config, listener);
 	}
 
 }

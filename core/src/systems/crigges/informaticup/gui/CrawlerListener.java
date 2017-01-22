@@ -14,4 +14,16 @@ public interface CrawlerListener {
 	
 	void downloadFinished();
 	
+	void wordCountStarted();
+	
+	void wordCountFinished();
+	
+	void wordAdded(String w);
+	
+	void endingCountStarted();
+	
+	void endingCountFinished();
+
+	void classificationDone(double[] res);
+	
 }

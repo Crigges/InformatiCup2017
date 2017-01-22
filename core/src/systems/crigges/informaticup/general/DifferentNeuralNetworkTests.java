@@ -12,23 +12,7 @@ import systems.crigges.informaticup.nnetwork.ClassifierNetwork;
 
 public class DifferentNeuralNetworkTests {
 
-	private static final int testSize = 5;
-
 	public static void main(String[] args) throws Exception {
-		int[] hiddenNeuronsTestSet = { 8, 12, 16, 20, 24 };
-		double[] learningSpeedTestSet = { 0, 01, 0.1, 0.3, 0.5, 0.7 };
-		double[] maxErrorTestSet = { 0.1, 0.07, 0.01, 0.005, 0.003 };
-		double[] momentumTestSet = { 0.1, 0.3, 0.5, 0.7, 0.9 };
-		double[] wordDictionaryIntersectionStrengthTestSet = { 0.1, 0.25, 0.4, 0.5, 0.7 };
-		double[] fileNameIntersectionStrengthTestSet = { 0.1, 0.25, 0.4, 0.5, 0.7 };
-		double[] fileEndingIntersectionStrengthTestSet = { 0.1, 0.25, 0.4, 0.5, 0.7 };
-		double[] fileNameDictionaryWordCountPerTypeTestSet = { 10, 20, 30, 40, 50 };
-		double[] wordDictionaryDictionaryWordCountPerTypeTestSet = { 10, 20, 30, 40, 50 };
-		double[] fileEndingDictionaryWordCountPerTypeTestSet = { 10, 20, 30, 40, 50 };
-		double[] wordDictionarylogisticValueTestSet = { 0.05, 0.1, 0.3, 0.5, 0.8 };
-		double[] fileEndinglogisticValueTestSet = { 0.05, 0.1, 0.3, 0.5, 0.8 };
-		double[] fileNamelogisticValueTestSet = { 0.05, 0.1, 0.3, 0.5, 0.8 };
-		double[] ratiologisticValueTestSet = { 0.05, 0.1, 0.3, 0.5, 0.8 };
 		ClassifierConfiguration config = ClassifierConfiguration.getOnlyDefaultLocations();
 		
 		for (int i = 0; i < 5; i++) {

@@ -1,8 +1,6 @@
 package systems.crigges.informaticup.general;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,9 +10,7 @@ import java.util.Set;
 import systems.crigges.informaticup.io.InputFileReader;
 import systems.crigges.informaticup.io.OutputFileWriter;
 import systems.crigges.informaticup.io.RepoCacher;
-import systems.crigges.informaticup.io.SerializeHelper;
 import systems.crigges.informaticup.nnetwork.ClassifierNetwork;
-import systems.crigges.informaticup.wordanalytics.DictionaryEntry;
 
 public class Main {
 
@@ -31,9 +27,6 @@ public class Main {
 		List<RepositoryDescriptor> repositorys = null;
 		try {
 			config = ClassifierConfiguration.getDefault();
-			for(DictionaryEntry ds : config.wordDictionary){
-				System.out.println(ds.getWord() + " ");
-			}
 			testRepositoryLocation = null;
 			if (args.length > 1) {
 				System.out.println("Invalid Input");
@@ -71,7 +64,7 @@ public class Main {
 			String outputFileName = testRepositoryLocation.getParentFile().getAbsolutePath() + "/"
 					+ testRepositoryLocation.getName().substring(0, testRepositoryLocation.getName().indexOf("."))
 					+ "output.txt";
-			System.out.println(outputFileName);
+			System.out.println("Output to: " + outputFileName);
 			
 			HashMap<RepositoryTyp, Integer> evaluationData = new HashMap<>();
 			HashMap<RepositoryTyp, Integer> correctData = new HashMap<>();
@@ -90,7 +83,6 @@ public class Main {
 						evaluationData.put(type, 1);
 					}
 					if (correctClassified(rp, goldenData)) {
-						System.out.println("correct"  + rp.getName());
 						if (correctData.get(rp.getTyp()) != null) {
 							correctData.put(rp.getTyp(), correctData.get(rp.getTyp()) + 1);
 						} else {
@@ -98,7 +90,6 @@ public class Main {
 						}
 					}
 					writer.write(rp);
-					System.out.println(rp.getName() + " " + type.toString());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -158,11 +149,6 @@ public class Main {
 				dataSetAll.add(dataSet);
 			} catch (Exception e2) {
 			}
-		}
-		ClassifierConfiguration conf = ClassifierConfiguration.getDefault();
-		ArrayList<DictionaryEntry> list = SerializeHelper.deserialize(conf.fileNameDictionaryLocation);
-		for (DictionaryEntry entry : list) {
-			System.out.println(entry.getWord());
 		}
 		return new ClassifierNetwork(dataSetAll, ClassifierConfiguration.getDefault());
 	}
