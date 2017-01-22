@@ -159,19 +159,19 @@ public class ClassifierConfiguration {
 
 		configuration.wordDictionaryIntersectionStrength = 0.2;
 		configuration.wordDictionaryWordCountPerType = 20;
-		configuration.wordDictionaryLogisticValue = 0.03;
+		configuration.wordDictionaryLogisticValue = 0.45599;
 
 		configuration.fileNameDictionaryIntersectionStrength = 0.25;
 		configuration.fileNameDictionaryWordCountPerType = 150;
-		configuration.fileNameDictionaryLogisticValue = 0.03;
+		configuration.fileNameDictionaryLogisticValue = 3.206;
 
 		configuration.fileEndingDictionaryIntersectionStrength = 0.01;
 		configuration.fileEndingDictionaryWordCountPerType = 50;
-		configuration.fileEndingDictionaryLogisticValue = 0.01;
+		configuration.fileEndingDictionaryLogisticValue = 6.14125;
 		
-		configuration.hiddenLayerNeuronCount = 20;
+		configuration.hiddenLayerNeuronCount = 39;
 		configuration.maxError = 0.01;
-		configuration.learningRate = 0.03;
+		configuration.learningRate = 0.1;
 		configuration.momentum = 0.2;
 		configuration.recreateDictionary = false;
 		configuration.recreateNeuralNetwork = false;
@@ -192,7 +192,6 @@ public class ClassifierConfiguration {
 		configuration.inputNeuronCount = (configuration.fileEndingDictionary.size()
 				+ configuration.fileNameDictionary.size()  + configuration.wordDictionary.size()
 				+ RatioDataSet.getDefaultRatioCount()) * 2;
-		System.out.println(configuration.inputNeuronCount);
 		return configuration;
 	}
 

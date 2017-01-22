@@ -13,6 +13,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import systems.crigges.informaticup.gui.CrawlerListener;
+
 /**
  * This class offers multithreaded word counting for unformatted Strings
  * 
@@ -26,6 +28,7 @@ public class WordCounter implements Closeable {
 	private HashMap<String, Integer> wordCount = new HashMap<>();
 	private long totalWordCount = 0;
 	private long numberCount = 0;
+	private CrawlerListener listener;
 
 	/**
 	 * Private constructor which setups the streams and <tt>Scanner</tt> and
@@ -52,6 +55,11 @@ public class WordCounter implements Closeable {
 	 */
 	public WordCounter() {
 		this(new PipedOutputStream());
+	}
+	
+	public WordCounter(CrawlerListener listener) {
+		this();
+		this.listener = listener;
 	}
 
 	/**
@@ -138,6 +146,9 @@ public class WordCounter implements Closeable {
 			if (next.matches("[0-9]+")) {
 				numberCount++;
 				continue;
+			}
+			if(listener != null){
+				listener.wordAdded(next);
 			}
 			totalWordCount++;
 			Integer count = wordCount.get(next);

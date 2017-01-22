@@ -82,7 +82,7 @@ public class ClassifierNetwork {
 		neuralNetwork.getLearningThread().join();
 		
 
-		//neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
+		neuralNetwork.save(configuration.neuralNetworkLocation.getAbsolutePath());
 	}
 
 	/**

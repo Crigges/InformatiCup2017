@@ -72,14 +72,14 @@ public class Dictionary {
 //		generate(config.fileEndingDictionaryIntersectionStrength, config.fileEndingDictionaryWordCountPerType,
 //				config.fileEndingDictionaryLogisticValue);
 //		SerializeHelper.serialize(config.fileEndingDictionaryLocation, dictionaryWords);
-
-//		clear();
-//		for (LoadedRepository crawler : crawlers) {
-//			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileNameCount());
-//		}
-//		generate(config.fileNameDictionaryIntersectionStrength, config.fileNameDictionaryWordCountPerType,
-//				config.fileNameDictionaryLogisticValue);
-//		SerializeHelper.serialize(config.fileNameDictionaryLocation, dictionaryWords);
+//
+		clear();
+		for (LoadedRepository crawler : crawlers) {
+			unifiedGroupDictonary.get(crawler.getType()).add(crawler.getFileNameCount());
+		}
+		generate(config.fileNameDictionaryIntersectionStrength, config.fileNameDictionaryWordCountPerType,
+				config.fileNameDictionaryLogisticValue);
+		SerializeHelper.serialize(config.fileNameDictionaryLocation, dictionaryWords);
 	}
 
 	public Dictionary(Set<CollectedDataSet> crawlers, ClassifierConfiguration config, ClassifierConfiguration target) throws Exception {	
@@ -196,7 +196,7 @@ public class Dictionary {
 		Set<DictionaryEntry> tempWordSet = new TreeSet<DictionaryEntry>();
 		for (String s : uniqueWords) {
 			tempWordSet.add(new DictionaryEntry(s, dictionaryWordStatistic.getStatistic(s)));
-//			System.out.print(s + "  ");
+			System.out.print(s + "  ");
 		}
 		dictionaryWords.addAll(tempWordSet);
 	}
@@ -247,7 +247,6 @@ public class Dictionary {
 			
 			Dictionary d = new Dictionary(crawlers, config);
 			int[] count = new int[7];
-			System.out.println(d.dictionaryWords.size());
 		}
 		sc.close();
 	}

@@ -12,8 +12,8 @@ import systems.crigges.informaticup.io.RepoCacher;
 public class FileGenerator {
 
 	public static void main(String[] args) throws Exception {
-//		cacheRepositories();
-		genTraining();
+		cacheRepositories();
+//		genTraining();
 //		InputFileReader allR = new InputFileReader(new File("./assets/Repositorys.txt"));
 //		List<RepositoryDescriptor> res = new ArrayList<>();
 //		for (RepositoryDescriptor des : allR.getRepositorysAndTypes()) {

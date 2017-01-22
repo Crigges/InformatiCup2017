@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 import net.sf.jmimemagic.MagicParseException;
 import net.sf.jmimemagic.MagicParser;
 import systems.crigges.informaticup.general.CollectedDataSet;
+import systems.crigges.informaticup.gui.CrawlerListener;
 import systems.crigges.informaticup.io.RepoCacher;
 import systems.crigges.informaticup.wordanalytics.WordCounter;
 
@@ -63,6 +64,7 @@ public class RepositoryCrawler implements Serializable {
 	@SuppressWarnings("unused")
 	private int staredCount;
 	private long numberCount;
+	transient private CrawlerListener listener;
 
 	/**
 	 * Creates a new RepositoryCrawler from the given url. Note: Depending on
@@ -79,6 +81,13 @@ public class RepositoryCrawler implements Serializable {
 	public RepositoryCrawler(String url) throws IOException {
 		repoName = getRepoNameFromURL(url);
 		fileList = ZipballGrabber.grabVirtual(repoName, null);
+		analyzeRepo();
+	}
+	
+	public RepositoryCrawler(String url, CrawlerListener listener) throws IOException {
+		this.listener = listener;
+		repoName = getRepoNameFromURL(url);
+		fileList = ZipballGrabber.grabVirtual(repoName, listener);
 		analyzeRepo();
 	}
 
@@ -180,7 +189,10 @@ public class RepositoryCrawler implements Serializable {
 	 * analyzer classes to extract the raw strings.
 	 */
 	private void calcWordCount() {
-		WordCounter wordCounter = new WordCounter();
+		if(listener != null){
+			listener.wordCountStarted();
+		}
+		WordCounter wordCounter = new WordCounter(listener);
 		for (VirtualFile f : fileList) {
 			try {
 				if (f.getName().toLowerCase().equals("readme.md")) {
@@ -215,6 +227,9 @@ public class RepositoryCrawler implements Serializable {
 		wordCount = wordCounter.getEntryMap();
 		totalWordCount = wordCounter.getTotalWordCount();
 		numberCount = wordCounter.getNumberCount();
+		if(listener != null){
+			listener.wordCountFinished();
+		}
 	}
 
 	/**
