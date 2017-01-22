@@ -1,38 +1,45 @@
 \select@language {english}
-\contentsline {section}{\numberline {1}Abstract}{2}{section.1}
-\contentsline {section}{\numberline {2}Selecting features}{5}{section.2}
-\contentsline {subsection}{\numberline {2.1}General thoughts}{5}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Selected features}{5}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}Word Count}{5}{subsubsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.2}File Ending Count}{5}{subsubsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.3}Filename Count}{6}{subsubsection.2.2.3}
-\contentsline {subsubsection}{\numberline {2.2.4}Media Density}{6}{subsubsection.2.2.4}
-\contentsline {subsubsection}{\numberline {2.2.5}Average File Size}{6}{subsubsection.2.2.5}
-\contentsline {subsubsection}{\numberline {2.2.6}Number Density}{6}{subsubsection.2.2.6}
-\contentsline {subsubsection}{\numberline {2.2.7}Commit messages}{6}{subsubsection.2.2.7}
-\contentsline {subsubsection}{\numberline {2.2.8}E-Mail of repository owner}{7}{subsubsection.2.2.8}
-\contentsline {section}{\numberline {3}Gathering selected features from Github}{7}{section.3}
-\contentsline {subsection}{\numberline {3.1}Gathering the Repository\IeC {\textquoteright }s content from Github}{7}{subsection.3.1}
-\contentsline {subsubsection}{\numberline {3.1.1}Choosing the content acquiring method}{7}{subsubsection.3.1.1}
-\contentsline {subsubsection}{\numberline {3.1.2}Grabbing the \IeC {\textquotedblleft }zipball\IeC {\textquotedblright }}{7}{subsubsection.3.1.2}
-\contentsline {subsection}{\numberline {3.2}Categorizing Files}{7}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Inflating the Filelist}{8}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Getting Word Count}{8}{subsection.3.4}
-\contentsline {subsubsection}{\numberline {3.4.1}Access non readable files that contain text}{8}{subsubsection.3.4.1}
-\contentsline {subsubsection}{\numberline {3.4.2}Formatting the raw text}{8}{subsubsection.3.4.2}
-\contentsline {section}{\numberline {4}Removing irrelevant information from selected features}{8}{section.4}
-\contentsline {subsection}{\numberline {4.1}Algorithm to create Dictionaries}{8}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Created Dictionaries}{9}{subsection.4.2}
-\contentsline {section}{\numberline {5}Building the Prediction Model}{10}{section.5}
-\contentsline {subsection}{\numberline {5.1}Choosing a prediction Model}{10}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Our Neural Network Model}{10}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Formating and further preprocessing of Features to fit into the Neural Network}{11}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}Data Sets and Training}{12}{subsection.5.4}
-\contentsline {section}{\numberline {6}Optimizing our Neural Network}{13}{section.6}
-\contentsline {section}{\numberline {7}Validation of created Classifier}{13}{section.7}
-\contentsline {section}{\numberline {8}Possible improvement approaches}{14}{section.8}
-\contentsline {section}{\numberline {9}Extensions}{14}{section.9}
-\contentsline {section}{\numberline {10}Source Code, used external Libraries and Repositories}{15}{section.10}
-\contentsline {paragraph}{\nonumberline Source Code}{15}{section*.5}
-\contentsline {paragraph}{\nonumberline Repository Dataset}{15}{section*.6}
-\contentsline {paragraph}{\nonumberline Training Repositories}{15}{section*.7}
+\contentsline {section}{\numberline {1}Selecting features}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}General thoughts}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Selected features}{4}{subsection.1.2}
+\contentsline {subsubsection}{\numberline {1.2.1}Word Count}{5}{subsubsection.1.2.1}
+\contentsline {subsubsection}{\numberline {1.2.2}File Ending Count}{5}{subsubsection.1.2.2}
+\contentsline {subsubsection}{\numberline {1.2.3}Filename Count}{5}{subsubsection.1.2.3}
+\contentsline {subsubsection}{\numberline {1.2.4}Media Density}{5}{subsubsection.1.2.4}
+\contentsline {subsubsection}{\numberline {1.2.5}Average File Size}{5}{subsubsection.1.2.5}
+\contentsline {subsubsection}{\numberline {1.2.6}Number Density}{6}{subsubsection.1.2.6}
+\contentsline {subsubsection}{\numberline {1.2.7}Stared to Subscribed Ratio}{6}{subsubsection.1.2.7}
+\contentsline {subsubsection}{\numberline {1.2.8}Commit Messages}{6}{subsubsection.1.2.8}
+\contentsline {subsubsection}{\numberline {1.2.9}E-Mail of repository owner}{6}{subsubsection.1.2.9}
+\contentsline {section}{\numberline {2}Gathering selected features from Github}{7}{section.2}
+\contentsline {subsection}{\numberline {2.1}Gathering the Repository\IeC {\textquoteright }s content from Github}{7}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Choosing the content acquiring method}{7}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}Grabbing the \IeC {\textquotedblleft }zipball\IeC {\textquotedblright }}{7}{subsubsection.2.1.2}
+\contentsline {subsection}{\numberline {2.2}Categorizing Files}{7}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Inflating the Filelist}{8}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Getting Word Count}{8}{subsection.2.4}
+\contentsline {subsubsection}{\numberline {2.4.1}Access non readable files that contain text}{8}{subsubsection.2.4.1}
+\contentsline {subsubsection}{\numberline {2.4.2}Formatting the raw text}{8}{subsubsection.2.4.2}
+\contentsline {subsection}{\numberline {2.5}Counting Words}{9}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Calculate the Fileextension and Name Count}{9}{subsection.2.6}
+\contentsline {section}{\numberline {3}Removing irrelevant information from selected features}{9}{section.3}
+\contentsline {subsection}{\numberline {3.1}Algorithm to create Dictionaries}{9}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Created Dictionaries}{10}{subsection.3.2}
+\contentsline {paragraph}{\nonumberline File Ending}{10}{section*.4}
+\contentsline {paragraph}{\nonumberline File Name}{11}{section*.5}
+\contentsline {paragraph}{\nonumberline Words}{11}{section*.6}
+\contentsline {section}{\numberline {4}Building the Prediction Model}{11}{section.4}
+\contentsline {subsection}{\numberline {4.1}Choosing a prediction Model}{11}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Our Neural Network Model}{12}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Formating and further preprocessing of Features to fit into the Neural Network}{13}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Data Sets and Training}{14}{subsection.4.4}
+\contentsline {section}{\numberline {5}Optimizing our Neural Network}{15}{section.5}
+\contentsline {section}{\numberline {6}Validation of created Classifier}{17}{section.6}
+\contentsline {section}{\numberline {7}Extensions}{20}{section.7}
+\contentsline {section}{\numberline {8}Source Code, used external Libraries and Repositories}{21}{section.8}
+\contentsline {paragraph}{\nonumberline Source Code}{21}{section*.11}
+\contentsline {paragraph}{\nonumberline Repository Dataset}{21}{section*.12}
+\contentsline {paragraph}{\nonumberline Training Repositories}{21}{section*.13}
+\contentsline {paragraph}{\nonumberline Test Repositories}{21}{section*.14}
+\contentsline {paragraph}{\nonumberline Intuitive Classification}{21}{section*.15}
+\contentsline {paragraph}{\nonumberline Recording of Results}{21}{section*.16}
