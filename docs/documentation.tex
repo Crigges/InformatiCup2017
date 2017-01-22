@@ -1,4 +1,4 @@
-\documentclass[paper=A4,pagesize=auto,12pt,headinclude=true,footinclude=true,BCOR=0mm,DIV=calc]{scrartcl}
+\documentclass[paper=A4,pagesize=auto,11pt,headinclude=true,footinclude=true,BCOR=0mm,DIV=calc]{scrartcl}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -205,7 +205,9 @@ singlelinecheck=false]
 	
 	To format the input for the neuron we will iterate through every word in a dictionary of a type. The ratio between the relative occurence of the word for this type and the occurence value stored in the dictionary is calculated. Effectively this ratio is equal to the deviation of the relative word occurrence for the considered type. In case the relative occurrence of a word ending is higher then the occurrence in the dictionary it will result into a value $> 1$. So there is still the necessity of a normalization process - for the dictionary deviation as well as for the ratios.
 	
-	There are several possibilities to normalize the input. In our case it is important that the input is distinct. Furthermore standard normalize procedures are using a maximum and minimum value. The problem is that it is not possible to define an upper bound for the inputs because a testinput could always exceed the previous bound and therefore the attribute of distinction is contradicted (New Max value could lead to values to have the exact same value as a value with an old bound).
+	There are several possibilities to normalize the input. In our case it is important that the input is distinct. Furthermore standard normalize procedures are using a maximum and minimum value. The problem is that it is not possible to define an upper bound for the inputs because a testinput could always exceed the previous bound and therefore the attribute of distinction is contradicted in case the input should still be normalized (New Max value could lead to values to have the exact same value as a value with an old bound). Nonetheless we tried the different normalization procedures of min-max normalization and standardisation but the \hyperref[src:optimizing]{results} results (\hyperref[src:optimizing]{Chapter 5.4}) were rather disappointing.
+	
+	
 	Therefore we decided to use a logistic function to normalize our data. A logistic function is monotonically increasing and thus is every value distinct. Depending wether we use a Sigmoid or tanh function we will construct the logistic function in a way that the upper bound is 1 and the lower bound respectively 0 or -1 in case of the tanh. 
 	We can then use a constant of proportionality to optimize the distribution of the values:
 	
@@ -225,27 +227,42 @@ singlelinecheck=false]
 	
 	
 	\subsection{Data Sets and Training}
-	Beside the labeled repositories in the challenge description we used the additional \hyperref[src:Repositories]{Repositories} provided by a participating team in the official github repository of the InformaticCup 2017 (although you cannot read it: a big thank you at this point!). We have to admit that even as a human being the classification is not as clear as we thought it would be. Sometime we were not sure if the labeling of the data Sets we used were correct and we realized that many repositories overlap with different categories and it is not always objectively clear to which repository it fits more. In this case the repositories were labeled by personal preference and estimation. Therefore the learning of our network is influenced by personal decisions as it uses the labels.
-	
+	Beside the labeled repositories in the challenge description we used \hyperref[src:TrainingRepositories]{most} of the the additional \hyperref[src:Repositories]{Repositories} provided by a participating team in the official github repository of the InformaticCup 2017 as training repositories (although you cannot read it: a big thank you at this point!). We have to admit that even as a human being the classification is not as clear as we thought it would be. Sometime we were not sure if the labeling of the data Sets we used were correct and we realized that many repositories overlap with different categories and it is not always objectively clear to which repository it fits more. In this case the repositories were labeled by personal preference and estimation. Therefore the learning of our network is influenced by personal decisions as it uses the labels.
 	
 	Since we are using backpropagation after each iteration the actual output of the network is compared to the desired output and using the euclidean distance leads us to an error value. Update the parameters of the classification function(in this case the weights of the neural network). The Training continues until this error value is below a manual set value.
 	
 	
 	
 	\section{Optimizing our Neural Network }
+	\label{src:optimizing}
 	A potentially very time consuming task is to optimize the network. We divided the possible optimizing parameters into three categories. Firstly we need to optimize the training. Besides changing the inertia and learn rate it is far more important to take care of the error value of the neural network. A min error value far to low could result into over fitting the neural network to the repositories of the training phase. Then again a min error value too high would result into a very unstable Network and an under fit network. 
 	The second category would be optimizing the features selected in the beginning. We have to consider that our selected features are not as optimal as expected.
 	Lastly we need to optimize the neural network itself. This counts in the hidden Layer as well as the preprocessing step of normalizing the values.\\
+	For Testing we used the Test Repositories given by the Challenge Description. To prevent an over fitting on the Test repositories we decided to use further ones provided by the additional Dataset for testing. We used further 36 Repositories (6 per class) so all in all we tested our neural network on 67 \hyperref[src:TestRepositories]{Repositories}.  We thought about different testing methods for testing. Known procedures like k-fold cross validation do not have benefints in our case because in our opinion the dataset is not big enough for this. There is a natural deviation in results in each change of a parameter and it is not easy to tell wether this change has been random or has really improved the network. The rather small datasets we would obtain for k-fold cross validation would increase this problem while reducing the possible over fitting. Nontheless we decided to stay with our fixed 67 repositories.
 	The base values resulted to following results
 	GANZ VIELE MESSDATEN(VERTEILUNG DER OUTPUTS, ABSOLUTE TREFFER ETC......)
-	We started with modifying the number of hidden Layer, the neurons in each hidden Layer, the Values $p$ and $q$ for the dictionary, the weight of the Readme words and the proportional constant $k$ for our defined logistic function.
-	We firstly changed the $k$ values as they are not as depend of the other values. We just need to find a value so that the function distributes the deviations even. This could be done by calculating the average distance between to points.
+	The parameters we changed too modify are the number of hidden Layer, the neurons in each hidden Layer, the Values $p$ and $q$ for the dictionary, the weight of the Readme words and the proportional constant $k$ for our defined logistic function.
+	We firstly changed the $k$ values as they are not as variable as the other values. We just need to find a value so that the function distributes the input values even. This could be done by calculating the average distance between the values.
 	Based on the first results of our network we decided to vary the count of Neurons in the hidden Layer.
 	
 	\section{Validation of created Classifier}
+	-> Hängt vom Usecase ab
+	<gleiche anzahl an repo für jeden typ
+	-> Suchfunktion mit Eingerzung und Filter Lieber hohe Ausbeute(nichts verpassen was wichtig ist)
+	-> Umso höher die Anzahl der betrachteten Repositories ist, umso wichtiger präzision(also richtige einordnung wichtiger wenn man generell viele repoos betrachten möchte)
+	->geringer, dann Ausbeute(siehe punkt 1)
+	
+	
+	->Vorgehen
+	
+	->Präz und ausbeute berechnen
+	->Indizien für schwach oder stärken unseres Netzes
+	->Sagen was wichtiger ist
+	-> Verbesserungen
+	
+	\section{Possible improvement approaches}
 	
 	\section{Extensions}
-	
 	
 	
 	\newpage
@@ -261,7 +278,12 @@ singlelinecheck=false]
 	Github: \url{https://github.com/Crigges/InformatiCup2017}\\
 	\paragraph{Repository Dataset}
 	\label{src:Repositories}
-	\url{https://github.com/InformatiCup/InformatiCup2017/tree/master/additional_data_sets}
+	\url{https://github.com/InformatiCup/InformatiCup2017/tree/master/additional_data_sets}	\\
+	
+	\label{src:TrainingRepositories}
+	\paragraph{Training Repositories}
+	Exact repositories used fo training can be found in the document TrainingRepositories.
+	
 	
 	
 \end{document}
