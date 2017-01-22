@@ -4,11 +4,12 @@ Rami Aly's & Andre Schurat contribution
 
 How to use the classifier:
 --------------------------
-**Requirements:**
--JRE 8 or higher or an aquivalent JDK Version
--Java HOME Path Variable needs to be setted
+**Requirements:**  
+-JRE 8 or higher or an aquivalent JDK Version  
+-Java HOME Path Variable needs to be setted  
 
 **Use the Classifier:**
+
 1. Run the classifier.bat located inside the root folder (Note: you may NOT move the batch file!)
 2. Select an input file that matches the InformatiCups offical specifications
 3.  Select an output file
@@ -16,12 +17,13 @@ How to use the classifier:
 
 How to use the Classify Visualizer:
 --------------------------
-**Requirements:**
--JRE 8 or higher or an aquivalent JDK Version
--Java HOME Path Variable needs to be setted
--Decent Hardware on the operating system including OpenGL 3.0 support
+**Requirements:**  
+-JRE 8 or higher or an aquivalent JDK Version  
+-Java HOME Path Variable needs to be setted  
+-Decent Hardware on the operating system including OpenGL 3.0 support  
 
 **Use the Visualizer:**
+
 1. Run the Classify Visualization.bat located inside the root folder (Note: you may NOT move the batch file!)
 2. Enter an URL to a Repository as input and press OK
 3. Enjoy what you see
