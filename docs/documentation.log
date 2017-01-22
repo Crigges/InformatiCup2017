@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  22 JAN 2017 02:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  22 JAN 2017 21:52
 entering extended mode
 **documentation.tex
 (documentation.tex
@@ -37,17 +37,17 @@ Package tocbasic Info: omitting babel extension for `lof'
 Package tocbasic Info: omitting babel extension for `lot'
 (tocbasic)             because of feature `nobabel' available
 (tocbasic)             for `lot' on input line 125.
-Package scrartcl Info: You've used standard option `11pt'.
+Package scrartcl Info: You've used standard option `12pt'.
 (scrartcl)             This is correct!
-(scrartcl)             Internally I'm using `fontsize=11pt'.
+(scrartcl)             Internally I'm using `fontsize=12pt'.
 (scrartcl)             If you'd like to set the option with \KOMAoptions,
-(scrartcl)             you'd have to use `fontsize=11pt' there
-(scrartcl)             instead of `11pt', too.
-Class scrartcl Info: File `scrsize11pt.clo' used to setup font sizes on input l
+(scrartcl)             you'd have to use `fontsize=12pt' there
+(scrartcl)             instead of `12pt', too.
+Class scrartcl Info: File `scrsize12pt.clo' used to setup font sizes on input l
 ine 2033.
 
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\koma-script\scrsize11pt.clo"
-File: scrsize11pt.clo 2015/10/03 v3.19a KOMA-Script font size class option (11p
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\koma-script\scrsize12pt.clo"
+File: scrsize12pt.clo 2015/10/03 v3.19a KOMA-Script font size class option (12p
 t)
 )
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\koma-script\typearea.sty"
@@ -65,21 +65,21 @@ Package typearea, 2015/10/03 v3.19a KOMA-Script package (type area)
 \footheight=\skip45
 DIV calculation for typearea with good linewidth.
 Package typearea Info: These are the values describing the layout:
-(typearea)             DIV  = 8
+(typearea)             DIV  = 9
 (typearea)             BCOR = 0.0pt
 (typearea)             \paperwidth      = 597.50793pt
-(typearea)              \textwidth      = 373.44246pt
+(typearea)              \textwidth      = 398.33862pt
 (typearea)              DIV departure   = 0%
-(typearea)              \evensidemargin = 39.76274pt
-(typearea)              \oddsidemargin  = 39.76274pt
+(typearea)              \evensidemargin = 27.31467pt
+(typearea)              \oddsidemargin  = 27.31467pt
 (typearea)             \paperheight     = 845.04694pt
-(typearea)              \textheight     = 446.2002pt
-(typearea)              \topmargin      = 33.36087pt
-(typearea)              \headheight     = 17.0pt
-(typearea)              \headsep        = 20.40001pt
-(typearea)              \topskip        = 11.0pt
-(typearea)              \footskip       = 47.6pt
-(typearea)              \baselineskip   = 13.6pt
+(typearea)              \textheight     = 476.0pt
+(typearea)              \topmargin      = 21.62411pt
+(typearea)              \headheight     = 18.125pt
+(typearea)              \headsep        = 21.75pt
+(typearea)              \topskip        = 12.0pt
+(typearea)              \footskip       = 50.75pt
+(typearea)              \baselineskip   = 14.5pt
 (typearea)              on input line 1509.
 )
 \c@part=\count80
@@ -900,6 +900,24 @@ LaTeX Warning: Label `konfiguration' multiply defined.
 
 LaTeX Warning: Label `sub@konfiguration' multiply defined.
 
+
+LaTeX Warning: Label `konfiguration' multiply defined.
+
+
+LaTeX Warning: Label `sub@konfiguration' multiply defined.
+
+
+LaTeX Warning: Label `konfiguration' multiply defined.
+
+
+LaTeX Warning: Label `sub@konfiguration' multiply defined.
+
+
+LaTeX Warning: Label `konfiguration' multiply defined.
+
+
+LaTeX Warning: Label `sub@konfiguration' multiply defined.
+
 )
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
 LaTeX Font Info:    ... okay on input line 48.
@@ -956,15 +974,15 @@ File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 * \textheight=717.00955pt
 * \oddsidemargin=-1.1381pt
 * \evensidemargin=-1.1381pt
-* \topmargin=-38.53812pt
-* \headheight=17.0pt
-* \headsep=20.40001pt
-* \topskip=11.0pt
-* \footskip=47.6pt
-* \marginparwidth=74.68849pt
+* \topmargin=-41.0131pt
+* \headheight=18.125pt
+* \headsep=21.75pt
+* \topskip=12.0pt
+* \footskip=50.75pt
+* \marginparwidth=66.38977pt
 * \marginparsep=12.8401pt
 * \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -1025,15 +1043,15 @@ LaTeX Font Info:    Try loading font information for T1+ua1 on input line 55.
 File: t1ua1.fd 2006/03/21 Fontinst v1.928 font definitions for T1/ua1.
 )
 LaTeX Font Info:    Font shape `T1/ua1/m/n' will be
-(Font)              scaled to size 10.40245pt on input line 55.
-LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <10.95> not available
+(Font)              scaled to size 11.39996pt on input line 55.
+LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <12> not available
 (Font)              Font shape `T1/ua1/b/n' tried instead on input line 55.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 10.40245pt on input line 55.
-LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <20.74> not available
+(Font)              scaled to size 11.39996pt on input line 55.
+LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/ua1/b/n' tried instead on input line 55.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 19.70294pt on input line 55.
+(Font)              scaled to size 23.63593pt on input line 55.
 LaTeX Font Info:    Try loading font information for OT1+lmr on input line 55.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
@@ -1057,11 +1075,11 @@ LaTeX Font Info:    Try loading font information for OMX+lmex on input line 55.
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 55.
+(Font)              <17.28> on input line 55.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 55.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 55.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 55.
 LaTeX Font Info:    Try loading font information for U+msa on input line 55.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
@@ -1075,13 +1093,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 {C:/Users/Ramor/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <14.4> not available
+LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/ua1/b/n' tried instead on input line 58.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 13.67995pt on input line 58.
+(Font)              scaled to size 16.41594pt on input line 58.
  [2] (documentation.toc
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -1090,95 +1106,125 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 [3])
 \tf@toc=\write4
  [4]
-LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <12> not available
+LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ua1/b/n' tried instead on input line 67.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 67.
- [5] [6]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 122.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 122.
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 122.
+(Font)              scaled to size 13.67995pt on input line 67.
+ <images/graph1387.png, id=207, 1051.93pt x 754.82pt>
+File: images/graph1387.png Graphic file (type png)
 
- ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
+<use images/graph1387.png>
+Package pdftex.def Info: images/graph1387.png used on input line 73.
+(pdftex.def)             Requested size: 473.36412pt x 339.66586pt.
+
+Overfull \hbox (18.11995pt too wide) in paragraph at lines 73--74
+[][] 
+ []
+
+[5 <./images/graph1387.png>] [6]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 126.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 126.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 126.
+
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-[7] [8] <images/Woerterbuchbildung.png, id=226, 1272.755pt x 610.28pt>
+) [7] [8] [9]
+<images/Woerterbuchbildung.png, id=244, 1272.755pt x 610.28pt>
 File: images/Woerterbuchbildung.png Graphic file (type png)
 
 <use images/Woerterbuchbildung.png>
-Package pdftex.def Info: images/Woerterbuchbildung.png used on input line 167.
-(pdftex.def)             Requested size: 445.47093pt x 213.6012pt.
+Package pdftex.def Info: images/Woerterbuchbildung.png used on input line 179.
+(pdftex.def)             Requested size: 509.09299pt x 244.10767pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 172--178
-
+Overfull \hbox (53.84882pt too wide) in paragraph at lines 179--180
+[][] 
  []
 
-[9 <./images/Woerterbuchbildung.png>] [10] [11]
-<images/logistic.png, id=250, 2212.265pt x 1264.725pt>
+[10] [11 <./images/Woerterbuchbildung.png>] [12] [13] [14]
+<images/logistic.png, id=283, 2212.265pt x 1264.725pt>
 File: images/logistic.png Graphic file (type png)
 
 <use images/logistic.png>
-Package pdftex.def Info: images/logistic.png used on input line 218.
+Package pdftex.def Info: images/logistic.png used on input line 237.
 (pdftex.def)             Requested size: 442.44516pt x 252.94052pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 216--220
+Underfull \hbox (badness 10000) in paragraph at lines 235--239
 
  []
 
-[12 <./images/logistic.png>]
+[15 <./images/logistic.png>]
+<images/messung1.png, id=301, 972.63374pt x 627.34375pt>
+File: images/messung1.png Graphic file (type png)
 
-LaTeX Warning: Hyper reference `src:TestRepositories' on page 13 undefined on i
-nput line 241.
+<use images/messung1.png>
+Package pdftex.def Info: images/messung1.png used on input line 270.
+(pdftex.def)             Requested size: 437.68114pt x 282.30208pt.
+ [16]
+<images/messung2.png, id=308, 957.5775pt x 592.2125pt>
+File: images/messung2.png Graphic file (type png)
 
-[13] [14]
-Underfull \hbox (badness 4303) in paragraph at lines 271--272
-[]\T1/lmr/m/n/10.95 David P. Williams Gaus-sian Pro-cesses (2006) []$\T1/lmtt/m
-/n/10.95 http : / / people . ee . duke . edu /$
+<use images/messung2.png>
+Package pdftex.def Info: images/messung2.png used on input line 276.
+(pdftex.def)             Requested size: 430.9059pt x 266.49315pt.
+ [17 <./images/messung1.png>]
+Overfull \hbox (3.28033pt too wide) in paragraph at lines 281--285
+\T1/lmr/m/n/12 Readme words = $\OML/lmm/m/it/12 k[] \OT1/lmr/m/n/12 = 0\OML/lmm
+/m/it/12 :\OT1/lmr/m/n/12 45599\OML/lmm/m/it/12 ; k[] \OT1/lmr/m/n/12 = 3\OML/l
+mm/m/it/12 :\OT1/lmr/m/n/12 206\OML/lmm/m/it/12 ; k[] \OT1/lmr/m/n/12 = 6\OML/l
+mm/m/it/12 :\OT1/lmr/m/n/12 14125\OML/lmm/m/it/12 ; k[] \OT1/lmr/m/n/12 =$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 278--279
+Underfull \hbox (badness 10000) in paragraph at lines 287--288
 
  []
 
 
-Overfull \hbox (0.60376pt too wide) in paragraph at lines 281--282
-[] []\T1/ua1/b/n/10.95 Repository Dataset[][] []$\T1/lmtt/m/n/10.95 https : / /
- github . com / InformatiCup / InformatiCup2017 / tree / master /$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 281--282
+Underfull \hbox (badness 10000) in paragraph at lines 296--311
 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 289.
-[15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 289.
+[18 <./images/messung2.png>] [19] [20]
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
+
+ []
+
+
+Overfull \hbox (36.44153pt too wide) in paragraph at lines 340--341
+[] []\T1/ua1/b/n/12 Repository Dataset[][] []$\T1/lmtt/m/n/12 https : / / githu
+b . com / InformatiCup / InformatiCup2017 / tree / master /$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 340--341
+
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 358.
+[21]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 358.
  (documentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 289.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 289.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 358.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 358.
 Package rerunfilecheck Info: File `documentation.out' has not changed.
-(rerunfilecheck)             Checksum: 11B878262609787DE1DE2F777367D624;2609.
-
-
-LaTeX Warning: There were undefined references.
+(rerunfilecheck)             Checksum: 52DA652215C49D0399E6992232249D3B;2785.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 289.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 358.
  ) 
 Here is how much of TeX's memory you used:
- 12590 strings out of 493673
- 191830 string characters out of 3141529
- 347522 words of memory out of 3000000
- 15638 multiletter control sequences out of 15000+200000
- 88366 words of font info for 75 fonts, out of 3000000 for 9000
+ 12624 strings out of 493673
+ 192417 string characters out of 3141529
+ 348702 words of memory out of 3000000
+ 15649 multiletter control sequences out of 15000+200000
+ 84384 words of font info for 70 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 41i,9n,50p,1015b,506s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,9n,50p,1144b,506s stack positions out of 5000i,500n,10000p,200000b,50000s
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -1186,25 +1232,30 @@ pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
 , replaced by a fixed one
 
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}{C:/Program Fil
-es (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files (x86)/MiKTeX
- 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/
-enc/dvips/lm/lm-mathsy.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/f
-ontname/8r.enc}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.
-pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi6.pfb><C:/Program Files (
-x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi8.pfb><C:/Program Files (x86)/MiKTeX 
-2.9/fonts/type1/public/lm/lmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/ty
-pe1/public/lm/lmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/l
-m/lmr6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr8.pfb><C
-:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr9.pfb><C:/Program Fil
-es (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmri10.pfb><C:/Program Files (x86)/Mi
-KTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fo
-nts/type1/public/lm/lmsy6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/pu
-blic/lm/lmtt10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmt
-t9.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/arial/ua1b8a.pfb>
-Output written on documentation.pdf (15 pages, 472339 bytes).
+es (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Program Files (x86)/Mi
+KTeX 2.9/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/
+enc/dvips/lm/lm-mathsy.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/l
+m/lm-mathit.enc}{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.
+enc}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmbx12.pfb><C:/Pro
+gram Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmex10.pfb><C:/Program Files 
+(x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi10.pfb><C:/Program Files (x86)/MiKTe
+X 2.9/fonts/type1/public/lm/lmmi12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
+/type1/public/lm/lmmi6.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publi
+c/lm/lmmi8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr10.p
+fb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Progr
+am Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Program Files (x8
+6)/MiKTeX 2.9/fonts/type1/public/lm/lmr6.pfb><C:/Program Files (x86)/MiKTeX 2.9
+/fonts/type1/public/lm/lmr7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/
+public/lm/lmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmr
+i12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb><C:
+/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmsy6.pfb><C:/Program Fil
+es (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.pfb><C:/Program Files (x86)/MiK
+TeX 2.9/fonts/type1/public/lm/lmtt10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
+ts/type1/public/lm/lmtt12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
+w/arial/ua1b8a.pfb>
+Output written on documentation.pdf (21 pages, 665608 bytes).
 PDF statistics:
- 361 PDF objects out of 1000 (max. 8388607)
- 63 named destinations out of 1000 (max. 500000)
- 283 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 447 PDF objects out of 1000 (max. 8388607)
+ 84 named destinations out of 1000 (max. 500000)
+ 314 words of extra memory for PDF output out of 10000 (max. 10000000)
 
