@@ -11,15 +11,24 @@
 \BOOKMARK [3][-]{subsubsection.2.2.7}{Commit messages}{subsection.2.2}% 11
 \BOOKMARK [3][-]{subsubsection.2.2.8}{E-Mail of repository owner}{subsection.2.2}% 12
 \BOOKMARK [1][-]{section.3}{Gathering selected features from Github}{}% 13
-\BOOKMARK [1][-]{section.4}{Removing irrelevant information from selected features}{}% 14
-\BOOKMARK [2][-]{subsection.4.1}{Algorithm to create Dictionaries}{section.4}% 15
-\BOOKMARK [2][-]{subsection.4.2}{Created Dictionaries}{section.4}% 16
-\BOOKMARK [1][-]{section.5}{Building the Prediction Model}{}% 17
-\BOOKMARK [2][-]{subsection.5.1}{Choosing a prediction Model}{section.5}% 18
-\BOOKMARK [2][-]{subsection.5.2}{Our Neural Network Model}{section.5}% 19
-\BOOKMARK [2][-]{subsection.5.3}{Formating and further preprocessing of Features to fit into the Neural Network}{section.5}% 20
-\BOOKMARK [2][-]{subsection.5.4}{Data Sets and Training}{section.5}% 21
-\BOOKMARK [1][-]{section.6}{Optimizing our Neural Network}{}% 22
-\BOOKMARK [1][-]{section.7}{Validation of created Classifier}{}% 23
-\BOOKMARK [1][-]{section.8}{Extensions}{}% 24
-\BOOKMARK [1][-]{section.9}{Source Code, used external Libraries and Repositories}{}% 25
+\BOOKMARK [2][-]{subsection.3.1}{Gathering the Repository\220s content from Github}{section.3}% 14
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Choosing the content acquiring method}{subsection.3.1}% 15
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Grabbing the \215zipball\216}{subsection.3.1}% 16
+\BOOKMARK [2][-]{subsection.3.2}{Categorizing Files}{section.3}% 17
+\BOOKMARK [2][-]{subsection.3.3}{Inflating the Filelist}{section.3}% 18
+\BOOKMARK [2][-]{subsection.3.4}{Getting Word Count}{section.3}% 19
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Access non readable files that contain text}{subsection.3.4}% 20
+\BOOKMARK [3][-]{subsubsection.3.4.2}{Formatting the raw text}{subsection.3.4}% 21
+\BOOKMARK [1][-]{section.4}{Removing irrelevant information from selected features}{}% 22
+\BOOKMARK [2][-]{subsection.4.1}{Algorithm to create Dictionaries}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.2}{Created Dictionaries}{section.4}% 24
+\BOOKMARK [1][-]{section.5}{Building the Prediction Model}{}% 25
+\BOOKMARK [2][-]{subsection.5.1}{Choosing a prediction Model}{section.5}% 26
+\BOOKMARK [2][-]{subsection.5.2}{Our Neural Network Model}{section.5}% 27
+\BOOKMARK [2][-]{subsection.5.3}{Formating and further preprocessing of Features to fit into the Neural Network}{section.5}% 28
+\BOOKMARK [2][-]{subsection.5.4}{Data Sets and Training}{section.5}% 29
+\BOOKMARK [1][-]{section.6}{Optimizing our Neural Network}{}% 30
+\BOOKMARK [1][-]{section.7}{Validation of created Classifier}{}% 31
+\BOOKMARK [1][-]{section.8}{Possible improvement approaches}{}% 32
+\BOOKMARK [1][-]{section.9}{Extensions}{}% 33
+\BOOKMARK [1][-]{section.10}{Source Code, used external Libraries and Repositories}{}% 34
