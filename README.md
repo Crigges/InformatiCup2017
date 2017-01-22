@@ -4,7 +4,7 @@ Rami Aly's & Andre Schurat contribution
 
 How to use the classifier:
 --------------------------
-**Requirements:**
+**Requirements:**  
 -JRE 8 or higher or an aquivalent JDK Version  
 -Java HOME Path Variable needs to be setted  
 
@@ -17,7 +17,7 @@ How to use the classifier:
 
 How to use the Classify Visualizer:
 --------------------------
-**Requirements:**
+**Requirements:**  
 -JRE 8 or higher or an aquivalent JDK Version  
 -Java HOME Path Variable needs to be setted  
 -Decent Hardware on the operating system including OpenGL 3.0 support  
