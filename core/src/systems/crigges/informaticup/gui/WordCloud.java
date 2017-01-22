@@ -73,6 +73,7 @@ public class WordCloud {
 	}
 	
 	public void clear(){
+		active = false;
 		wordCount.clear();
 		displayedWords.clear();
 		wordBuffer.clear();

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Dictionary;
 
+import com.badlogic.gdx.Gdx;
+
 import systems.crigges.informaticup.io.SerializeHelper;
 import systems.crigges.informaticup.nnetwork.LogisticFunction;
 import systems.crigges.informaticup.nnetwork.RatioDataSet;
@@ -194,6 +196,60 @@ public class ClassifierConfiguration {
 				+ RatioDataSet.getDefaultRatioCount()) * 2;
 		return configuration;
 	}
+	
+	/**
+	 * the default values for every parameter
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public static ClassifierConfiguration getDefaultGdx() throws ClassNotFoundException, IOException {
+		ClassifierConfiguration configuration = new ClassifierConfiguration();
+		configuration.wordDictionaryLocation = new File("C:\\Users\\Crigges\\git\\InformatiCup2017\\core\\assets\\wordDictionary.ser");
+		configuration.fileNameDictionaryLocation = Gdx.files.internal("assets/fileNameDictionary.ser").file().getCanonicalFile();
+		configuration.fileEndingDictionaryLocation = new File("./assets/fileEndingDictionary.ser");
+		configuration.averageRatioValuesLocation = new File("./assets/averageRatioValues");
+		configuration.trainingRepositoryLocation = new File("./assets/Repositorys.txt");
+		configuration.testRepositoryLocation = new File("./assets/TestRepositorys.txt");
+		configuration.neuralNetworkLocation = new File("./assets/classifierNN.nnet");
+
+		configuration.wordDictionaryIntersectionStrength = 0.2;
+		configuration.wordDictionaryWordCountPerType = 20;
+		configuration.wordDictionaryLogisticValue = 0.45599;
+
+		configuration.fileNameDictionaryIntersectionStrength = 0.25;
+		configuration.fileNameDictionaryWordCountPerType = 150;
+		configuration.fileNameDictionaryLogisticValue = 3.206;
+
+		configuration.fileEndingDictionaryIntersectionStrength = 0.01;
+		configuration.fileEndingDictionaryWordCountPerType = 50;
+		configuration.fileEndingDictionaryLogisticValue = 6.14125;
+		
+		configuration.hiddenLayerNeuronCount = 39;
+		configuration.maxError = 0.01;
+		configuration.learningRate = 0.1;
+		configuration.momentum = 0.2;
+		configuration.recreateDictionary = false;
+		configuration.recreateNeuralNetwork = false;
+
+
+
+		configuration.numberOfNeuronOutput = 7;
+
+		configuration.readmeInfluenceFactor = 10;
+
+		configuration.ratioLogisticValue = 0.001;
+		System.out.println(configuration.fileNameDictionaryLocation);
+		configuration.fileNameDictionary = SerializeHelper.deserialize(configuration.fileNameDictionaryLocation);
+		configuration.fileEndingDictionary = SerializeHelper.deserialize(configuration.fileEndingDictionaryLocation);
+		configuration.wordDictionary = SerializeHelper.deserialize(configuration.wordDictionaryLocation);
+		configuration.normRatioValues = SerializeHelper.deserialize(configuration.averageRatioValuesLocation);
+
+		configuration.inputNeuronCount = (configuration.fileEndingDictionary.size()
+				+ configuration.fileNameDictionary.size()  + configuration.wordDictionary.size()
+				+ RatioDataSet.getDefaultRatioCount()) * 2;
+		return configuration;
+	}
 
 	/**
 	 * {@link ClassifierConfiguration} with every default parameter but without any {@link Dictionary's
@@ -253,7 +309,7 @@ public class ClassifierConfiguration {
 	public static ClassifierConfiguration getOnlyDefaultLocations() throws ClassNotFoundException, IOException {
 		ClassifierConfiguration configuration = new ClassifierConfiguration();
 		configuration.wordDictionaryLocation = new File("./assets/wordDictionary.ser");
-		configuration.fileNameDictionaryLocation = new File("./assets/fileNameDictionary.ser");
+		configuration.fileNameDictionaryLocation = new File("/assets/fileNameDictionary.ser");
 		configuration.fileEndingDictionaryLocation = new File("./assets/fileEndingDictionary.ser");
 		configuration.averageRatioValuesLocation = new File("./assets/averageRatioValues");
 		configuration.trainingRepositoryLocation = new File("./assets/Repositorys.txt");

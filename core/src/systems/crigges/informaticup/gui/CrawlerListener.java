@@ -20,4 +20,10 @@ public interface CrawlerListener {
 	
 	void wordAdded(String w);
 	
+	void endingCountStarted();
+	
+	void endingCountFinished();
+
+	void classificationDone(double[] res);
+	
 }

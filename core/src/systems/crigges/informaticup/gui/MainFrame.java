@@ -1,8 +1,12 @@
 package systems.crigges.informaticup.gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -15,12 +19,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import systems.crigges.informaticup.crawling.FileType;
 import systems.crigges.informaticup.crawling.RepositoryCrawler;
-import systems.crigges.informaticup.crawling.ZipballGrabber;
+import systems.crigges.informaticup.general.ClassifierConfiguration;
+import systems.crigges.informaticup.general.RepositoryTyp;
+import systems.crigges.informaticup.nnetwork.ClassifierNetwork;
 
 public class MainFrame extends ApplicationAdapter implements CrawlerListener {
 	private static final int viewportWidth = 1920;
@@ -43,6 +50,7 @@ public class MainFrame extends ApplicationAdapter implements CrawlerListener {
 	private Label extensionSpreadingLabel;
 	private Label networkInputLabel;
 	private Label classificationLabel;
+	private String repo;
 
 	@Override
 	public void create() {
@@ -53,6 +61,18 @@ public class MainFrame extends ApplicationAdapter implements CrawlerListener {
 		stage = new Stage(viewport);
 		Gdx.input.setInputProcessor(stage);
 		AssetFactory.loadAllRessources();
+		try {
+			ClassifierConfiguration.getDefaultGdx();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		repo = JOptionPane.showInputDialog("Enter the link to the repository that should be analyzed:");
+   
+		
 		createSideLabels();
 		for (int i = 1; i <= 200; i++) {
 			Label label = new Label("",
@@ -60,14 +80,19 @@ public class MainFrame extends ApplicationAdapter implements CrawlerListener {
 			bufferLabels.addFirst(label);
 			stage.addActor(label);
 		}
+		
 		Thread t = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				try {
-					new RepositoryCrawler("https://github.com/DataScienceSpecialization/courses", MainFrame.this);
-				} catch (IOException e) {
+					RepositoryCrawler crawler = new RepositoryCrawler(repo, MainFrame.this);
+					ClassifierNetwork network = ClassifierNetwork.loadFromFile(ClassifierConfiguration.getDefaultGdx(), MainFrame.this);
+					network.classify(crawler.getCollectedDataSet());
+				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Given URL was invaild");
+					System.exit(0);
 				}
 			}
 		});
@@ -112,15 +137,15 @@ public class MainFrame extends ApplicationAdapter implements CrawlerListener {
 		extensionSpreadingLabel = new Label("                                   Extension Spreading", stlye);
 		extensionSpreadingLabel.setBounds(-200, 780, 520, 100);
 		stage.addActor(extensionSpreadingLabel);
-		stlye = new LabelStyle(AssetFactory.getFont("normal", 30), Color.WHITE);
-		stlye.background = AssetFactory.getDefaultButtonStyle().up;
-		networkInputLabel = new Label("                                    Network Input", stlye);
-		networkInputLabel.setBounds(-200, 680, 520, 100);
-		stage.addActor(networkInputLabel);
+//		stlye = new LabelStyle(AssetFactory.getFont("normal", 30), Color.WHITE);
+//		stlye.background = AssetFactory.getDefaultButtonStyle().up;
+//		networkInputLabel = new Label("                                    Network Input", stlye);
+//		networkInputLabel.setBounds(-200, 680, 520, 100);
+//		stage.addActor(networkInputLabel);
 		stlye = new LabelStyle(AssetFactory.getFont("normal", 30), Color.WHITE);
 		stlye.background = AssetFactory.getDefaultButtonStyle().up;
 		classificationLabel = new Label("                                    Classification", stlye);
-		classificationLabel.setBounds(-200, 580, 520, 100);
+		classificationLabel.setBounds(-200, 680, 520, 100);
 		stage.addActor(classificationLabel);
 	}
 
@@ -413,7 +438,7 @@ public class MainFrame extends ApplicationAdapter implements CrawlerListener {
 			}
 		});
 		try {
-			Thread.sleep(4000);
+			Thread.sleep(8000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -424,4 +449,139 @@ public class MainFrame extends ApplicationAdapter implements CrawlerListener {
 	public void wordAdded(String w) {
 		cloud.wordAdded(w);
 	}
+
+	@Override
+	public void endingCountStarted() {
+		System.out.println("ending count started");
+		Gdx.app.postRunnable(new Runnable() {
+
+			@Override
+			public void run() {
+				extensionSpreadingLabel.getStyle().background = AssetFactory.getDefaultButtonStyle().over;
+				extensionSpreadingLabel.addAction(new LabelSlideAction(extensionSpreadingLabel, true));
+				cloud = new WordCloud(stage);
+			}
+		});
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void endingCountFinished() {
+		Gdx.app.postRunnable(new Runnable() {
+
+			@Override
+			public void run() {
+				extensionSpreadingLabel.getStyle().background = AssetFactory.getDefaultButtonStyle().down;
+				extensionSpreadingLabel.addAction(new LabelSlideAction(extensionSpreadingLabel, false));
+			}
+		});
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		cloud.clear();
+	}
+	
+	@Override
+	public void classificationDone(double[] types) {
+		Gdx.app.postRunnable(new Runnable() {
+
+			@Override
+			public void run() {
+				classificationLabel.getStyle().background = AssetFactory.getDefaultButtonStyle().down;
+				classificationLabel.addAction(new LabelSlideAction(classificationLabel, false));
+			}
+		});
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		Gdx.app.postRunnable(new Runnable() {
+			
+
+			@Override
+			public void run() {
+				Color[] colors = new Color[FileType.values().length];
+				colors[0] = Color.GOLD;
+				colors[1] = Color.CORAL;
+				colors[2] = Color.MAGENTA;
+				colors[3] = Color.NAVY;
+				colors[4] = Color.GRAY;
+				colors[5] = Color.OLIVE;
+				colors[6] = Color.TEAL;
+				colors[7] = Color.FIREBRICK;
+				for(RepositoryTyp type : RepositoryTyp.values()){
+					int i = type.getValue();
+					
+					Image image = new Image(AssetFactory.getTexture("quarder"));
+					image.setBounds(400 + 182f * i, downloadImage.getHeight() + 5, 175, 100);
+					image.setColor(colors[i]);
+					int cref = i;
+					image.addAction(new Action() {
+						
+						float cur = 0;
+
+						@Override
+						public boolean act(float delta) {
+							cur += 0.001;
+							if(cur >= types[type.getValue()]){
+								cur = (float) types[type.getValue()];	
+							}
+							double targetHeight = 600 * cur;
+							float diff = (float) (targetHeight - (image.getHeight() - 100));
+							image.setBounds(400 + 182f * cref, downloadImage.getHeight() + 5, 175,
+									image.getHeight() + diff * delta * 1.5f);
+							return false;
+						}
+					});
+
+					stage.addActor(image);
+					
+					Label barProgressLabel = new Label("0%",
+							new LabelStyle(AssetFactory.getFont("normal", 35), Color.WHITE));
+					barProgressLabel.setAlignment(Align.center);
+					barProgressLabel.setBounds(image.getX() + 40, image.getY() + image.getHeight() - 50, 100, 50);
+					barProgressLabel.addAction(new Action() {
+
+						float cur = 0;
+						
+						@Override
+						public boolean act(float delta) {
+							cur += 0.001;
+							if(cur >= types[type.getValue()]){
+								cur = (float) types[type.getValue()];	
+							}
+							barProgressLabel.setBounds(image.getX() + 40, image.getY() + image.getHeight() - 50, 100,
+									50);
+							barProgressLabel
+									.setText(String.format("%.2f", (100f * cur)) + "%");
+							return false;
+						}
+					});
+					stage.addActor(barProgressLabel);
+					
+					Label barNameLabel = new Label(type.toString(),
+							new LabelStyle(AssetFactory.getFont("normal", 35), Color.WHITE));
+					barNameLabel.setAlignment(Align.center);
+					barNameLabel.setBounds(image.getX() + 40, image.getY(), 100, 50);
+					barNameLabel.addAction(new Action() {
+
+						@Override
+						public boolean act(float delta) {
+							barNameLabel.setBounds(image.getX() + 40, image.getY(), 100, 50);
+							return false;
+						}
+					});
+					stage.addActor(barNameLabel);
+				}
+			}
+		});
+	}
+
 }

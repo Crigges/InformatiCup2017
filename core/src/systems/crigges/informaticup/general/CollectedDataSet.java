@@ -1,9 +1,6 @@
 package systems.crigges.informaticup.general;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import systems.crigges.informaticup.crawling.RepositoryCrawler;
 
 /**

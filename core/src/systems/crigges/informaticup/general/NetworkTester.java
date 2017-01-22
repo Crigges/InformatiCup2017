@@ -1,8 +1,6 @@
 package systems.crigges.informaticup.general;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,9 +8,6 @@ import java.util.Set;
 import systems.crigges.informaticup.io.InputFileReader;
 import systems.crigges.informaticup.io.RepoCacher;
 import systems.crigges.informaticup.nnetwork.ClassifierNetwork;
-import systems.crigges.informaticup.nnetwork.RatioDataSet;
-import systems.crigges.informaticup.wordanalytics.Dictionary;
-import systems.crigges.informaticup.wordanalytics.Dictionary.LoadedRepository;
 
 public class NetworkTester {
 	

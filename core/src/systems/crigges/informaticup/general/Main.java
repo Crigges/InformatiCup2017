@@ -1,8 +1,6 @@
 package systems.crigges.informaticup.general;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,9 +10,7 @@ import java.util.Set;
 import systems.crigges.informaticup.io.InputFileReader;
 import systems.crigges.informaticup.io.OutputFileWriter;
 import systems.crigges.informaticup.io.RepoCacher;
-import systems.crigges.informaticup.io.SerializeHelper;
 import systems.crigges.informaticup.nnetwork.ClassifierNetwork;
-import systems.crigges.informaticup.wordanalytics.DictionaryEntry;
 
 public class Main {
 
@@ -31,7 +27,6 @@ public class Main {
 		List<RepositoryDescriptor> repositorys = null;
 		try {
 			config = ClassifierConfiguration.getDefault();
-			createNeuralNetwork(config);
 			testRepositoryLocation = null;
 			if (args.length > 1) {
 				System.out.println("Invalid Input");
@@ -155,8 +150,6 @@ public class Main {
 			} catch (Exception e2) {
 			}
 		}
-		ClassifierConfiguration conf = ClassifierConfiguration.getDefault();
-		ArrayList<DictionaryEntry> list = SerializeHelper.deserialize(conf.fileNameDictionaryLocation);
 		return new ClassifierNetwork(dataSetAll, ClassifierConfiguration.getDefault());
 	}
 	

@@ -3,9 +3,6 @@ package systems.crigges.informaticup.nnetwork;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Set;
-
-import systems.crigges.informaticup.general.CollectedDataSet;
 import systems.crigges.informaticup.wordanalytics.Dictionary;
 import systems.crigges.informaticup.wordanalytics.DictionaryEntry;
 import systems.crigges.informaticup.wordanalytics.WordStatistic;

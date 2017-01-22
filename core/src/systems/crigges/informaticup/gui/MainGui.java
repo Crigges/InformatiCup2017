@@ -15,7 +15,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import systems.crigges.informaticup.crawling.RepositoryCrawler;
 import systems.crigges.informaticup.general.ClassifierConfiguration;
 import systems.crigges.informaticup.general.RepositoryDescriptor;
-import systems.crigges.informaticup.general.RepositoryTyp;
 import systems.crigges.informaticup.io.InputFileReader;
 import systems.crigges.informaticup.io.OutputFileWriter;
 import systems.crigges.informaticup.io.RepoCacher;
@@ -26,8 +25,6 @@ import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
