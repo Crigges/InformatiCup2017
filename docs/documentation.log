@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  22 JAN 2017 23:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.10.11)  22 JAN 2017 23:47
 entering extended mode
 **documentation.tex
 (documentation.tex
@@ -1037,55 +1037,55 @@ LaTeX Info: Redefining \selectfont on input line 126.
 \RaggedRightParindent=\skip70
 \JustifyingParindent=\skip71
 )
-LaTeX Font Info:    Try loading font information for T1+ua1 on input line 55.
+LaTeX Font Info:    Try loading font information for T1+ua1 on input line 56.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\arial\t1ua1.fd"
 File: t1ua1.fd 2006/03/21 Fontinst v1.928 font definitions for T1/ua1.
 )
 LaTeX Font Info:    Font shape `T1/ua1/m/n' will be
-(Font)              scaled to size 11.39996pt on input line 55.
+(Font)              scaled to size 11.39996pt on input line 56.
 LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <12> not available
-(Font)              Font shape `T1/ua1/b/n' tried instead on input line 55.
+(Font)              Font shape `T1/ua1/b/n' tried instead on input line 56.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 55.
+(Font)              scaled to size 11.39996pt on input line 56.
 LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/ua1/b/n' tried instead on input line 55.
+(Font)              Font shape `T1/ua1/b/n' tried instead on input line 56.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 23.63593pt on input line 55.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 55.
+(Font)              scaled to size 23.63593pt on input line 56.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 56.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\ot1lmr.fd"
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 55.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 56.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\omllmm.fd"
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 55.
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 56.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\omslmsy.fd"
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 55.
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 56.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\omxlmex.fd"
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <17.28> on input line 55.
+(Font)              <17.28> on input line 56.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 55.
+(Font)              <12> on input line 56.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 55.
-LaTeX Font Info:    Try loading font information for U+msa on input line 55.
+(Font)              <10> on input line 56.
+LaTeX Font Info:    Try loading font information for U+msa on input line 56.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 55.
+LaTeX Font Info:    Try loading font information for U+msb on input line 56.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1094,9 +1094,9 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {C:/Users/Ramor/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/ua1/b/n' tried instead on input line 60.
+(Font)              Font shape `T1/ua1/b/n' tried instead on input line 61.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 16.41594pt on input line 60.
+(Font)              scaled to size 16.41594pt on input line 61.
  (documentation.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 3.
@@ -1107,139 +1107,143 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 \tf@toc=\write4
  [3]
 LaTeX Font Info:    Font shape `T1/ua1/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/ua1/b/n' tried instead on input line 64.
+(Font)              Font shape `T1/ua1/b/n' tried instead on input line 65.
 LaTeX Font Info:    Font shape `T1/ua1/b/n' will be
-(Font)              scaled to size 13.67995pt on input line 64.
+(Font)              scaled to size 13.67995pt on input line 65.
  <images/graph1387.png, id=198, 1051.93pt x 754.82pt>
 File: images/graph1387.png Graphic file (type png)
 
 <use images/graph1387.png>
-Package pdftex.def Info: images/graph1387.png used on input line 70.
+Package pdftex.def Info: images/graph1387.png used on input line 71.
 (pdftex.def)             Requested size: 473.36412pt x 339.66586pt.
 
-Overfull \hbox (18.11995pt too wide) in paragraph at lines 70--71
+Overfull \hbox (18.11995pt too wide) in paragraph at lines 71--72
 [][] 
  []
 
 [4 <./images/graph1387.png>] [5]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 122.
+(Font)              <7> on input line 123.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 122.
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 122.
+(Font)              <5> on input line 123.
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 123.
 
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lm\t1lmtt.fd"
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [6] [7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 166--168
+
+ []
+
 <images/dictionary.png, id=235, 1565.85pt x 492.84125pt>
 File: images/dictionary.png Graphic file (type png)
 
 <use images/dictionary.png>
-Package pdftex.def Info: images/dictionary.png used on input line 175.
+Package pdftex.def Info: images/dictionary.png used on input line 178.
 (pdftex.def)             Requested size: 500.77164pt x 200.75018pt.
 
-Overfull \hbox (45.52747pt too wide) in paragraph at lines 175--176
+Overfull \hbox (45.52747pt too wide) in paragraph at lines 178--179
 [][] 
  []
 
-[9] [10 <./images/dictionary.png>] [11] [12]
-<images/logistic.png, id=272, 2212.265pt x 1264.725pt>
+[9] [10 <./images/dictionary.png>] [11] [12] [13]
+<images/logistic.png, id=276, 2212.265pt x 1264.725pt>
 File: images/logistic.png Graphic file (type png)
 
 <use images/logistic.png>
-Package pdftex.def Info: images/logistic.png used on input line 233.
+Package pdftex.def Info: images/logistic.png used on input line 240.
 (pdftex.def)             Requested size: 442.44516pt x 252.94052pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 231--235
+Underfull \hbox (badness 10000) in paragraph at lines 238--242
 
  []
 
-[13] [14 <./images/logistic.png>]
-<images/messung1.png, id=294, 972.63374pt x 627.34375pt>
+[14 <./images/logistic.png>]
+<images/messung1.png, id=293, 972.63374pt x 627.34375pt>
 File: images/messung1.png Graphic file (type png)
 
 <use images/messung1.png>
-Package pdftex.def Info: images/messung1.png used on input line 266.
+Package pdftex.def Info: images/messung1.png used on input line 275.
 (pdftex.def)             Requested size: 437.68114pt x 282.30208pt.
  [15]
-<images/messung2.png, id=301, 957.5775pt x 592.2125pt>
+<images/messung2.png, id=300, 957.5775pt x 592.2125pt>
 File: images/messung2.png Graphic file (type png)
 
 <use images/messung2.png>
-Package pdftex.def Info: images/messung2.png used on input line 272.
+Package pdftex.def Info: images/messung2.png used on input line 281.
 (pdftex.def)             Requested size: 430.9059pt x 266.49315pt.
-
-Overfull \hbox (3.28033pt too wide) in paragraph at lines 277--281
+ [16 <./images/messung1.png>]
+Overfull \hbox (3.28033pt too wide) in paragraph at lines 286--290
 \T1/lmr/m/n/12 Readme words = $\OML/lmm/m/it/12 k[] \OT1/lmr/m/n/12 = 0\OML/lmm
 /m/it/12 :\OT1/lmr/m/n/12 45599\OML/lmm/m/it/12 ; k[] \OT1/lmr/m/n/12 = 3\OML/l
 mm/m/it/12 :\OT1/lmr/m/n/12 206\OML/lmm/m/it/12 ; k[] \OT1/lmr/m/n/12 = 6\OML/l
 mm/m/it/12 :\OT1/lmr/m/n/12 14125\OML/lmm/m/it/12 ; k[] \OT1/lmr/m/n/12 =$
  []
 
-[16 <./images/messung1.png> <./images/messung2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 283--284
+
+Underfull \hbox (badness 10000) in paragraph at lines 292--293
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 285--320
+Underfull \hbox (badness 10000) in paragraph at lines 294--329
 
  []
 
-[17] [18]
-Underfull \hbox (badness 10000) in paragraph at lines 321--323
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 324--337
+[17 <./images/messung2.png>] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 330--332
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 341--345
+Underfull \hbox (badness 10000) in paragraph at lines 333--346
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 351--355
 
  []
 
 [19] [20]
-Underfull \hbox (badness 10000) in paragraph at lines 372--373
+Underfull \hbox (badness 10000) in paragraph at lines 384--385
 
  []
 
 
-Overfull \hbox (36.44153pt too wide) in paragraph at lines 375--376
+Overfull \hbox (36.44153pt too wide) in paragraph at lines 387--388
 [] []\T1/ua1/b/n/12 Repository Dataset[][] []$\T1/lmtt/m/n/12 https : / / githu
 b . com / InformatiCup / InformatiCup2017 / tree / master /$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 375--376
+Underfull \hbox (badness 10000) in paragraph at lines 387--388
 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 393.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 406.
 [21]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 393.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 406.
  (documentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 393.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 393.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 406.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 406.
 Package rerunfilecheck Info: File `documentation.out' has not changed.
 (rerunfilecheck)             Checksum: FA45F19BA02C6E90DDD59CD451675D7D;2740.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 393.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 406.
  ) 
 Here is how much of TeX's memory you used:
  12622 strings out of 493673
  192357 string characters out of 3141529
- 352701 words of memory out of 3000000
+ 353701 words of memory out of 3000000
  15648 multiletter control sequences out of 15000+200000
  84384 words of font info for 70 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 41i,9n,50p,1144b,507s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,9n,50p,1164b,507s stack positions out of 5000i,500n,10000p,200000b,50000s
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -1268,9 +1272,9 @@ es (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmsy7.pfb><C:/Program Files (x86)/MiK
 TeX 2.9/fonts/type1/public/lm/lmtt10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
 ts/type1/public/lm/lmtt12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
 w/arial/ua1b8a.pfb>
-Output written on documentation.pdf (21 pages, 662922 bytes).
+Output written on documentation.pdf (21 pages, 663031 bytes).
 PDF statistics:
- 447 PDF objects out of 1000 (max. 8388607)
+ 446 PDF objects out of 1000 (max. 8388607)
  83 named destinations out of 1000 (max. 500000)
  306 words of extra memory for PDF output out of 10000 (max. 10000000)
 

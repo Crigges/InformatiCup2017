@@ -47,7 +47,8 @@ singlelinecheck=false]
 
 \begin{document}
 	
-	\title{Github Repository Classifier}
+	\title{Github Repository Classifier\\
+		Contribution to the InformatiCup}
 	\author{\textbf{Rami Aly$^{1}$, Andre Schurat}$^{2}$\\
 		$^{1}$ University of Hamburg\\
 		$^{2}$ Technical University of Dortmund}
@@ -163,11 +164,13 @@ singlelinecheck=false]
 	\label{sec: dictionary}
 	\subsection{Algorithm to create Dictionaries}
 	Especially the features \textit{File Ending Count}, \textit{Word Count} and\textit{ Filename Count} still consist of information noise as every repository could contain words that are unique to every other repository and are therefore not relevant for the classification. Then again some words could be in almost every repository but their occurrence does not differentiate between the classes in a considerable margin. Due to the rising complexity of a neural network for every input added to it, one should try to find a balance between the number of words and the relevance of a word. We decided to create a dictionary for each of the mentioned three features that contains every relevant word for classification.
-	The question arises how to choose the words for the dictionaries. Therefore we created an algorithm.
+	The question arises how to choose the words for the dictionaries. Therefore we created an algorithm.\\
 	
-	The algorithm takes classified repositories, we choose to use our \hyperref[src:Repositories]{Training Datasets}.
+	
+	The algorithm takes classified repositories, we choose to use our Training Datasets \hyperref[src:Repositories]{(Chapter 8)}.
 	In the first step the intersection with a threshold $p$ of words between repositories of the same class is calculated for each repository class. The threshold $p$ is used to define the minimum ratio between repositories that contain the word and the total number of repositories in the class. 
 	This step is used to filter words that are too unique.
+	
 	
 	In the next step the ratio between the occurrence probability of a remaining word in a class and the average occurrence of a word over \textit{all} repositories is calculated for every word and class. We will thus sort the seven (in case we have seven classes) lists from large to small. This step is used to find the words with the highest deviation from the average occurrence and therefore helps to classify a repository. Combined with the first step we thus selected words that exist in many repositories. Moreover their occurrence probability is highly dependent on the class of the repository.
 	Our dictionary is then created by adding the first $q$ words of a list of each class to a set (because words can exists in multiple lists).
@@ -186,18 +189,20 @@ singlelinecheck=false]
 	iml ps cls tmp orig graffle eps large art sty hdr cproject woff2 hs launch rhistory tga eot woff gitattributes am pyx prototxt cu groovy prefs ds store xsd project less mf pri mm erl mat hpp dtd jar r ui glsl ru out pem lock qrc kml ttf svg in scss bin s otf iwa yaml d qdoc npy coffee rdx rdb rdata f pl tex qml conf map jpeg markdown properties rmd cache pod gitignore cs sh pro keep php data rst gif erb m csv npmignore css txt cpp yml c pdf java h rb py html class png filehasnoending xml jpg md js json 
 	
 	\paragraph{File Name}
-	session10 cheat pykcharts session2 district percentage session1 sheet india united south america git day glyphicons bar house country rock sec2 men secret collection pradesh buttons sec3 gear francisco black sec1 master light line lord top t is fragment slide twitter img vs nfl theme v1 my king san math template pdf france as r o time locale final changes for small linux ssl california 2x new gui i x ui plot game bg exercises c icon slides resources view repository root info java sample org it pom in topo init xml basic error controller types array on bootstrap db build all b and resource to parser js html regular min application css p app source config s makefile world modules src example no map the a unnamed chunk utils node of data lib main test license package readme index 
+	session10 cheat pykcharts session2 district percentage session1 sheet india united south america git day glyphicons bar house country rock sec2 men secret collection pradesh buttons sec3 gear francisco black sec1 master light line lord top t is fragment slide twitter img vs nfl theme v1 my king san math template pdf france as r o time locale final changes for small linux ssl california 2x new gui i x ui plot game bg exercises c icon slides resources view repository root info java sample org it pom in topo init xml basic error controller types array on bootstrap db build all b and resource to parser js html regular min application css p app source config s makefile world modules src example no map the a unnamed chunk utils node of data lib main test license package readme index homework assignment 
 	
 	\paragraph{Words}
-	multipolygon engtype varname censuscode brk pradesh adm0 cen district wb nm python chart os cd a3 dt arcs polygon a2 iso durch nr bis einer pra ber def eine bei zur install import sind werden info nicht auf das dem nba abs properties im attr paper gender joseph ui william san ist tate zu returns none me insurance mm art mit sf den nach element von uk txt qt observed images st div app result list ownership sector left profile oder turner solo hour fa any percent sizes lb required events span views vt sic tags const get timestamp california uri num segment hispanic version style promise void values male path des original license www years comments set err key size white state require u else jpg from female und l county error g source o private callback vn title url length it false as that no y h on with x m pc null file class string node object album all an true be by js start options children data org username d net https com v value type der t die end text http not s f int b or image column var row of line and for in is e return r name w to this function xml if c n id the rd a i
+	multipolygon engtype varname censuscode brk pradesh adm0 cen district wb nm python chart os cd a3 dt arcs polygon a2 iso durch nr bis einer pra ber def eine bei zur install import sind werden info nicht auf das dem nba abs properties im attr paper gender joseph ui william san ist tate zu returns none me insurance mm art mit sf den nach element von uk txt qt observed images st div app result list ownership sector left profile oder turner solo hour fa any percent sizes lb required events span views vt sic tags const get timestamp california uri num segment hispanic version style promise void values male path des original license www years comments set err key size white state require u else jpg from female und l county error g source o private callback vn title url length it false as that no y h on with x m pc null file class string node object album all an true be by js start options children data org username d net https com v value type der t die end text http not s f int b or image column var row of line and for in is e return r name w to this function xml if c n id the rd a i homework assignment 
 	
 	\section{Building the Prediction Model}
 	
 	\subsection{Choosing a prediction Model}
 	There are many different approaches to the problem. A static algorithm to classify repositories is rather impractical because the parameters of our classify function would be strongly influenced by our interpretation of how we weight features for each class. However we quickly noticed that the complexity is very high so that a normal algorithm would limit the aspects which possibly needed to be considered. The problem is non-linear and through the static analysis we would lose the possibility to freely improve or change the classifier. As the software and use-case market of Github rises, the possible need of further classes could arise.
 	
+	
 	To ensure a classifier who is as dynamic and as extensible as possible we choose to use some form of machine learning.
 	The problem which needs to be solved by the Prediction Model is a classification problem: As input we have a fixed number of values for selected features  and as an output the class to which the values fit the most. As a result of this it was pretty clear to us that a supervised learning method would be optimal.
+	
 	
 	In the next step we thought about the pro- and contra arguments of non-parametic and parametic learning.
 	Gaussian-Process-Models for example could theoretically be used, as one does not need to specify a fixed number of parameters and therefore be non-parametic. 
@@ -218,9 +223,11 @@ singlelinecheck=false]
 	\subsection{Formating and further preprocessing of Features to fit into the Neural Network}
 	We tried to find the perfect balance in preprocessing so that on the one hand the network does not need to learn obvious relations between features and on the other hand it does not lose possible relations by too much preprocessing.
 	
+	
 	To format the input for the neuron we will iterate through every word in a dictionary of a type. The ratio between the relative occurence of the word for this type and the occurence value stored in the dictionary is calculated. Effectively this ratio is equal to the deviation of the relative word occurrence for the considered type. In case the relative occurrence of a word ending is higher then the occurrence in the dictionary it will result into a value $> 1$. Hence there is still the necessity of a normalization process - for the dictionary deviation as well as for the ratios.
 	
-	There are several possibilities to normalize the input. In our case it is important that the input is distinct. Furthermore standard normalize procedures are using a maximum and minimum value. The problem is that it is not possible to define an upper bound for the inputs because a test-input could always exceed the previous bound and therefore the attribute of distinction is contradicted in case the input should still be normalized (new Max value could lead to values to have the exact same value as a value with an old bound). Nonetheless we tried the different normalization procedures of min-max normalization and standardization but the \hyperref[src:optimizing]{results} results (\hyperref[src:optimizing]{Chapter 5.4}) were rather disappointing.
+	
+	There are several possibilities to normalize the input. In our case it is important that the input is distinct. Furthermore standard normalize procedures are using a maximum and minimum value. The problem is that it is not possible to define an upper bound for the inputs because a test-input could always exceed the previous bound and therefore the attribute of distinction is contradicted in case the input should still be normalized (new Max value could lead to values to have the exact same value as a value with an old bound). Nonetheless we tried the different normalization procedures of min-max normalization and standardization but the results were rather disappointing so we will not go deeper into this.
 	
 	
 	Therefore we decided to use a logistic function to normalize our data. A logistic function is monotonically increasing and thus for every value distinct. Depending whether we use a sigmoid or tanh function we will construct the logistic function in a way that the upper bound is 1 and the lower bound respectively 0 or -1 in case of the tanh. 
@@ -242,7 +249,7 @@ singlelinecheck=false]
 	
 	
 	\subsection{Data Sets and Training}
-	Besides the labeled repositories in the challenge description we used \hyperref[src:TrainingRepositories]{most} of the the additional \hyperref[src:Repositories]{Repositories} provided by a participating team in the official Github repository of the InformatiCup 2017 as training repositories (although you cannot read it: a big thank you at this point!). We have to admit that even as a human being the classification is not as clear as we thought it would be. Sometimes we were not sure if the labeling of the data sets we used were correct and we realized that many repositories overlap with different classes. It is not always objectively clear to which repository it fits more. In this case the repositories were labeled by personal preference and estimation. Therefore the learning of our network is influenced by personal decisions as it uses the labels.
+	Besides the labeled repositories in the challenge description we used most\hyperref[src:TrainingRepositories]{(Chapter 8)} of the the additional additional repositories \hyperref[src:Repositories]{(Chapter 8)} provided by a participating team in the official Github repository of the InformatiCup 2017 as training repositories (although you cannot read it: a big thank you at this point!). We have to admit that even as a human being the classification is not as clear as we thought it would be. Sometimes we were not sure if the labeling of the data sets we used were correct and we realized that many repositories overlap with different classes. It is not always objectively clear to which repository it fits more. In this case the repositories were labeled by personal preference and estimation. Therefore the learning of our network is influenced by personal decisions as it uses the labels.
 	
 	Since we are using backpropagation after each iteration, the actual output of the network is compared to the desired output. Using the euclidean distance leads us to an error value. The Training continues until this error value is below a manual set value.
 	
@@ -252,9 +259,11 @@ singlelinecheck=false]
 	\label{src:optimizing}
 	A potentially very time consuming task is to optimize the network. We divided the possible optimizing parameters into three classes. Firstly we need to optimize the training. Besides changing the inertia and learning rate it is far more important to take care of the error value of the neural network. A minimum max-error value far too low could result into overfitting the neural network to the repositories of the training phase. Then again a minimum max-error value that is too high would result into a very unstable and an underfit network. 
 	
+	
 	The second category would be optimizing the features selected in the beginning. We have to consider that our selected features are not as optimal as expected.
 	Lastly we need to optimize the neural network itself. This includes the hidden layer as well as the preprocessing step of normalizing the values.\\
-	For testing we used the Test Repositories given by the Challenge Description. To prevent an overfitting on the Test repositories we decided to use further ones provided by the additional Dataset for testing. We used 36 more Repositories (6 per class) so that we tested our neural network on 67 \hyperref[src:TestRepositories]{Repositories}. While intuitively \hyperref[src:ClassifyTestRepositories]{classifying these repositories} we noticed again that some repositories could be classified in multiple classes. It is hard to say to which it fits the most. 
+	For testing we used the Test Repositories given by the Challenge Description. To prevent an overfitting on the Test repositories we decided to use further ones provided by the additional Dataset for testing. We used 36 more Repositories (6 per class) so that we tested our neural network on 67 Repositories \hyperref[src:TestRepositories]{(Chapter 8)}. While intuitively classifying these repositories \hyperref[src:ClassifyTestRepositories]{(Chapter 8)} we noticed again that some repositories could be classified in multiple classes. It is hard to say to which it fits the most. 
+	
 	
 	 We thought about different methods for testing. Known procedures like k-fold cross validation do not have benefits in our case because in our opinion the dataset is not big enough for this. There is a natural deviation of results in each change of a parameter and it is not easy to tell whether this change has been random or has really improved the network. The rather small datasets we would obtain for k-fold cross validation would increase this problem while reducing the possible overfitting. Nonetheless we decided to stay with our fixed 67 repositories.
 	 
@@ -335,6 +344,7 @@ singlelinecheck=false]
 	\\
 	First of all the results are disappointing, nonetheless it is possible to see many things and problems in our network through this matrix. A highly noticeable issue is that every repository of the class OTHER was identified but many wrong repositories were also put in this class. Therefore it seems that our classifier trains a little bit too hard on OTHER repositories. We have several reasons why this could have been the case: As we mentioned earlier we tested and trained our network with a rather balanced repository set. Therefore OTHER has always more or less the same weight as the other repositories. However our own classification of the test repository only classifies one out of 31 repositories as OTHER and therefore just 22\% of the expected occurrence. Moreover this result somehow reflects our decision to evaluate the results with the accuracy.\cite{EvaluateNetwork}
 	
+	
 	Furthermore we noticed that the influence of the WEB class is too high. 50\% are wrongly classified while the recall is at 100\%. The selected features are seemingly strong indicators for WEB repositories however they are not exclusively enough.
 	
 	
@@ -346,7 +356,9 @@ singlelinecheck=false]
 	
 	 The importance of yield and precision depends on the use-case. A search function with a filter for each category for example might rather have a high recall in case the classes are evenly divided. The importance lies in finding as many repositories of the right type as possible, some outliers are not that big of a problem. Equal to the Test-repositories the distribution of the classes would not necessarily be balanced in a real case scenario. Under this assumption it would be possible that we are searching for a class which occurs rather rarely on Github then it is far more important to gain a high precision while holding the recall stable. If for instance a repository type occurred 0.1\% on Github and there were 100.000.000 repositories in total, the difficulty on obtaining a specific precision would be a lot higher than on a balanced classification problem. Therefore it is very important to optimize the precision in these cases.
 	
+	
 	In case the number of considered repositories is low then a higher recall would be preferable because it would be more important to find the desired repository in the selected number. Then again the use case here is a different one from the above. The focus would lie on looking through the own repositories and searching for a special repository taken for class. It would be far more important to find the desired repository even though classifying some wrongly. Having a high precision but missing repositories at the same time would not be satisfactory for this use-case.
+	
 	
 	All in all we would say that a high precision is more desirable for the realistic and reasonable use-case of the classifier. In our opinion a classifier benefits the most when the total number of repositories is high because it would not be as easy for a human to filter the desired repositories. It is possible to apply a classifier on a small number of repositories but the benefit would be not as big as most of the time it is known to oneself what is located in the own repositories.
 	To underline the importance of a high precision we searched for possible indicators for imbalanced classes (high variance overall for class occurrence in set of repositories).
@@ -380,10 +392,11 @@ singlelinecheck=false]
 	
 	\label{src:TestRepositories}
 	\paragraph{Test Repositories}
-	Every test-repository can can be found on the relative path to the root folder ./assets/TestRepositorys.txt.
+	Every test-repository can can be found on the relative path to the root folder ./assets/CombinedTestRepositories.txt.
+	
 	\paragraph{Intuitive Classification}
 	\label{src:ClassifyTestRepositories}
-	intuitve classification of the repositories can can be found on the relative path to the root folder ./assets/TestRepositorys.txt.
+	Intuitive classification of the repositories can can be found on the relative path to the root folder ./assets/TestRepositorys.txt.
 	
 	\label{src:recordingsOfResults}
 	\paragraph{Recording of Results}
